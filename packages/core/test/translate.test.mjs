@@ -3,7 +3,10 @@ import test from 'node:test'
 import { translate } from '../dist/index.js'
 
 test('translates an exact key in a flat dot-key dictionary', () => {
-  assert.equal(translate({ 'dashboard.heading': 'Welcome' }, 'dashboard.heading'), 'Welcome')
+  assert.equal(
+    translate({ 'dashboard.heading': 'Welcome' }, 'dashboard.heading'),
+    'Welcome',
+  )
 })
 
 test('returns the key when the message is missing', () => {
@@ -11,11 +14,16 @@ test('returns the key when the message is missing', () => {
 })
 
 test('uses an explicit fallback for missing messages', () => {
-  assert.equal(translate({}, 'dashboard.heading', {}, { fallback: 'Not translated' }), 'Not translated')
+  assert.equal(
+    translate({}, 'dashboard.heading', {}, { fallback: 'Not translated' }),
+    'Not translated',
+  )
 })
 
 test('interpolates Laravel placeholders with string and non-string replacements', () => {
-  const messages = { 'files.summary': ':count files, active: :active, owner: :name' }
+  const messages = {
+    'files.summary': ':count files, active: :active, owner: :name',
+  }
   const replacements = { count: 3, active: false, name: 'Ada' }
 
   assert.equal(
@@ -25,7 +33,10 @@ test('interpolates Laravel placeholders with string and non-string replacements'
 })
 
 test('leaves unknown placeholders intact', () => {
-  assert.equal(translate({ greeting: 'Hello :name, :team' }, 'greeting', { name: 'Ada' }), 'Hello Ada, :team')
+  assert.equal(
+    translate({ greeting: 'Hello :name, :team' }, 'greeting', { name: 'Ada' }),
+    'Hello Ada, :team',
+  )
 })
 
 test('interpolates placeholders in an explicit fallback', () => {

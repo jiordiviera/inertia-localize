@@ -34,7 +34,7 @@ Use pnpm for the TypeScript workspace and Composer for the Laravel package:
 - `pnpm --filter @inertia-localize/core test`: build core and run behavior and type-contract tests.
 - `composer test` from `packages/laravel`: will be added with the Laravel test setup.
 
-Add package scripts when each package's tooling is established. There is no formatter or linter configured yet.
+Biome handles formatting, lint rules, and import sorting for supported JavaScript and TypeScript files. Run `pnpm lint` to check the repository and `pnpm format` to format supported files.
 
 ## Coding Style & Naming Conventions
 

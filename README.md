@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/inertia-localize-banner.png" alt="Inertia Localize: Laravel translations, anywhere" width="100%">
+</p>
+
 # Inertia Localize
 
 Inertia Localize brings Laravel's localization to Inertia applications through small, framework-native frontend adapters. Laravel remains the source of truth for locales, translations, and fallback behavior; Inertia delivers the active locale and selected messages with page props.

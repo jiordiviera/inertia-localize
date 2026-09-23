@@ -1,0 +1,44 @@
+# Quickstart
+
+## 1. Configure locales and groups
+
+```php
+'locales' => ['en' => ['name' => 'English'], 'fr' => ['name' => 'Français']],
+'groups' => ['ui'],
+```
+
+## 2. Add translations
+
+Older Laravel apps may use `resources/lang` instead of `lang/`.
+
+```php
+// lang/en/ui.php
+return ['greeting' => 'Hello :name'];
+```
+
+## 3. Register the locale route
+
+Keep the switch route inside Laravel's session-enabled `web` middleware group.
+
+```php
+use InertiaLocalize\Http\Controllers\LocaleController;
+use InertiaLocalize\Http\Middleware\SetLocale;
+
+Route::post('/locale', LocaleController::class)->name('locale.switch');
+Route::middleware(SetLocale::class)->group(function () {
+    Route::get('/', HomeController::class);
+});
+```
+
+## 4. Read a translation on the frontend
+
+```tsx
+import { useTranslation } from '@inertia-localize/react'
+
+const { t, locale } = useTranslation()
+t('ui.greeting', { name: 'Ada' }) // Hello Ada
+```
+
+Laravel automatically shares the `i18n` prop with Inertia, including `locale`, `fallback`,
+`locales`, and flattened `messages` such as `ui.greeting`. See [The i18n shared
+prop](/docs/i18n-prop) for the full shape.

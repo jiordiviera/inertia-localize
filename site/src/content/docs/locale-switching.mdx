@@ -1,0 +1,32 @@
+# Locale switching & sessions
+
+The locale is session-based, not URL-based. POST the selected locale to the switch route, then
+subsequent requests use that locale until it changes again.
+
+```php
+use Illuminate\Support\Facades\Route;
+use InertiaLocalize\Http\Controllers\LocaleController;
+use InertiaLocalize\Http\Middleware\SetLocale;
+
+Route::post('/locale', LocaleController::class)->name('locale.switch');
+
+Route::middleware(SetLocale::class)->group(function () {
+    Route::get('/', HomeController::class);
+});
+```
+
+> Register `locale.switch` inside routes that already run in Laravel's session-enabled `web`
+> middleware group — routes in `routes/web.php` start the session before route middleware runs.
+
+Post `{ locale: 'fr' }` to `locale.switch`. Supported values are stored under the configured
+`session_key`; unsupported values receive HTTP 422. On each request, `SetLocale` sets Laravel's
+application locale from the session and falls back to the configured `default` when the session
+value is missing or unsupported.
+
+This session-first approach does not add locale URL prefixes or, by itself, persist a user
+preference across devices — see below.
+
+## Persisting on the user model
+
+Set `user_column` in the config to remember an authenticated user's locale beyond the current
+session, instead of only the session value.

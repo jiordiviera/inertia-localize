@@ -1,0 +1,29 @@
+# React adapter
+
+`@inertia-localize/react` reads the current Inertia `i18n` prop directly — it does not keep a
+second locale or message dictionary in React state.
+
+```tsx
+import { useTranslation } from '@inertia-localize/react'
+
+export function Greeting() {
+  const { t, locale, locales } = useTranslation()
+
+  return (
+    <p lang={locale}>
+      {t('greeting.user', { name: 'Ada' })} ({locales.length} languages)
+    </p>
+  )
+}
+```
+
+`useTranslation()` returns:
+
+| Field | Type |
+| --- | --- |
+| `t(key, replacements?)` | Looks up a dot-key message and interpolates `:placeholder`s |
+| `locale` | Active locale code |
+| `fallback` | Configured fallback locale code |
+| `locales` | Every supported locale, as `{ code, name }` |
+
+The consuming app must install compatible versions of `react` and `@inertiajs/react`.

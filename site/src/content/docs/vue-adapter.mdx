@@ -1,0 +1,25 @@
+# Vue adapter
+
+`@inertia-localize/vue` reads the current Inertia page props directly and requires no Vue
+plugin — just call the composable inside `<script setup>`.
+
+```vue
+<script setup lang="ts">
+import { useTranslation } from '@inertia-localize/vue'
+
+const { t, locale, locales } = useTranslation()
+</script>
+
+<template>
+  <p :lang="locale">
+    {{ t('greeting.user', { name: 'Ada' }) }}
+    ({{ locales.length }} languages)
+  </p>
+</template>
+```
+
+`useTranslation()` returns `t(key, replacements?)` plus computed refs for `locale`, `fallback`,
+and `locales` — the same shape as the [React adapter](/docs/react-adapter), so messages and dot
+keys behave identically across both.
+
+The consuming app must install compatible versions of `vue` and `@inertiajs/vue3`.

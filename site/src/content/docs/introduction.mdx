@@ -1,0 +1,23 @@
+# Introduction
+
+Inertia Localize brings Laravel's localization to Inertia applications through small React and
+Vue adapters. Laravel remains the source of truth for supported locales and translation files;
+the active locale and selected messages arrive as Inertia page props.
+
+## Scope
+
+Locale URL prefixes are not added by default. Laravel owns validation messages; this package
+shares configured UI translation groups with the client. Frontend adapters use a small
+translation helper, not a separate heavy i18n runtime.
+
+## Packages
+
+| Package | Role |
+| --- | --- |
+| `jiordiviera/inertia-localize` | Laravel service provider, middleware, Inertia shared prop |
+| `@inertia-localize/core` | Framework-independent lookup + interpolation, shared types |
+| `@inertia-localize/react` | `useTranslation()` hook for React |
+| `@inertia-localize/vue` | `useTranslation()` composable for Vue |
+
+Continue to [Installation](/docs/installation) to add the packages to an existing Laravel +
+Inertia application.

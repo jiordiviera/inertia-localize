@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "baseBranch": "v0",
+  "access": "public",
+  "fixed": [
+    [
+      "@inertia-localize/core",
+      "@inertia-localize/react",
+      "@inertia-localize/vue"
+    ]
+  ],
+  "updateInternalDependencies": "patch",
+  "changelog": "@changesets/cli/changelog"
+}

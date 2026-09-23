@@ -58,7 +58,18 @@ export function SiteFooter() {
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-4 text-xs text-white/35 sm:flex-row sm:justify-between">
           <span>&#169; Inertia Localize &#8212; MIT License</span>
-          <span>Built with Vite + React</span>
+          <span>
+            Built by{' '}
+            <a
+              href="https://jiordiviera.me"
+              target="_blank"
+              rel="noreferrer"
+              className="text-white/50 hover:text-white/80"
+            >
+              Jiordi Kengne
+            </a>{' '}
+            with Vite + React
+          </span>
         </div>
       </div>
     </footer>

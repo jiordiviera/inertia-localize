@@ -29,6 +29,8 @@ Composer and the published npm packages use one lockstep version. Changesets man
 
 Check that each npm preview contains its `LICENSE` file. Validate and inspect the Composer source archive with `composer archive --working-dir=packages/laravel`; do not commit the generated archive. CI runs tests for pull requests, version branches, and tags. For tags, it also checks lockstep versions and previews npm package contents. A passing tag workflow is required before publishing.
 
+The first release is bootstrapped manually because earlier implementation PRs predate Changesets. Keep the initial combined notes in the root `CHANGELOG.md`, and do not bump the already aligned `0.1.0` package versions just to create generated changelog files. Future releases use Changesets as above.
+
 ## Tag and publish
 
 After the release PR, including Changesets version/changelog updates, is merged into `v0`, create and push an annotated tag from that commit. Prereleases use SemVer identifiers such as `v0.1.0-alpha.1` or `v0.1.0-rc.1`; update npm package versions to the same prerelease version before tagging.

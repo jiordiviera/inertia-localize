@@ -52,6 +52,8 @@ t('ui.greeting', { name: 'Ada' }) // Hello Ada
 
 See the [Laravel guide](packages/laravel/README.md), [React guide](packages/react/README.md), and [Vue guide](packages/vue/README.md) for complete examples.
 
+For version compatibility and release changes, see the [changelog](CHANGELOG.md). All `0.x` releases are pre-stable.
+
 ## Scope
 
 Locale URL prefixes are not added by default. Laravel owns validation messages; this package shares configured UI translation groups with the client. Frontend adapters use a small translation helper, not a separate heavy i18n runtime.

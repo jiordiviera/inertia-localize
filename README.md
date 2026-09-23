@@ -31,6 +31,7 @@ pnpm test
 pnpm --filter @inertia-localize/core build
 pnpm --filter @inertia-localize/core test
 composer install --working-dir=packages/laravel
+composer test --working-dir=packages/laravel
 ```
 
-The root pnpm commands delegate to package scripts when present. The core package currently provides build and test commands; lint scripts will be added with package tooling. See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow, and [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for proposed responsibilities and open design questions.
+The root pnpm commands delegate to package scripts when present. The core package currently provides build and test commands; lint scripts will be added with package tooling. See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow, and [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for package responsibilities and open design questions.

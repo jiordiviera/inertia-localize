@@ -24,6 +24,11 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist --working-dir=packages/laravel
       - run: pnpm build
       - run: pnpm test
       - run: pnpm lint
@@ -49,4 +54,3 @@ jobs:
       - run: composer validate --strict --working-dir=packages/laravel
       - run: composer install --no-interaction --prefer-dist --working-dir=packages/laravel
       - run: composer test --working-dir=packages/laravel
-      - run: composer test:e2e --working-dir=packages/laravel

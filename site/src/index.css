@@ -51,3 +51,29 @@ body {
 ::selection {
   background: color-mix(in oklch, var(--color-primary) 35%, transparent);
 }
+
+/* Ecosystem diagram: purposeful motion showing the direction data flows
+   (Laravel -> Inertia Localize -> adapters), per DESIGN.md's "show the
+   mechanism" principle. */
+.ecosystem-tile {
+  animation: ecosystem-float 5s ease-in-out infinite;
+}
+
+@keyframes ecosystem-float {
+  0%,
+  100% {
+    transform: rotateX(50deg) rotateZ(-38deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(50deg) rotateZ(-38deg) translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecosystem-tile {
+    animation: none;
+  }
+  .ecosystem-flow {
+    display: none;
+  }
+}

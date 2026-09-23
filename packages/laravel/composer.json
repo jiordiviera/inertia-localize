@@ -1,0 +1,13 @@
+{
+  "name": "jiordiviera/inertia-localize",
+  "description": "Laravel localization for Inertia applications",
+  "type": "library",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "InertiaLocalize\\": "src/"
+    }
+  }
+}

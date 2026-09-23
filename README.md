@@ -1,29 +1,35 @@
+<p align="center">
+  <img src="assets/inertia-localize-banner.png" alt="Inertia Localize: Laravel translations, anywhere" width="100%">
+</p>
+
 # Inertia Localize
 
-Inertia Localize brings Laravel's localization to Inertia applications with small, framework-native frontend adapters. Laravel remains the source of truth for locales, translations, and fallback behavior; Inertia delivers the active locale and selected messages with page props.
+Inertia Localize brings Laravel's localization to Inertia applications through small, framework-native frontend adapters. Laravel remains the source of truth for locales, translations, and fallback behavior; Inertia delivers the active locale and selected messages with page props.
 
-> Project status: planning. Package APIs and implementation are not available yet.
+> Project status: early development. Package APIs are still being implemented.
 
-## Planned packages
+## Packages
 
-| Package | Registry | Purpose |
+| Path | Package | Responsibility |
 | --- | --- | --- |
-| `jiordiviera/inertia-localize` | Composer | Laravel locale handling, translation export, and Inertia props |
-| `@inertia-localize/core` | npm | Framework-independent lookup, interpolation, and shared types |
-| `@inertia-localize/react` | npm | React translation helpers |
-| `@inertia-localize/vue` | npm | Vue translation helpers |
+| `packages/laravel` | `jiordiviera/inertia-localize` (Composer) | Locale handling, translation export, and Inertia props |
+| `packages/core` | `@inertia-localize/core` (npm) | Shared TypeScript translation utilities and types |
+| `packages/react` | `@inertia-localize/react` (npm) | React adapter |
+| `packages/vue` | `@inertia-localize/vue` (npm) | Vue adapter |
+| `packages/svelte` | Planned | Reserved for a possible later adapter |
 
-The initial release focuses on Laravel, Inertia, React, and Vue. Other adapters may follow after the core API is established.
-
-## Design principles
-
-- Use Laravel translation files as the default source of messages.
-- Support session-based locale selection by default.
-- Deliver initial messages through Inertia props for server rendering and client navigation.
-- Keep frontend adapters small and avoid requiring a specific frontend framework for the Laravel package.
+The initial release targets Laravel, Inertia, React, and Vue. Composer and npm packages follow the repository's lockstep version policy.
 
 ## Development
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow. See [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for package responsibilities, proposed data shapes, and unresolved design questions. The current project backlog is tracked in [GitHub Issues](https://github.com/jiordiviera/inertia-localize/issues).
+Use Node.js and pnpm for the JavaScript workspace. Composer manages the Laravel package independently.
 
-No build or test commands are available yet; they will be documented when the monorepo scaffold is added.
+```sh
+pnpm install
+pnpm build
+pnpm test
+pnpm lint
+composer install --working-dir=packages/laravel
+```
+
+The root pnpm commands delegate to package scripts when present. Package-specific build, test, and lint scripts will be added with their tooling and implementations. See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow, and [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for proposed responsibilities and open design questions.

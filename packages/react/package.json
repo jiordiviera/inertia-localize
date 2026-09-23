@@ -2,6 +2,10 @@
   "name": "@inertia-localize/react",
   "version": "0.1.0",
   "description": "React adapter for Inertia Localize",
+  "author": {
+    "name": "Jiordi Kengne",
+    "url": "https://jiordiviera.me"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

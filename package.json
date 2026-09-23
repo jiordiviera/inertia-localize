@@ -1,6 +1,10 @@
 {
   "name": "inertia-localize",
   "private": true,
+  "author": {
+    "name": "Jiordi Kengne",
+    "url": "https://jiordiviera.me"
+  },
   "packageManager": "pnpm@12.5.1",
   "scripts": {
     "build": "pnpm --recursive --if-present build",

@@ -30,6 +30,10 @@ Route::middleware(SetLocale::class)->group(function () {
 
 Post the selected locale as `locale` to `locale.switch`. Supported values are stored under the configured `session_key`; unsupported values receive HTTP 422. On each request, the middleware sets Laravel's application locale from the session and falls back to the configured default when the session value is missing or unsupported. This session-first approach does not add locale URL prefixes or persist a user preference.
 
+## Inertia shared props
+
+The package automatically shares an `i18n` prop on Inertia responses. It contains `locale`, `fallback`, `locales` (`code` and display `name`), and `messages`. Translation groups in `inertia-localize.groups` are loaded for the active locale and flattened to dot keys prefixed by their group, such as `ui.actions.save`. The prop is available in the initial server-rendered page without a client fetch and is included in partial reloads.
+
 ## Tests
 
 ```sh

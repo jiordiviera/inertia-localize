@@ -1,59 +1,29 @@
 # Inertia Localize
 
-Working name for a Laravel-first localization package that integrates with Inertia apps across React, Vue, Svelte, and plain TypeScript clients.
+Inertia Localize brings Laravel's localization to Inertia applications with small, framework-native frontend adapters. Laravel remains the source of truth for locales, translations, and fallback behavior; Inertia delivers the active locale and selected messages with page props.
 
-## Purpose
+> Project status: planning. Package APIs and implementation are not available yet.
 
-Make session-based localization feel native in Laravel + Inertia apps:
+## Planned packages
 
-- Laravel owns locale detection, fallback, translations, and server-rendered data.
-- Inertia shares the active locale and UI messages as page props.
-- Frontend adapters expose small framework-native helpers like `useTranslation()`.
-- Apps can start with Laravel language files and later plug into translation platforms.
+| Package | Registry | Purpose |
+| --- | --- | --- |
+| `jiordiviera/inertia-localize` | Composer | Laravel locale handling, translation export, and Inertia props |
+| `@inertia-localize/core` | npm | Framework-independent lookup, interpolation, and shared types |
+| `@inertia-localize/react` | npm | React translation helpers |
+| `@inertia-localize/vue` | npm | Vue translation helpers |
 
-## Core Opinion
+The initial release focuses on Laravel, Inertia, React, and Vue. Other adapters may follow after the core API is established.
 
-Laravel should be the source of truth.
+## Design principles
 
-The package should not require React, Vue, or any frontend runtime to own the dictionaries. It should expose Laravel translations to Inertia in a predictable, SSR-safe shape.
+- Use Laravel translation files as the default source of messages.
+- Support session-based locale selection by default.
+- Deliver initial messages through Inertia props for server rendering and client navigation.
+- Keep frontend adapters small and avoid requiring a specific frontend framework for the Laravel package.
 
-## Target Stack
+## Development
 
-- Laravel
-- Inertia Laravel
-- React adapter
-- Vue adapter
-- Svelte adapter, later
-- Optional SSR
-- Session-based locale by default
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow. See [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for package responsibilities, proposed data shapes, and unresolved design questions. The current project backlog is tracked in [GitHub Issues](https://github.com/jiordiviera/inertia-localize/issues).
 
-## Non-goals
-
-- URL locale prefixes by default
-- Replacing Laravel localization
-- Owning validation translations
-- Forcing one frontend framework
-- Shipping a heavy client i18n runtime unless an adapter asks for it
-
-## Package Shape
-
-Possible split:
-
-```txt
-inertia-localize/
-  packages/
-    laravel/
-    react/
-    vue/
-    svelte/
-    core/
-```
-
-Alternative monorepo names:
-
-- `inertia-localize`
-- `inertia-i18n-kit`
-- `laravel-inertia-locales`
-- `inertia-localize`
-
-Current preferred name: `inertia-localize`.
+No build or test commands are available yet; they will be documented when the monorepo scaffold is added.

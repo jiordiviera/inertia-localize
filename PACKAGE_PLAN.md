@@ -1,8 +1,10 @@
 # Package Plan
 
+This document records the proposed package boundaries and API shapes for the `inertia-localize` monorepo. These examples are planning material, not implemented or stable APIs. Track implementation in the repository's GitHub issues.
+
 ## Laravel Package
 
-Composer package idea:
+Composer package:
 
 ```txt
 jiordiviera/inertia-localize
@@ -52,7 +54,7 @@ Shared Inertia prop:
 
 ## Core JavaScript Package
 
-NPM package idea:
+npm package:
 
 ```txt
 @inertia-localize/core
@@ -131,16 +133,15 @@ Requirements:
 - Should user persistence be first-party or app-owned?
 - Should Vue adapter expose both composable and plugin?
 
-## First Milestone
+## Implementation Sequence
 
-Build the package behavior manually inside Prooflog:
+Build and validate the packages directly in this repository. Do not prototype in an external application and extract later.
 
-1. `lang/en/ui.php` and `lang/fr/ui.php`
-2. `SetLocale` middleware
-3. `LocaleController`
-4. `i18n` shared Inertia prop
-5. React `useTranslation()`
-6. Language switcher component
-7. Dashboard/footer/menu translated
+1. Establish the monorepo structure and tooling (`02-monorepo-scaffold`).
+2. Implement the framework-independent translation engine (`03-core-translation-engine`).
+3. Build Laravel locale handling, session switching, and Inertia props (`04`-`06`).
+4. Add React and Vue adapters (`07`-`08`).
+5. Verify the integration fixture and publish a quickstart (`09`-`10`).
+6. Add release automation and prepare `v0.1.0` (`11`-`12`).
 
-Then extract only once the API feels stable.
+The initial scope is Laravel, Inertia, React, and Vue. Svelte and other adapters are future options, not part of the first milestone. Resolve open API questions in their implementation issues before treating the sketches above as commitments.

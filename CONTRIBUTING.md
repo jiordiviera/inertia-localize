@@ -17,6 +17,8 @@ Open or find a GitHub issue before starting work. Describe the bug, proposal, or
 
 Use concise imperative commit subjects, optionally following Conventional Commits (for example, `feat(core): add fallback lookup`). Follow the established formatter and tests in the package being changed; until tooling is committed, keep formatting consistent with nearby files. Add or update focused tests for behavior changes and update docs when public APIs or workflows change.
 
+For user-facing package changes, add a Changesets entry with `pnpm changeset` and commit it with the change. The npm packages are configured as a fixed version group; release maintainers generate versions and changelogs with `pnpm version:packages`. See [RELEASING.md](RELEASING.md) for the full release process.
+
 ## Releases and versioning
 
 Composer and all npm packages share one lockstep version. Use SemVer tags prefixed with `v`, such as `v0.1.0`, `v0.1.0-alpha.1`, and `v0.1.0-rc.1`. Before `1.0.0`, breaking changes may ship in a minor release; patch releases are for compatible fixes. After `1.0.0`, follow SemVer strictly. The `v0` line may evolve before `1.0.0`; stable `v1` and later lines receive compatible fixes only, with breaking changes developed on the next major line.

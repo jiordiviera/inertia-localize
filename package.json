@@ -7,9 +7,12 @@
     "test": "pnpm --recursive --if-present test",
     "test:e2e": "composer test:e2e --working-dir=packages/laravel",
     "lint": "biome check .",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "changeset": "changeset",
+    "version:packages": "changeset version"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.14"
+    "@biomejs/biome": "2.5.14",
+    "@changesets/cli": "^3.0.3"
   }
 }

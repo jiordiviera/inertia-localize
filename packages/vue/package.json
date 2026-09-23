@@ -1,6 +1,7 @@
 {
   "name": "@inertia-localize/vue",
   "version": "0.1.0",
+  "license": "MIT",
   "description": "Vue adapter for Inertia Localize",
   "type": "module",
   "main": "./dist/index.js",

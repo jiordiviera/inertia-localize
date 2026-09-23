@@ -28,8 +28,9 @@ Use Node.js and pnpm for the JavaScript workspace. Composer manages the Laravel 
 pnpm install
 pnpm build
 pnpm test
-pnpm lint
+pnpm --filter @inertia-localize/core build
+pnpm --filter @inertia-localize/core test
 composer install --working-dir=packages/laravel
 ```
 
-The root pnpm commands delegate to package scripts when present. Package-specific build, test, and lint scripts will be added with their tooling and implementations. See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow, and [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for proposed responsibilities and open design questions.
+The root pnpm commands delegate to package scripts when present. The core package currently provides build and test commands; lint scripts will be added with package tooling. See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow, and [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for proposed responsibilities and open design questions.

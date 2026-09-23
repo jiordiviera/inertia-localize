@@ -1,9 +1,9 @@
+import assert from 'node:assert/strict'
+import { test } from 'node:test'
+import { App } from '@inertiajs/react'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { App } from '@inertiajs/react'
 import { useTranslation } from '../dist/index.js'
-import { test } from 'node:test'
-import assert from 'node:assert/strict'
 
 test('reads shared Inertia locale data and translates with replacements during SSR', () => {
   const page = {

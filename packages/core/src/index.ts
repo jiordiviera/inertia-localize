@@ -27,12 +27,16 @@ export function translate(
   options: TranslateOptions = {},
 ): string {
   const message = Object.hasOwn(messages, key) ? messages[key] : undefined
-  const template = typeof message === 'string' ? message : options.fallback ?? key
+  const template =
+    typeof message === 'string' ? message : (options.fallback ?? key)
 
-  return template.replace(/:([A-Za-z_][A-Za-z0-9_]*)/g, (placeholder, name: string) => {
-    if (!Object.hasOwn(replacements, name)) return placeholder
+  return template.replace(
+    /:([A-Za-z_][A-Za-z0-9_]*)/g,
+    (placeholder, name: string) => {
+      if (!Object.hasOwn(replacements, name)) return placeholder
 
-    const value = replacements[name]
-    return value === undefined ? placeholder : String(value)
-  })
+      const value = replacements[name]
+      return value === undefined ? placeholder : String(value)
+    },
+  )
 }

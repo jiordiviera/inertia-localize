@@ -27,9 +27,7 @@
   },
   "extra": {
     "laravel": {
-      "providers": [
-        "InertiaLocalize\\InertiaLocalizeServiceProvider"
-      ]
+      "providers": ["InertiaLocalize\\InertiaLocalizeServiceProvider"]
     }
   }
 }

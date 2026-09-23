@@ -49,7 +49,7 @@ export function CommandPalette() {
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60" />
           <Dialog.Content
             aria-describedby={undefined}
-            className="fixed left-1/2 top-[110px] z-50 w-full max-w-xl -translate-x-1/2 overflow-hidden rounded-2xl border border-primary/40 bg-[#111114] shadow-2xl"
+            className="fixed left-1/2 top-[110px] z-50 w-full max-w-xl -translate-x-1/2 overflow-hidden rounded-2xl border border-primary/40 bg-surface shadow-2xl"
           >
             <Dialog.Title className="sr-only">
               Search documentation

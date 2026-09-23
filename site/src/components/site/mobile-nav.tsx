@@ -29,7 +29,7 @@ export function MobileNav() {
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 md:hidden" />
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col gap-1 border-r-2 border-primary bg-[#111114] p-5 md:hidden"
+          className="fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col gap-1 border-r-2 border-primary bg-surface p-5 md:hidden"
         >
           <div className="mb-4 flex items-center justify-between">
             <Dialog.Title className="flex items-center gap-2 text-sm font-bold">

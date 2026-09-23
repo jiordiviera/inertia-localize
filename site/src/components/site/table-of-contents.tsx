@@ -33,7 +33,7 @@ export function TableOfContents() {
   return (
     <nav
       aria-label="On this page"
-      className="flex w-[220px] shrink-0 flex-col gap-2 border-l border-white/10 px-5 py-6 text-[13px]"
+      className="flex w-[220px] shrink-0 flex-col gap-2 border-l border-white/10 pl-6 text-[13px]"
     >
       <span className="text-[11px] uppercase tracking-wide text-white/35">
         On this page

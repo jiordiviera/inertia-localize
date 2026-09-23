@@ -9,7 +9,7 @@ export function DocPage() {
   const known = flatDocsNav.some((entry) => entry.slug === slug)
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-10">
+    <div className="mx-auto flex w-full max-w-[65ch] flex-col gap-10">
       <article
         id="doc-content"
         className="prose prose-invert prose-docs max-w-none"

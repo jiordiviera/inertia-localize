@@ -7,11 +7,17 @@
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
 
-  --color-background: #0a0a0a;
-  --color-surface: #fafaf8;
-  --color-primary: #6366f1;
-  --color-secondary: #a5b4fc;
-  --color-border: #e5e7eb;
+  /* DESIGN.md palette — tinted neutrals (~275deg brand hue), one committed accent */
+  --color-background: oklch(14.5% 0.006 275);
+  --color-surface: oklch(19% 0.008 275);
+  --color-surface-2: oklch(23% 0.009 275);
+  --color-primary: oklch(58% 0.233 277);
+  --color-secondary: oklch(81% 0.1 277);
+  --color-text: oklch(96% 0.004 275);
+  --color-text-muted: oklch(72% 0.006 275);
+  --color-text-faint: oklch(52% 0.006 275);
+
+  --container-page: 88rem;
 }
 
 :root {
@@ -20,8 +26,16 @@
 
 body {
   background: var(--color-background);
-  color: #ededed;
+  color: var(--color-text);
   font-family: var(--font-sans);
+}
+
+/* DESIGN.md layout: every section shares this container so content never stretches
+   edge-to-edge on wide viewports. */
+.page-container {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
 }
 
 .prose-docs code {
@@ -29,10 +43,11 @@ body {
 }
 
 .prose-docs pre {
-  border: 1px solid rgba(229, 231, 235, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.75rem;
+  background: var(--color-surface);
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.35);
+  background: color-mix(in oklch, var(--color-primary) 35%, transparent);
 }

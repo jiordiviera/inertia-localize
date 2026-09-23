@@ -2,10 +2,14 @@
 
 ## Project Structure & Module Organization
 
-This repository is currently a planning-stage package for `inertia-localize`, a Laravel-first localization toolkit for Inertia apps. Root documents define the product direction:
+This repository is an early-stage monorepo for `inertia-localize`, a Laravel-first localization toolkit for Inertia apps. Packages live under `packages/`:
 
-- `README.md`: purpose, target stack, package philosophy, and non-goals.
-- `PACKAGE_PLAN.md`: proposed Laravel, core TypeScript, React, Vue, and future Svelte package responsibilities.
+- `laravel/`: Composer package for Laravel integration.
+- `core/`: framework-independent TypeScript engine; source in `src/`, behavior and type tests in `test/`.
+- `react/` and `vue/`: frontend adapters.
+- `svelte/`: reserved for possible future support.
+
+`README.md` is the repository overview; `PACKAGE_PLAN.md` describes package boundaries and unresolved design questions.
 
 When implementation begins, keep the planned monorepo shape:
 
@@ -18,18 +22,19 @@ packages/
   svelte/
 ```
 
-Place framework-specific tests beside their package or under each package's `tests/` directory. Keep shared fixtures and examples small and clearly named.
+Keep package tests alongside their package. Shared fixtures and examples should remain small and clearly named.
 
 ## Build, Test, and Development Commands
 
-No package manager or test runner is committed yet. Add commands as the scaffold lands and document them here. Expected future commands:
+Use pnpm for the TypeScript workspace and Composer for the Laravel package:
 
-- `composer test`: run Laravel package tests.
-- `npm test` or `pnpm test`: run TypeScript adapter tests.
-- `npm run build` or `pnpm build`: compile frontend packages.
-- `npm run lint` or `pnpm lint`: run formatting and static checks.
+- `pnpm build`: build packages that define a build script.
+- `pnpm test`: run tests for packages that define a test script.
+- `pnpm --filter @inertia-localize/core build`: compile core ESM and declarations.
+- `pnpm --filter @inertia-localize/core test`: build core and run behavior and type-contract tests.
+- `composer test` from `packages/laravel`: will be added with the Laravel test setup.
 
-Prefer one top-level command per workflow once the monorepo tooling is chosen.
+Add package scripts when each package's tooling is established. There is no formatter or linter configured yet.
 
 ## Coding Style & Naming Conventions
 
@@ -39,10 +44,10 @@ Use Laravel conventions for PHP classes, middleware, config, and translations. U
 
 ## Testing Guidelines
 
-Test locale resolution, session behavior, fallback handling, placeholder interpolation, and Inertia prop shape. Adapter tests should verify helper output without requiring a full application where possible. Name tests after behavior, for example `it_interpolates_laravel_placeholders` or `translate.fallback.test.ts`.
+Core behavior tests use Node's built-in `node:test` runner in `.test.mjs` files; TypeScript type contracts live in `test/type-contract.ts`. Cover lookup, missing-key fallback, interpolation, and shared prop types. Laravel and adapter tests will follow their package test tooling.
 
 ## Commit & Pull Request Guidelines
 
-Git history is not available in this sandbox, so no existing commit convention could be verified. Use concise imperative commits such as `Add locale middleware plan` or `Implement core translate helper`.
+Use concise imperative commits, preferably Conventional Commits, for example `feat(core): add translation lookup`.
 
-Pull requests should include a short summary, affected package paths, test results, and screenshots only when UI examples change. Link related issues or design notes when resolving open questions from `PACKAGE_PLAN.md`.
+Follow `CONTRIBUTING.md`: open an issue before creating a work branch, target the matching version branch with a pull request, link the issue, and include relevant checks in the PR description.

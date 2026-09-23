@@ -1,6 +1,6 @@
 # Package Plan
 
-This document records the proposed package boundaries and API shapes for the `inertia-localize` monorepo. These examples are planning material, not implemented or stable APIs. Track implementation in the repository's GitHub issues.
+This document records package boundaries and planned API shapes for the `inertia-localize` monorepo. Check each package README and source for implemented behavior; proposed snippets here may change. Track implementation in the repository's GitHub issues.
 
 ## Laravel Package
 
@@ -72,6 +72,8 @@ API sketch:
 ```ts
 translate(messages, 'dashboard.heading', { name: 'Ada' })
 ```
+
+The current core API also accepts `{ fallback: '...' }` as a fourth argument for a custom missing-key string.
 
 ## React Adapter
 

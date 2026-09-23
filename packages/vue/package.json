@@ -5,7 +5,30 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "files": [
     "dist"
-  ]
+  ],
+  "scripts": {
+    "build": "pnpm --filter @inertia-localize/core build && tsc -p tsconfig.json",
+    "test": "pnpm build && node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@inertia-localize/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "@inertiajs/vue3": "^2.0.0 || ^3.0.0",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@inertiajs/vue3": "^3.0.0",
+    "@vue/server-renderer": "^3.5.0",
+    "typescript": "^7.0.2",
+    "vue": "^3.5.0"
+  }
 }

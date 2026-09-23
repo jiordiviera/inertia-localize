@@ -3,6 +3,8 @@
 namespace InertiaLocalize\Tests;
 
 use InertiaLocalize\InertiaLocalizeServiceProvider;
+use InertiaLocalize\Http\Controllers\LocaleController;
+use InertiaLocalize\Http\Middleware\SetLocale;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
@@ -23,6 +25,18 @@ abstract class TestCase extends OrchestraTestCase
         }
 
         $app->useConfigPath($this->testConfigPath);
+        $app['config']->set('app.key', '0123456789abcdef0123456789abcdef');
+    }
+
+    protected function defineRoutes($router): void
+    {
+        $router->middleware('web')->group(function ($router): void {
+            $router->get('/locale-check', static fn () => response()->json([
+                'locale' => app()->getLocale(),
+            ]))->middleware(SetLocale::class);
+
+            $router->post('/locale', LocaleController::class)->middleware(SetLocale::class);
+        });
     }
 
     protected function tearDown(): void

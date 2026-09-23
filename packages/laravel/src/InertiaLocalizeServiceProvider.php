@@ -9,6 +9,7 @@ final class InertiaLocalizeServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/inertia-localize.php', 'inertia-localize');
+        $this->app->singleton(LocaleResolver::class);
     }
 
     public function boot(): void

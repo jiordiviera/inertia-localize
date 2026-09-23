@@ -1,0 +1,11 @@
+{
+  "name": "@inertia-localize/core",
+  "version": "0.1.0",
+  "description": "Framework-independent translation utilities for Inertia Localize",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ]
+}

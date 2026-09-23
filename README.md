@@ -1,59 +1,31 @@
 # Inertia Localize
 
-Working name for a Laravel-first localization package that integrates with Inertia apps across React, Vue, Svelte, and plain TypeScript clients.
+Inertia Localize brings Laravel's localization to Inertia applications through small, framework-native frontend adapters. Laravel remains the source of truth for locales, translations, and fallback behavior; Inertia delivers the active locale and selected messages with page props.
 
-## Purpose
+> Project status: early development. Package APIs are still being implemented.
 
-Make session-based localization feel native in Laravel + Inertia apps:
+## Packages
 
-- Laravel owns locale detection, fallback, translations, and server-rendered data.
-- Inertia shares the active locale and UI messages as page props.
-- Frontend adapters expose small framework-native helpers like `useTranslation()`.
-- Apps can start with Laravel language files and later plug into translation platforms.
+| Path | Package | Responsibility |
+| --- | --- | --- |
+| `packages/laravel` | `jiordiviera/inertia-localize` (Composer) | Locale handling, translation export, and Inertia props |
+| `packages/core` | `@inertia-localize/core` (npm) | Shared TypeScript translation utilities and types |
+| `packages/react` | `@inertia-localize/react` (npm) | React adapter |
+| `packages/vue` | `@inertia-localize/vue` (npm) | Vue adapter |
+| `packages/svelte` | Planned | Reserved for a possible later adapter |
 
-## Core Opinion
+The initial release targets Laravel, Inertia, React, and Vue. Composer and npm packages follow the repository's lockstep version policy.
 
-Laravel should be the source of truth.
+## Development
 
-The package should not require React, Vue, or any frontend runtime to own the dictionaries. It should expose Laravel translations to Inertia in a predictable, SSR-safe shape.
+Use Node.js and pnpm for the JavaScript workspace. Composer manages the Laravel package independently.
 
-## Target Stack
-
-- Laravel
-- Inertia Laravel
-- React adapter
-- Vue adapter
-- Svelte adapter, later
-- Optional SSR
-- Session-based locale by default
-
-## Non-goals
-
-- URL locale prefixes by default
-- Replacing Laravel localization
-- Owning validation translations
-- Forcing one frontend framework
-- Shipping a heavy client i18n runtime unless an adapter asks for it
-
-## Package Shape
-
-Possible split:
-
-```txt
-inertia-localize/
-  packages/
-    laravel/
-    react/
-    vue/
-    svelte/
-    core/
+```sh
+pnpm install
+pnpm build
+pnpm test
+pnpm lint
+composer install --working-dir=packages/laravel
 ```
 
-Alternative monorepo names:
-
-- `inertia-localize`
-- `inertia-i18n-kit`
-- `laravel-inertia-locales`
-- `inertia-localize`
-
-Current preferred name: `inertia-localize`.
+The root pnpm commands delegate to package scripts when present. Package-specific build, test, and lint scripts will be added with their tooling and implementations. See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue, branch, and pull request workflow, and [PACKAGE_PLAN.md](PACKAGE_PLAN.md) for proposed responsibilities and open design questions.

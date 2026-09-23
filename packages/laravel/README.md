@@ -10,7 +10,25 @@ The service provider is registered through Laravel package discovery. It merges 
 php artisan vendor:publish --tag=inertia-localize-config
 ```
 
-The configuration defines `default`, `fallback`, supported `locales`, `session_key`, translation `groups`, and an optional `user_column`. Locale middleware, session switching, translation export, and Inertia props are implemented in later issues.
+The configuration defines `default`, `fallback`, supported `locales`, `session_key`, translation `groups`, and an optional `user_column`.
+
+## Session locale
+
+Register the locale switch endpoint in `routes/web.php`. Put `SetLocale` on locale-aware routes; routes in `web.php` already start the session before route middleware runs.
+
+```php
+use Illuminate\Support\Facades\Route;
+use InertiaLocalize\Http\Controllers\LocaleController;
+use InertiaLocalize\Http\Middleware\SetLocale;
+
+Route::post('/locale', LocaleController::class)->name('locale.switch');
+
+Route::middleware(SetLocale::class)->group(function () {
+    Route::get('/', HomeController::class);
+});
+```
+
+Post the selected locale as `locale` to `locale.switch`. Supported values are stored under the configured `session_key`; unsupported values receive HTTP 422. On each request, the middleware sets Laravel's application locale from the session and falls back to the configured default when the session value is missing or unsupported. This session-first approach does not add locale URL prefixes or persist a user preference.
 
 ## Tests
 

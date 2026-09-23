@@ -5,6 +5,7 @@
   "scripts": {
     "build": "pnpm --recursive --if-present build",
     "test": "pnpm --recursive --if-present test",
+    "test:e2e": "composer test:e2e --working-dir=packages/laravel",
     "lint": "biome check .",
     "format": "biome format --write ."
   },

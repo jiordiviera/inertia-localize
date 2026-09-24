@@ -5,7 +5,7 @@ import type {
   MessageDictionary,
   TranslationReplacements,
 } from '../src/index.js'
-import { translate } from '../src/index.js'
+import { translate, translateChoice } from '../src/index.js'
 
 const locale: LocaleCode = 'fr'
 const localeMetadata: LocaleMetadata = { code: locale, name: 'French' }
@@ -22,5 +22,14 @@ const pageProps: I18nProps = {
   messages,
 }
 const translated: string = translate(messages, 'greeting.user', replacements)
+const choiceMessages: MessageDictionary = {
+  'cart.items': '{0} No items|{1} One item|[2,*] :count items',
+}
+const chosen: string = translateChoice(
+  choiceMessages,
+  'cart.items',
+  3,
+  replacements,
+)
 
-void [pageProps, translated]
+void [pageProps, translated, chosen]

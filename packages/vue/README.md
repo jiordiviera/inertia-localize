@@ -17,7 +17,20 @@ const { t, locale, locales } = useTranslation()
 </template>
 ```
 
-`useTranslation()` returns `t(key, replacements?)` and computed refs for `locale`, `fallback`, and `locales`. Messages use flat dot keys; Laravel-style `:name` placeholders are interpolated by `@inertia-localize/core`.
+`useTranslation()` returns `t(key, replacements?)`, `tChoice(key, count, replacements?)`, and computed refs for `locale`, `fallback`, and `locales`. Messages use flat dot keys; Laravel-style `:name` placeholders are interpolated by `@inertia-localize/core`.
+
+## Pluralization
+
+```vue
+<script setup lang="ts">
+const { tChoice } = useTranslation()
+</script>
+
+<template>{{ tChoice('cart.items', itemCount) }}</template>
+```
+
+Uses Laravel's `trans_choice` pipe-separated DSL (`{0} No items|{1} One item|[2,*] :count items`);
+see [`@inertia-localize/core`'s README](https://www.npmjs.com/package/@inertia-localize/core) for the full syntax.
 
 ## Switching locale
 

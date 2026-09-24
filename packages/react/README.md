@@ -18,7 +18,18 @@ export function Greeting() {
 }
 ```
 
-`useTranslation()` returns `t(key, replacements?)`, `locale`, `fallback`, and `locales`. Messages use flat dot keys; Laravel-style `:name` placeholders are interpolated by `@inertia-localize/core`.
+`useTranslation()` returns `t(key, replacements?)`, `tChoice(key, count, replacements?)`, `locale`, `fallback`, and `locales`. Messages use flat dot keys; Laravel-style `:name` placeholders are interpolated by `@inertia-localize/core`.
+
+## Pluralization
+
+```tsx
+const { tChoice } = useTranslation()
+
+tChoice('cart.items', itemCount)
+```
+
+Uses Laravel's `trans_choice` pipe-separated DSL (`{0} No items|{1} One item|[2,*] :count items`);
+see [`@inertia-localize/core`'s README](https://www.npmjs.com/package/@inertia-localize/core) for the full syntax.
 
 ## Switching locale
 

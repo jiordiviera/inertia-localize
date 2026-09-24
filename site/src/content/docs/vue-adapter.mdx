@@ -18,9 +18,10 @@ const { t, locale, locales } = useTranslation()
 </template>
 ```
 
-`useTranslation()` returns `t(key, replacements?)` plus computed refs for `locale`, `fallback`,
-and `locales` — the same shape as the [React adapter](/docs/react-adapter), so messages and dot
-keys behave identically across both.
+`useTranslation()` returns `t(key, replacements?)`, `tChoice(key, count, replacements?)` (Laravel
+`trans_choice` syntax — see [Interpolation](/docs/interpolation)), plus computed refs for
+`locale`, `fallback`, and `locales` — the same shape as the [React adapter](/docs/react-adapter),
+so messages and dot keys behave identically across both.
 
 The consuming app must install compatible versions of `vue` and `@inertiajs/vue3`.
 

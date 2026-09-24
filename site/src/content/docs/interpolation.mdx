@@ -22,3 +22,28 @@ argument when a friendlier default is needed:
 translate({}, 'greeting.user', { name: 'Ada' }, { fallback: 'Hello :name' })
 // "Hello Ada"
 ```
+
+## Pluralization
+
+`translateChoice(messages, key, count, replacements?, options?)` selects a plural form using
+Laravel's `trans_choice` pipe-separated syntax — not ICU MessageFormat — so lang files stay the
+same whether an app also calls `trans_choice()` server-side:
+
+```ts
+import { translateChoice } from '@inertia-localize/core'
+
+const messages = {
+  'cart.items': '{0} No items|{1} One item|[2,*] :count items',
+}
+
+translateChoice(messages, 'cart.items', 0) // "No items"
+translateChoice(messages, 'cart.items', 1) // "One item"
+translateChoice(messages, 'cart.items', 5) // "5 items"
+```
+
+Each segment may start with an exact `{n}` or inclusive range `[n,m]` selector (`*` for
+infinity); the first matching segment wins, falling back to the last one. Without any explicit
+selector, only the plain 2-segment `singular|plural` shape resolves (`count === 1` picks the
+first) — for 3+ forms, use explicit ranges rather than relying on locale-specific plural rules,
+which this package doesn't implement. `:count` is always available for interpolation and
+overrides a same-named entry in `replacements`, matching `trans_choice`.

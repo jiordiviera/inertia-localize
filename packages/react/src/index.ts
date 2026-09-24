@@ -4,7 +4,7 @@ import type {
   LocaleMetadata,
   TranslationReplacements,
 } from '@inertia-localize/core'
-import { translate } from '@inertia-localize/core'
+import { translate, translateChoice } from '@inertia-localize/core'
 import { router, usePage } from '@inertiajs/react'
 import { useCallback, useState } from 'react'
 
@@ -14,6 +14,11 @@ interface LocalizedPageProps {
 
 export interface UseTranslationResult {
   t: (key: string, replacements?: TranslationReplacements) => string
+  tChoice: (
+    key: string,
+    count: number,
+    replacements?: TranslationReplacements,
+  ) => string
   locale: I18nProps['locale']
   fallback: I18nProps['fallback']
   locales: readonly LocaleMetadata[]
@@ -24,6 +29,8 @@ export function useTranslation(): UseTranslationResult {
 
   return {
     t: (key, replacements = {}) => translate(i18n.messages, key, replacements),
+    tChoice: (key, count, replacements = {}) =>
+      translateChoice(i18n.messages, key, count, replacements),
     locale: i18n.locale,
     fallback: i18n.fallback,
     locales: i18n.locales,

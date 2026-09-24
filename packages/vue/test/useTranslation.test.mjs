@@ -16,7 +16,10 @@ test('reads shared Inertia locale data and translates with replacements during S
           { code: 'en', name: 'English' },
           { code: 'fr', name: 'Français' },
         ],
-        messages: { 'greeting.user': 'Bonjour :name' },
+        messages: {
+          'greeting.user': 'Bonjour :name',
+          'ui.apples': '{1} une pomme|[2,*] :count pommes',
+        },
       },
     },
     url: '/',
@@ -25,12 +28,12 @@ test('reads shared Inertia locale data and translates with replacements during S
 
   const Greeting = defineComponent({
     setup() {
-      const { t, locale, fallback, locales } = useTranslation()
+      const { t, tChoice, locale, fallback, locales } = useTranslation()
 
       return () =>
         h(
           'p',
-          `${t('greeting.user', { name: 'Ada' })}|${locale.value}|${fallback.value}|${locales.value[1].name}`,
+          `${t('greeting.user', { name: 'Ada' })}|${tChoice('ui.apples', 3)}|${locale.value}|${fallback.value}|${locales.value[1].name}`,
         )
     },
   })
@@ -41,5 +44,8 @@ test('reads shared Inertia locale data and translates with replacements during S
     resolveComponent: () => Greeting,
   })
 
-  assert.match(await renderToString(app), /Bonjour Ada\|fr\|en\|Français/)
+  assert.match(
+    await renderToString(app),
+    /Bonjour Ada\|3 pommes\|fr\|en\|Français/,
+  )
 })

@@ -4,7 +4,7 @@ import type {
   LocaleMetadata,
   TranslationReplacements,
 } from '@inertia-localize/core'
-import { translate } from '@inertia-localize/core'
+import { translate, translateChoice } from '@inertia-localize/core'
 import { router, usePage } from '@inertiajs/vue3'
 import type { ComputedRef } from 'vue'
 import { computed, ref } from 'vue'
@@ -15,6 +15,11 @@ interface LocalizedPageProps {
 
 export interface UseTranslationResult {
   t: (key: string, replacements?: TranslationReplacements) => string
+  tChoice: (
+    key: string,
+    count: number,
+    replacements?: TranslationReplacements,
+  ) => string
   locale: ComputedRef<I18nProps['locale']>
   fallback: ComputedRef<I18nProps['fallback']>
   locales: ComputedRef<readonly LocaleMetadata[]>
@@ -27,6 +32,8 @@ export function useTranslation(): UseTranslationResult {
   return {
     t: (key, replacements = {}) =>
       translate(i18n.value.messages, key, replacements),
+    tChoice: (key, count, replacements = {}) =>
+      translateChoice(i18n.value.messages, key, count, replacements),
     locale: computed(() => i18n.value.locale),
     fallback: computed(() => i18n.value.fallback),
     locales: computed(() => i18n.value.locales),

@@ -13,12 +13,15 @@ test('reads shared Inertia locale data and translates with replacements during S
           { code: 'en', name: 'English' },
           { code: 'fr', name: 'Français' },
         ],
-        messages: { 'ui.greeting': 'Bonjour :name' },
+        messages: {
+          'ui.greeting': 'Bonjour :name',
+          'ui.apples': '{1} une pomme|[2,*] :count pommes',
+        },
       },
     },
     url: '/',
     version: 'test',
   }
 
-  assert.match(renderInertiaPage(page), /Bonjour Ada/)
+  assert.match(renderInertiaPage(page), /Bonjour Ada\|3 pommes/)
 })

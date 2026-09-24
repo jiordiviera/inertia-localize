@@ -54,6 +54,22 @@ See the [Laravel guide](packages/laravel/README.md), [React guide](packages/reac
 
 For version compatibility and release changes, see the [changelog](CHANGELOG.md). All `0.x` releases are pre-stable.
 
+## Agent skills
+
+For Claude Code, Codex, and other [Agent Skills](https://skills.sh)-compatible tools, install
+the integration and contributing skills into a project with one command:
+
+```sh
+npx skills add jiordiviera/inertia-localize --all
+```
+
+This installs `inertia-localize-integration` (adding the package to an app) and
+`inertia-localize-contributing` (this repo's workflow) to every detected agent, including
+Claude Code and Codex. Update installed skills later with `npx skills update`. Install a single
+skill with `--skill <name>`, or target specific agents with `--agent <name...>` (e.g.
+`--agent claude-code codex`). See `skills/*/SKILL.md` for the skill sources; this is opt-in and
+never runs as part of `composer install` or `npm install`.
+
 ## Scope
 
 Locale URL prefixes are not added by default. Laravel owns validation messages; this package shares configured UI translation groups with the client. Frontend adapters use a small translation helper, not a separate heavy i18n runtime.

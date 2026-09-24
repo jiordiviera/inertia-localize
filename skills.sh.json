@@ -1,0 +1,14 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Inertia Localize",
+      "description": "Integrate and contribute to the Inertia Localize Laravel + Inertia localization toolkit.",
+      "skills": [
+        "inertia-localize-integration",
+        "inertia-localize-contributing"
+      ]
+    }
+  ]
+}

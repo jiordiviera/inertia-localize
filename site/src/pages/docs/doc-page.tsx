@@ -11,7 +11,7 @@ export function DocPage() {
   const known = flatDocsNav.some((entry) => entry.slug === slug)
 
   return (
-    <div className="mx-auto flex w-full max-w-[65ch] flex-col gap-10">
+    <div className="mx-auto flex w-full min-w-0 max-w-[65ch] flex-col gap-10">
       <article
         id="doc-content"
         className="prose-docs prose max-w-none prose-neutral dark:prose-invert"
@@ -29,7 +29,7 @@ export function DocPage() {
       </article>
 
       {(prev || next) && (
-        <div className="flex items-center justify-between border-t border-border pt-6 text-sm">
+        <div className="flex flex-col gap-3 border-t border-border pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
           {prev ? (
             <NavLink
               to={`/docs/${prev.slug}`}
@@ -38,12 +38,12 @@ export function DocPage() {
               &#8592; {prev.title}
             </NavLink>
           ) : (
-            <span />
+            <span className="hidden sm:block" />
           )}
           {next && (
             <NavLink
               to={`/docs/${next.slug}`}
-              className="rounded-lg border border-border px-4 py-2.5 text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+              className="rounded-lg border border-border px-4 py-2.5 text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground sm:text-right"
             >
               {next.title} &#8594;
             </NavLink>

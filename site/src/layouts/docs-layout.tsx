@@ -17,8 +17,8 @@ export function DocsLayout() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="border-b border-border">
-        <div className="mx-auto flex h-11 max-w-6xl items-center justify-between px-6 text-xs text-muted-foreground">
-          <div>
+        <div className="mx-auto flex min-h-11 max-w-6xl flex-col gap-2 px-4 py-2 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-0">
+          <div className="min-w-0 truncate">
             Docs
             {group && (
               <>
@@ -33,7 +33,7 @@ export function DocsLayout() {
               </>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <DocPageActions slug={slug} />
             <a
               href={`https://github.com/jiordiviera/inertia-locale-kit/blob/v0/site/src/content/docs/${slug}.mdx`}
@@ -47,7 +47,7 @@ export function DocsLayout() {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-6xl flex-1 px-6">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 px-4 sm:px-6">
         <aside className="hidden w-[260px] shrink-0 flex-col gap-6 overflow-y-auto border-r border-border py-10 pr-6 text-[13px] lg:flex">
           {docsNav.map((navGroup) => (
             <div key={navGroup.title}>
@@ -75,7 +75,7 @@ export function DocsLayout() {
           ))}
         </aside>
 
-        <main className="flex-1 overflow-x-hidden px-6 py-10 lg:px-10">
+        <main className="min-w-0 flex-1 overflow-x-hidden py-8 sm:py-10 lg:px-10">
           <MDXProvider components={mdxComponents}>
             <Outlet />
           </MDXProvider>

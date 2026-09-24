@@ -10,10 +10,10 @@ export function SiteFooter() {
   const isDark = useResolvedDark()
   return (
     <footer className="border-t border-border/80">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2 text-muted-foreground">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="flex min-w-0 items-center gap-2 text-muted-foreground">
           <img src="/logo.png" alt="" className="size-5 rounded-md" />
-          <span>
+          <span className="min-w-0">
             Built by{" "}
             <a
               href="https://jiordiviera.me"
@@ -27,7 +27,7 @@ export function SiteFooter() {
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <a
             href={REPO_URL}
             target="_blank"

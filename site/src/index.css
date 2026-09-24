@@ -137,11 +137,24 @@
 
 .prose-docs :where(code):not(:where([class~="not-prose"] *)) {
   font-family: var(--font-mono, ui-monospace, monospace);
+  overflow-wrap: anywhere;
 }
 
 .prose-docs pre {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose-docs :where(table):not(:where([class~="not-prose"] *)) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose-docs :where(h1, h2, h3, h4, p, li):not(:where([class~="not-prose"] *)) {
+  overflow-wrap: anywhere;
 }
 
 .prose-docs :where(a):not(:where([class~="not-prose"] *)) {

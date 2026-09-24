@@ -70,6 +70,11 @@ skill with `--skill <name>`, or target specific agents with `--agent <name...>` 
 `--agent claude-code codex`). See `skills/*/SKILL.md` for the skill sources; this is opt-in and
 never runs as part of `composer install` or `npm install`.
 
+The same two skills are mirrored at `packages/laravel/resources/boost/skills/*/SKILL.md` for
+[Laravel Boost](https://laravel.com/docs/boost), which auto-installs skills from that
+package-relative path when it detects `jiordiviera/inertia-localize` in `composer.json` and you
+run `php artisan boost:install`. Keep both copies in sync when a skill changes.
+
 ## Scope
 
 Locale URL prefixes are not added by default. Laravel owns validation messages; this package shares configured UI translation groups with the client. Frontend adapters use a small translation helper, not a separate heavy i18n runtime.

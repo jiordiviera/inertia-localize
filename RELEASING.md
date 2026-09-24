@@ -40,18 +40,20 @@ git tag -a v0.1.0 -m "Release v0.1.0"
 git push origin v0.1.0
 ```
 
-Wait for the tag CI run to pass. Publish npm packages with pnpm in dependency order (`core`, then `react` and `vue`), so `workspace:*` dependencies are rewritten to their released versions:
+Wait for the tag CI run to pass. Pushing a tag also triggers `.github/workflows/publish-npm.yml`, which builds and publishes all three npm packages in dependency order (`core`, then `react` and `vue`, so `workspace:*` dependencies are rewritten to their released versions) using the `NPM_TOKEN` repository secret. If that workflow needs to be run manually (e.g. the secret is missing or a specific package needs republishing), do the same steps by hand from the tagged commit:
 
 ```sh
-cd packages/core && pnpm publish --access public
-cd ../react && pnpm publish --access public
-cd ../vue && pnpm publish --access public
+cd packages/core && pnpm publish --access public --no-git-checks
+cd ../react && pnpm publish --access public --no-git-checks
+cd ../vue && pnpm publish --access public --no-git-checks
 ```
+
+(`--no-git-checks` is needed because pnpm's default check expects `main`/`master`; this repository's release branch is `v0`.)
 
 `packages/laravel/` lives in a subdirectory, so Packagist can't read its `composer.json` from a submission of this monorepo's root. Pushing a tag triggers `.github/workflows/split-laravel.yml`, which mirrors `packages/laravel/` (including the same tag) into the read-only [`jiordiviera/inertia-localize-laravel`](https://github.com/jiordiviera/inertia-localize-laravel) repository via `danharrin/monorepo-split-github-action`. Publish the Laravel package to Packagist by submitting that split repository (one-time) or confirming its configured webhook (subsequent releases); never submit the monorepo itself. Create a GitHub Release for the same tag on this repository and summarize the generated package changelogs, package versions, breaking changes, and migration notes. Never publish before all package versions and the tag agree. Do not use `changeset publish` for this repository; publishing stays maintainer-operated so PHP and npm releases share one reviewed tag.
 
 ## Credentials and safety
 
-Publishing is a maintainer-operated step; CI does not publish and no package install hook performs release actions. npm publishing requires an authorized npm account/token with public-package access; Packagist requires an account and repository registration/webhook. The split workflow needs its own `LARAVEL_SPLIT_TOKEN` repository secret: a token with write access to `jiordiviera/inertia-localize-laravel` (the default `GITHUB_TOKEN` can't push to a different repository). Store any CI credentials only as narrowly scoped GitHub Actions secrets, never in source, package manifests, logs, or local commits. Prefer trusted publishing or short-lived credentials when available. Verify account, package names, version, and tag before each irreversible publish.
+Publishing is triggered only by a maintainer pushing a reviewed tag; no package install hook performs release actions, and CI never publishes on branch pushes or PRs, only on `v*` tags. npm publishing needs an `NPM_TOKEN` repository secret: an npm Automation token (bypasses 2FA prompts in CI) with publish access to the `inertia-localize` org/scope. The split workflow needs its own `LARAVEL_SPLIT_TOKEN` repository secret: a token with write access to `jiordiviera/inertia-localize-laravel` (the default `GITHUB_TOKEN` can't push to a different repository). Store any CI credentials only as narrowly scoped GitHub Actions secrets, never in source, package manifests, logs, or local commits. Prefer trusted publishing or short-lived credentials when available. Verify account, package names, version, and tag before each irreversible publish.
 
 See `.github/RELEASE_TEMPLATE.md` when writing GitHub release notes.

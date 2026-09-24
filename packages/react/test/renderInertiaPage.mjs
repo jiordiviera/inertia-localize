@@ -7,12 +7,12 @@ import { useTranslation } from '../dist/index.js'
 
 export function renderInertiaPage(page) {
   function Greeting() {
-    const { t, tChoice, locale } = useTranslation()
+    const { t, locale } = useTranslation()
 
     return React.createElement(
       'h1',
       { lang: locale },
-      `${t('ui.greeting', { name: 'Ada' })}|${tChoice('ui.apples', 3)}`,
+      t('ui.greeting', { name: 'Ada' }),
     )
   }
 

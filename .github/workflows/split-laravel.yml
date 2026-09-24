@@ -1,0 +1,27 @@
+name: Split Laravel package
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: read
+
+jobs:
+  split_laravel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: danharrin/monorepo-split-github-action@v2.4.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.LARAVEL_SPLIT_TOKEN }}
+        with:
+          tag: ${{ github.ref_name }}
+          package_directory: 'packages/laravel'
+          repository_organization: 'jiordiviera'
+          repository_name: 'inertia-localize-laravel'
+          user_name: 'github-actions[bot]'
+          user_email: '41898282+github-actions[bot]@users.noreply.github.com'

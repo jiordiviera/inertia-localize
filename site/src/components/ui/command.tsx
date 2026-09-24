@@ -33,7 +33,7 @@ function CommandDialog({
         overlayClassName
       )}
       contentClassName={cn(
-        "fixed top-24 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 overflow-hidden rounded-lg border border-border bg-popover shadow-xl",
+        "fixed top-20 left-1/2 z-50 w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 overflow-hidden rounded-lg border border-border bg-popover shadow-xl sm:top-24",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
         contentClassName
       )}

@@ -36,20 +36,20 @@ export function Home() {
 
   return (
     <div className="flex flex-col">
-      <section className="mx-auto flex max-w-6xl flex-col items-center gap-16 px-6 py-20 lg:flex-row lg:py-28">
-        <div className="flex flex-1 flex-col gap-6">
+      <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:flex-row lg:gap-16 lg:py-28">
+        <div className="flex min-w-0 flex-1 flex-col gap-6">
           <span className="inline-flex w-fit items-center rounded-full border border-primary/40 px-3.5 py-1.5 text-xs text-primary">
             Open Source &middot; Built for Laravel + Inertia
           </span>
-          <h1 className="max-w-xl text-4xl leading-[1.08] font-bold tracking-tight sm:text-5xl">
+          <h1 className="max-w-xl text-3xl leading-[1.08] font-bold tracking-tight sm:text-5xl">
             Localization that feels <span className="text-primary">native</span>{" "}
             to Inertia.
           </h1>
-          <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
+          <p className="max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
             Keep Laravel as your source of truth. Use your translations
             naturally in React and Vue.
           </p>
-          <div className="mt-2 flex gap-3">
+          <div className="mt-2 flex flex-col gap-3 min-[380px]:flex-row">
             <Button
               nativeButton={false}
               render={<Link to="/docs/installation" />}
@@ -77,8 +77,8 @@ export function Home() {
           </div>
         </div>
 
-        <div className="w-full max-w-xl flex-1">
-          <CodeBlock className="prose-docs overflow-x-auto rounded-xl border border-border bg-card p-6 text-sm leading-7 shadow-[0_20px_50px_-25px_rgba(0,0,0,0.15)]">
+        <div className="w-full min-w-0 max-w-xl flex-1">
+          <CodeBlock className="prose-docs overflow-x-auto rounded-xl border border-border bg-card p-4 text-xs leading-6 shadow-[0_20px_50px_-25px_rgba(0,0,0,0.15)] sm:p-6 sm:text-sm sm:leading-7">
             <code>
               <span className="text-muted-foreground">{"// tsx"}</span>
               {"\n"}
@@ -103,7 +103,7 @@ export function Home() {
       </section>
 
       <section className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-12 sm:px-6">
           <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
             Works with
           </span>
@@ -128,7 +128,7 @@ export function Home() {
       </section>
 
       <section className="border-t border-border">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 px-6 py-16 sm:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 px-4 py-12 sm:grid-cols-3 sm:px-6 sm:py-16">
           {features.map((feature) => (
             <div
               key={feature.title}

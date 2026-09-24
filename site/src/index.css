@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  /* DESIGN.md palette — tinted neutrals (~275deg brand hue), one committed accent */
+  --color-background: oklch(14.5% 0.006 275);
+  --color-surface: oklch(19% 0.008 275);
+  --color-surface-2: oklch(23% 0.009 275);
+  --color-primary: oklch(58% 0.233 277);
+  --color-secondary: oklch(81% 0.1 277);
+  --color-text: oklch(96% 0.004 275);
+  --color-text-muted: oklch(72% 0.006 275);
+  --color-text-faint: oklch(52% 0.006 275);
+
+  --container-page: 88rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+/* DESIGN.md layout: every section shares this container so content never stretches
+   edge-to-edge on wide viewports. */
+.page-container {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+}
+
+.prose-docs code {
+  font-family: var(--font-mono);
+}
+
+.prose-docs pre {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+}
+
+::selection {
+  background: color-mix(in oklch, var(--color-primary) 35%, transparent);
+}
+
+/* Ecosystem diagram: purposeful motion showing the direction data flows
+   (Laravel -> Inertia Localize -> adapters), per DESIGN.md's "show the
+   mechanism" principle. */
+.ecosystem-tile {
+  animation: ecosystem-float 5s ease-in-out infinite;
+}
+
+@keyframes ecosystem-float {
+  0%,
+  100% {
+    transform: rotateX(50deg) rotateZ(-38deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(50deg) rotateZ(-38deg) translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecosystem-tile {
+    animation: none;
+  }
+  .ecosystem-flow {
+    display: none;
+  }
+}

@@ -1,0 +1,28 @@
+# Configuration
+
+`php artisan vendor:publish --tag=inertia-localize-config` writes `config/inertia-localize.php`:
+
+```php
+return [
+    'default' => env('APP_LOCALE', 'en'),
+    'fallback' => env('APP_FALLBACK_LOCALE', 'en'),
+    'locales' => [
+        'en' => ['name' => 'English'],
+        'fr' => ['name' => 'Français'],
+    ],
+    'session_key' => 'locale',
+    'groups' => ['ui'],
+    'user_column' => null,
+];
+```
+
+| Key | Purpose |
+| --- | --- |
+| `default` / `fallback` | Locale used when the session has no value, and when a message is missing |
+| `locales` | Supported locale codes and display names, shared to the frontend as-is |
+| `session_key` | Session key the active locale is stored under |
+| `groups` | Laravel translation groups exported to the frontend, flattened to dot keys |
+| `user_column` | Optional column on the authenticated user model used to persist locale across sessions |
+
+The package does not depend on a frontend framework — this configuration is read entirely on
+the Laravel side.

@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "license": "MIT",
   "description": "React adapter for Inertia Localize",
+  "author": {
+    "name": "Jiordi Kengne",
+    "url": "https://jiordiviera.me"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

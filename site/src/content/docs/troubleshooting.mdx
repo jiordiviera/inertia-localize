@@ -1,0 +1,26 @@
+# Troubleshooting
+
+## `i18n` prop is missing
+
+Confirm the route renders through Inertia and runs inside Laravel's session-enabled `web`
+middleware group. The shared prop and `SetLocale` both depend on an active session.
+
+## A translation key renders as-is
+
+`translate()` returns the key itself when it isn't found. Check, in order:
+
+1. The locale's language file has the key (`lang/en/ui.php`).
+2. The key's group is listed in `config('inertia-localize.groups')`.
+3. The key you're calling includes its group prefix &mdash; `ui.greeting`, not `greeting`.
+
+## Switching locale doesn't persist
+
+The switch route must be registered inside the `web` middleware group so the session is
+available. If you need the locale to persist across sessions for a signed-in user, set
+`user_column` in the config &mdash; see [Locale switching &
+sessions](/docs/locale-switching#persisting-on-the-user-model).
+
+## Locale switch POST returns 422
+
+The posted `locale` value isn't in `config('inertia-localize.locales')`. Only configured locale
+codes are accepted.

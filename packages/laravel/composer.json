@@ -3,6 +3,12 @@
   "description": "Laravel localization for Inertia applications",
   "license": "MIT",
   "type": "library",
+  "authors": [
+    {
+      "name": "Jiordi Kengne",
+      "homepage": "https://jiordiviera.me"
+    }
+  ],
   "require": {
     "php": ">=8.2",
     "illuminate/http": "^11.0|^12.0|^13.0",

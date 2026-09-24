@@ -1,0 +1,17 @@
+# Installation
+
+Install the Laravel package and the adapter for your frontend. Packages are published
+independently, so only install the adapter you use.
+
+```sh
+composer require jiordiviera/inertia-localize
+npm install @inertia-localize/react  # or @inertia-localize/vue
+php artisan vendor:publish --tag=inertia-localize-config
+```
+
+The service provider is registered through Laravel package discovery. Publishing writes
+`config/inertia-localize.php`, which defines `default`, `fallback`, supported `locales`,
+`session_key`, translation `groups`, and an optional `user_column`.
+
+Next: [Quickstart](/docs/quickstart) wires up the locale route and reads a translation on the
+frontend.

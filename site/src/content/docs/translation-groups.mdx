@@ -1,0 +1,28 @@
+# Translation groups
+
+The package exports selected Laravel translation groups to the frontend — it does not ship a
+separate translation format. List the groups to expose in `config/inertia-localize.php`:
+
+```php
+'groups' => ['ui'],
+```
+
+Each group corresponds to a Laravel language file per locale:
+
+```php
+// lang/en/ui.php
+return [
+    'greeting' => 'Hello :name',
+    'actions' => [
+        'save' => 'Save',
+    ],
+];
+```
+
+For the active locale, every configured group is loaded and flattened to dot keys prefixed by
+the group name — `ui.greeting` and `ui.actions.save` in the example above. Flattening happens on
+the Laravel side, so the frontend always receives a flat `messages` dictionary regardless of how
+nested the underlying PHP array is.
+
+If a translation key is missing, check the locale's language file, the configured `groups`, and
+that the key includes its group prefix (`ui.greeting`, not `greeting`).

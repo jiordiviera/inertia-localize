@@ -1,0 +1,27 @@
+# API reference
+
+## `@inertia-localize/core`
+
+- `translate(messages, key, replacements?, { fallback }?)` — dot-key lookup with `:name`
+  interpolation.
+- Shared types: `LocaleCode`, `LocaleMetadata`, `MessageDictionary`, `TranslationReplacements`,
+  `I18nProps`. `I18nProps` matches the Laravel/Inertia contract: active locale, fallback locale,
+  available locales, and the current flat message dictionary.
+
+## `@inertia-localize/react`
+
+- `useTranslation()` &rarr; `{ t, locale, fallback, locales }`
+
+## `@inertia-localize/vue`
+
+- `useTranslation()` &rarr; `{ t, locale, fallback, locales }` (`locale`, `fallback`, `locales`
+  are computed refs)
+
+## Laravel package (`jiordiviera/inertia-localize`)
+
+- `InertiaLocalize\Http\Middleware\SetLocale` &mdash; resolves the active locale from session,
+  applies it to the request.
+- `InertiaLocalize\Http\Controllers\LocaleController` &mdash; handles `POST` to the locale
+  switch route.
+- Shared Inertia prop: `i18n` &mdash; see [The i18n shared prop](/docs/i18n-prop).
+- Config: `config/inertia-localize.php` &mdash; see [Configuration](/docs/configuration).

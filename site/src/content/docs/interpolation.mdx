@@ -1,0 +1,24 @@
+# Interpolation
+
+`@inertia-localize/core` powers lookup and interpolation for both adapters.
+
+```ts
+import { translate } from '@inertia-localize/core'
+
+translate({ 'greeting.user': 'Hello :name' }, 'greeting.user', { name: 'Ada' })
+// "Hello Ada"
+```
+
+Messages use flat dot-key dictionaries — the same shape the Laravel package produces from
+translation groups. Placeholders use Laravel's `:name` syntax, not ICU or `{{mustache}}` syntax.
+Replacements accept strings, numbers, and booleans; unknown placeholders remain unchanged.
+
+## Missing keys
+
+A missing key returns the key itself by default. Pass an explicit fallback as the fourth
+argument when a friendlier default is needed:
+
+```ts
+translate({}, 'greeting.user', { name: 'Ada' }, { fallback: 'Hello :name' })
+// "Hello Ada"
+```

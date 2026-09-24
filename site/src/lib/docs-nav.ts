@@ -10,36 +10,36 @@ export interface DocGroup {
 
 export const docsNav: DocGroup[] = [
   {
-    title: 'Getting Started',
+    title: "Getting Started",
     items: [
-      { slug: 'introduction', title: 'Introduction' },
-      { slug: 'installation', title: 'Installation' },
-      { slug: 'quickstart', title: 'Quickstart' },
+      { slug: "introduction", title: "Introduction" },
+      { slug: "installation", title: "Installation" },
+      { slug: "quickstart", title: "Quickstart" },
     ],
   },
   {
-    title: 'Laravel',
+    title: "Laravel",
     items: [
-      { slug: 'configuration', title: 'Configuration' },
-      { slug: 'locale-switching', title: 'Locale switching & sessions' },
-      { slug: 'translation-groups', title: 'Translation groups' },
-      { slug: 'i18n-prop', title: 'The i18n shared prop' },
+      { slug: "configuration", title: "Configuration" },
+      { slug: "locale-switching", title: "Locale switching & sessions" },
+      { slug: "translation-groups", title: "Translation groups" },
+      { slug: "i18n-prop", title: "The i18n shared prop" },
     ],
   },
   {
-    title: 'Frontend',
+    title: "Frontend",
     items: [
-      { slug: 'react-adapter', title: 'React adapter' },
-      { slug: 'vue-adapter', title: 'Vue adapter' },
-      { slug: 'interpolation', title: 'Interpolation' },
+      { slug: "react-adapter", title: "React adapter" },
+      { slug: "vue-adapter", title: "Vue adapter" },
+      { slug: "interpolation", title: "Interpolation" },
     ],
   },
   {
-    title: 'Reference',
+    title: "Reference",
     items: [
-      { slug: 'api-reference', title: 'API reference' },
-      { slug: 'troubleshooting', title: 'Troubleshooting' },
-      { slug: 'compatibility', title: 'Compatibility' },
+      { slug: "api-reference", title: "API reference" },
+      { slug: "troubleshooting", title: "Troubleshooting" },
+      { slug: "compatibility", title: "Compatibility" },
     ],
   },
 ]

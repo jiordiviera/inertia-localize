@@ -1,32 +1,36 @@
-import * as Dialog from '@radix-ui/react-dialog'
-import { Command } from 'cmdk'
-import { Search } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { docsNav } from '@/lib/docs-nav'
-import { useDocsSearch } from '@/lib/use-docs-search'
+import * as React from "react"
+import { IconFileText, IconSearch } from "@tabler/icons-react"
+import { useNavigate } from "react-router-dom"
+
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import { getDocSource } from "@/lib/docs-content"
+import { docsNav } from "@/lib/docs-nav"
 
 export function CommandPalette() {
-  const [open, setOpen] = useState(false)
-  const [query, setQuery] = useState('')
+  const [open, setOpen] = React.useState(false)
   const navigate = useNavigate()
-  const { results, indexed } = useDocsSearch(query)
 
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+  React.useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault()
-        setOpen((value) => !value)
+        setOpen((prev) => !prev)
       }
     }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [])
 
-  function go(url: string) {
+  const select = (slug: string) => {
     setOpen(false)
-    setQuery('')
-    navigate(url)
+    navigate(`/docs/${slug}`)
   }
 
   return (
@@ -34,84 +38,40 @@ export function CommandPalette() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Search"
-        className="flex size-9 items-center justify-center rounded-lg border border-white/15 text-white/50 transition-colors hover:border-white/30 hover:text-white/80 md:h-auto md:w-auto md:gap-2 md:px-3 md:py-1.5 md:text-sm"
+        className="hidden h-8 items-center gap-2 rounded-md border border-border bg-transparent px-2.5 text-xs text-muted-foreground hover:text-foreground sm:flex"
       >
-        <Search className="size-3.5" />
-        <span className="hidden md:inline">Search</span>
-        <kbd className="hidden rounded border border-white/15 px-1.5 py-0.5 font-mono text-[11px] text-white/40 md:inline">
-          &#8984;K
+        <IconSearch className="size-3.5" />
+        <span>Search docs...</span>
+        <kbd className="ml-2 rounded border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+          ⌘K
         </kbd>
       </button>
 
-      <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60" />
-          <Dialog.Content
-            aria-describedby={undefined}
-            className="fixed left-1/2 top-[110px] z-50 w-full max-w-xl -translate-x-1/2 overflow-hidden rounded-2xl border border-primary/40 bg-surface shadow-2xl"
-          >
-            <Dialog.Title className="sr-only">
-              Search documentation
-            </Dialog.Title>
-            <Command shouldFilter={!indexed} className="flex flex-col">
-              <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
-                <Search className="size-4 text-primary" />
-                <Command.Input
-                  value={query}
-                  onValueChange={setQuery}
-                  autoFocus
-                  placeholder="Search docs, guides, API..."
-                  className="flex-1 bg-transparent text-sm text-white/90 outline-none placeholder:text-white/35"
-                />
-                <kbd className="rounded border border-white/15 px-1.5 py-0.5 font-mono text-[11px] text-white/40">
-                  esc
-                </kbd>
-              </div>
-              <Command.List className="max-h-[380px] overflow-y-auto p-2 text-sm">
-                <Command.Empty className="px-3 py-6 text-center text-white/40">
-                  No results found.
-                </Command.Empty>
-
-                {indexed && results
-                  ? results.map((result) => (
-                      <Command.Item
-                        key={result.id}
-                        value={result.id}
-                        onSelect={() => go(result.url)}
-                        className="cursor-pointer rounded-lg px-3 py-2 text-white/80 data-[selected=true]:bg-primary/15 data-[selected=true]:text-secondary"
-                      >
-                        {result.title}
-                      </Command.Item>
-                    ))
-                  : docsNav.map((group) => (
-                      <Command.Group
-                        key={group.title}
-                        heading={group.title}
-                        className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wide [&_[cmdk-group-heading]]:text-white/35"
-                      >
-                        {group.items.map((item) => (
-                          <Command.Item
-                            key={item.slug}
-                            value={item.title}
-                            onSelect={() => go(`/docs/${item.slug}`)}
-                            className="cursor-pointer rounded-lg px-3 py-2 text-white/80 data-[selected=true]:bg-primary/15 data-[selected=true]:text-secondary"
-                          >
-                            {item.title}
-                          </Command.Item>
-                        ))}
-                      </Command.Group>
-                    ))}
-              </Command.List>
-              <div className="flex gap-4 border-t border-white/10 px-4 py-2 text-[11px] text-white/40">
-                <span>&#8593;&#8595; Navigate</span>
-                <span>&#9166; Select</span>
-                <span>esc Close</span>
-              </div>
-            </Command>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        label="Search docs"
+        shouldFilter
+      >
+        <CommandInput placeholder="Search docs..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          {docsNav.map((group) => (
+            <CommandGroup key={group.title} heading={group.title}>
+              {group.items.map((item) => (
+                <CommandItem
+                  key={item.slug}
+                  value={`${item.title} ${getDocSource(item.slug) ?? ""}`}
+                  onSelect={() => select(item.slug)}
+                >
+                  <IconFileText className="size-4 shrink-0" />
+                  {item.title}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </CommandDialog>
     </>
   )
 }

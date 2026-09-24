@@ -23,3 +23,17 @@ and `locales` — the same shape as the [React adapter](/docs/react-adapter), so
 keys behave identically across both.
 
 The consuming app must install compatible versions of `vue` and `@inertiajs/vue3`.
+
+## Switching locale
+
+```vue
+<script setup lang="ts">
+import { useLocaleSwitch } from '@inertia-localize/vue'
+
+const { setLocale, switching } = useLocaleSwitch()
+</script>
+```
+
+Same shape as the [React adapter](/docs/react-adapter): posts to `/locale` by default (override
+with `{ url }`) via Inertia's `router.post()`, plus `preserveScroll`, `preserveState`,
+`onSuccess`, and `onError`. `switching` is a computed ref here instead of a plain boolean.

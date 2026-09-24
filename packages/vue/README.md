@@ -19,4 +19,25 @@ const { t, locale, locales } = useTranslation()
 
 `useTranslation()` returns `t(key, replacements?)` and computed refs for `locale`, `fallback`, and `locales`. Messages use flat dot keys; Laravel-style `:name` placeholders are interpolated by `@inertia-localize/core`.
 
+## Switching locale
+
+```vue
+<script setup lang="ts">
+import { useLocaleSwitch } from '@inertia-localize/vue'
+
+const { setLocale, switching } = useLocaleSwitch()
+</script>
+
+<template>
+  <button :disabled="switching" @click="setLocale('fr')">Français</button>
+</template>
+```
+
+`useLocaleSwitch(options?)` returns `setLocale(locale)` and a `switching` computed ref. It posts
+to the package's locale-switch route (`/locale` by default — pass `{ url }` if your app
+registered it elsewhere) with Inertia's `router.post()`, so the response's redirect refreshes the
+`i18n` prop like any other Inertia visit. Also accepts `preserveScroll` (default `true`),
+`preserveState` (default `false`), `onSuccess`, and `onError` (called with the response body,
+e.g. on the package's 422 for an unsupported locale).
+
 The consuming app must install compatible versions of `vue` and `@inertiajs/vue3`. Run `pnpm --filter @inertia-localize/vue test` to build the package and run its server-rendering test.

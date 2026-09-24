@@ -1,75 +1,57 @@
+import { useResolvedDark } from "@/lib/use-resolved-dark"
+import { Bmc } from "@/components/ui/svgs/bmc"
+import { GithubDark } from "@/components/ui/svgs/githubDark"
+import { GithubLight } from "@/components/ui/svgs/githubLight"
+
+const COFFEE_URL = "https://buymeacoffee.com/jiordiviera"
+const REPO_URL = "https://github.com/jiordiviera/inertia-locale-kit"
+
 export function SiteFooter() {
+  const isDark = useResolvedDark()
   return (
-    <footer className="border-t border-white/10">
-      <div className="page-container px-4 py-12 text-sm sm:px-6 lg:px-10">
-        <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
-          <div className="flex flex-col gap-2">
-            <div className="font-semibold text-white/80">Docs</div>
-            <a
-              href="/docs/introduction"
-              className="text-white/50 hover:text-white/80"
-            >
-              Getting started
-            </a>
-            <a
-              href="/docs/configuration"
-              className="text-white/50 hover:text-white/80"
-            >
-              Laravel
-            </a>
-            <a
-              href="/docs/react-adapter"
-              className="text-white/50 hover:text-white/80"
-            >
-              React / Vue
-            </a>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="font-semibold text-white/80">Project</div>
-            <a
-              href="https://github.com/jiordiviera/inertia-localize"
-              className="text-white/50 hover:text-white/80"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://github.com/jiordiviera/inertia-localize/releases"
-              className="text-white/50 hover:text-white/80"
-            >
-              Changelog
-            </a>
-            <span className="text-white/50">License (MIT)</span>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="font-semibold text-white/80">Community</div>
-            <a
-              href="https://github.com/jiordiviera/inertia-localize/blob/v0/CONTRIBUTING.md"
-              className="text-white/50 hover:text-white/80"
-            >
-              Contributing
-            </a>
-            <a
-              href="https://github.com/jiordiviera/inertia-localize/discussions"
-              className="text-white/50 hover:text-white/80"
-            >
-              Discussions
-            </a>
-          </div>
-        </div>
-        <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-4 text-xs text-white/35 sm:flex-row sm:justify-between">
-          <span>&#169; Inertia Localize &#8212; MIT License</span>
+    <footer className="border-t border-border/80">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <img src="/logo.png" alt="" className="size-5 rounded-md" />
           <span>
-            Built by{' '}
+            Built by{" "}
             <a
               href="https://jiordiviera.me"
               target="_blank"
               rel="noreferrer"
-              className="text-white/50 hover:text-white/80"
+              className="underline underline-offset-4 hover:text-foreground"
             >
               Jiordi Kengne
-            </a>{' '}
-            with Vite + React
+            </a>{" "}
+            &middot; MIT License
           </span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={REPO_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {isDark ? (
+              <GithubDark className="size-4" />
+            ) : (
+              <GithubLight className="size-4" />
+            )}
+            GitHub
+          </a>
+          <a
+            href={COFFEE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1.5 text-foreground transition-colors hover:bg-muted"
+          >
+            <span className="flex size-5 items-center justify-center rounded-full bg-white p-0.5">
+              <Bmc className="size-full" />
+            </span>
+            Buy me a coffee
+          </a>
         </div>
       </div>
     </footer>

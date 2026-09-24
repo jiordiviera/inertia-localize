@@ -1,0 +1,28 @@
+# inertia-localize
+
+> Laravel-first localization toolkit for Inertia apps. Laravel stays the source of truth for locales and translations; React and Vue adapters consume them through a small useTranslation() hook.
+
+## Getting Started
+
+- [Introduction](https://inertia-localize.jiordiviera.me/docs/introduction): Inertia Localize brings Laravel's localization to Inertia applications through small React and Vue adapters. Laravel remains the source of truth for supported locales and translati
+- [Installation](https://inertia-localize.jiordiviera.me/docs/installation): Install the Laravel package and the adapter for your frontend. Packages are published independently, so only install the adapter you use.
+- [Quickstart](https://inertia-localize.jiordiviera.me/docs/quickstart): ```php 'locales' => ['en' => ['name' => 'English'], 'fr' => ['name' => 'Français']], 'groups' => ['ui'], ```
+
+## Laravel
+
+- [Configuration](https://inertia-localize.jiordiviera.me/docs/configuration): `php artisan vendor:publish --tag=inertia-localize-config` writes `config/inertia-localize.php`:
+- [Locale switching & sessions](https://inertia-localize.jiordiviera.me/docs/locale-switching): The locale is session-based, not URL-based. POST the selected locale to the switch route, then subsequent requests use that locale until it changes again.
+- [Translation groups](https://inertia-localize.jiordiviera.me/docs/translation-groups): The package exports selected Laravel translation groups to the frontend — it does not ship a separate translation format. List the groups to expose in `config/inertia-localize.php`
+- [The i18n shared prop](https://inertia-localize.jiordiviera.me/docs/i18n-prop): The package automatically shares an `i18n` prop on every Inertia response — no controller changes needed. It is available on the initial server-rendered page without a client fetch
+
+## Frontend
+
+- [React adapter](https://inertia-localize.jiordiviera.me/docs/react-adapter): `@inertia-localize/react` reads the current Inertia `i18n` prop directly — it does not keep a second locale or message dictionary in React state.
+- [Vue adapter](https://inertia-localize.jiordiviera.me/docs/vue-adapter): `@inertia-localize/vue` reads the current Inertia page props directly and requires no Vue plugin — just call the composable inside `<script setup>`.
+- [Interpolation](https://inertia-localize.jiordiviera.me/docs/interpolation): `@inertia-localize/core` powers lookup and interpolation for both adapters.
+
+## Reference
+
+- [API reference](https://inertia-localize.jiordiviera.me/docs/api-reference): - `translate(messages, key, replacements?, { fallback }?)` — dot-key lookup with `:name` interpolation. - Shared types: `LocaleCode`, `LocaleMetadata`, `MessageDictionary`, `Transl
+- [Troubleshooting](https://inertia-localize.jiordiviera.me/docs/troubleshooting): Confirm the route renders through Inertia and runs inside Laravel's session-enabled `web` middleware group. The shared prop and `SetLocale` both depend on an active session.
+- [Compatibility](https://inertia-localize.jiordiviera.me/docs/compatibility): | Requirement | Versions | | --- | --- | | PHP | &ge;8.2 | | Laravel (`illuminate/*`) | ^11.0 &#124; ^12.0 &#124; ^13.0 | | `inertiajs/inertia-laravel` | ^2.0 &#124; ^3.0 |

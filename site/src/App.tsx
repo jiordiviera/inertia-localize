@@ -1,8 +1,9 @@
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
-import { SiteHeader } from '@/components/site/site-header'
-import { DocsLayout } from '@/layouts/docs-layout'
-import { DocPage } from '@/pages/docs/doc-page'
-import { Home } from '@/pages/home'
+import { Navigate, Outlet, Route, Routes } from "react-router-dom"
+
+import { SiteHeader } from "@/components/site/site-header"
+import { DocsLayout } from "@/layouts/docs-layout"
+import { DocPage } from "@/pages/docs/doc-page"
+import { Home } from "@/pages/home"
 
 function RootLayout() {
   return (
@@ -13,7 +14,7 @@ function RootLayout() {
   )
 }
 
-export default function App() {
+export function App() {
   return (
     <Routes>
       <Route element={<RootLayout />}>
@@ -26,3 +27,5 @@ export default function App() {
     </Routes>
   )
 }
+
+export default App

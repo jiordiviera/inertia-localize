@@ -9,7 +9,7 @@ This repository is an early-stage monorepo for `inertia-localize`, a Laravel-fir
 - `react/` and `vue/`: frontend adapters.
 - `svelte/`: reserved for possible future support.
 
-`README.md` is the repository overview; `PACKAGE_PLAN.md` describes package boundaries and unresolved design questions.
+`README.md` is the repository overview. Unresolved design questions are tracked as GitHub issues rather than in a standalone planning document.
 
 When implementation begins, keep the planned monorepo shape:
 

@@ -1,9 +1,11 @@
-import { NavLink, useParams } from 'react-router-dom'
-import { getDocComponent } from '@/lib/docs-content'
-import { adjacentDocs, flatDocsNav } from '@/lib/docs-nav'
+import { NavLink, useParams } from "react-router-dom"
+
+import { getDocComponent } from "@/lib/docs-content"
+import { adjacentDocs, flatDocsNav } from "@/lib/docs-nav"
 
 export function DocPage() {
-  const { slug = '' } = useParams()
+  const { slug = "" } = useParams()
+  // Looked up from a static registry built at module load, not created here.
   const Content = getDocComponent(slug)
   const { prev, next } = adjacentDocs(slug)
   const known = flatDocsNav.some((entry) => entry.slug === slug)
@@ -12,23 +14,26 @@ export function DocPage() {
     <div className="mx-auto flex w-full max-w-[65ch] flex-col gap-10">
       <article
         id="doc-content"
-        className="prose prose-invert prose-docs max-w-none"
+        className="prose-docs prose max-w-none prose-neutral dark:prose-invert"
       >
         {Content ? (
+          // eslint-disable-next-line react-hooks/static-components
           <Content />
         ) : known ? (
-          <p className="text-white/50">This page hasn't been written yet.</p>
+          <p className="text-muted-foreground">
+            This page hasn't been written yet.
+          </p>
         ) : (
-          <p className="text-white/50">Page not found.</p>
+          <p className="text-muted-foreground">Page not found.</p>
         )}
       </article>
 
       {(prev || next) && (
-        <div className="flex items-center justify-between border-t border-white/10 pt-6 text-sm">
+        <div className="flex items-center justify-between border-t border-border pt-6 text-sm">
           {prev ? (
             <NavLink
               to={`/docs/${prev.slug}`}
-              className="rounded-lg border border-white/10 px-4 py-2.5 text-white/60 transition-colors hover:border-white/25 hover:text-white/90"
+              className="rounded-lg border border-border px-4 py-2.5 text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               &#8592; {prev.title}
             </NavLink>
@@ -38,7 +43,7 @@ export function DocPage() {
           {next && (
             <NavLink
               to={`/docs/${next.slug}`}
-              className="rounded-lg border border-white/10 px-4 py-2.5 text-white/60 transition-colors hover:border-white/25 hover:text-white/90"
+              className="rounded-lg border border-border px-4 py-2.5 text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               {next.title} &#8594;
             </NavLink>

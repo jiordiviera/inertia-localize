@@ -1,27 +1,21 @@
-# Inertia Localize — docs site
+# React + TypeScript + Vite + shadcn/ui
 
-Public documentation site for Inertia Localize. Vite + React, content in MDX, prerendered per
-route so Pagefind can index full-text search.
+This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
 
-## Development
+## Adding components
 
-```sh
-pnpm --dir site dev
+To add components to your app, run the following command:
+
+```bash
+npx shadcn@latest add button
 ```
 
-## Build
+This will place the ui components in the `src/components` directory.
 
-```sh
-pnpm --dir site build
+## Using components
+
+To use the components in your app, import them as follows:
+
+```tsx
+import { Button } from "@/components/ui/button"
 ```
-
-Runs, in order: type-check, client build, an SSR build used only to prerender, `prerender.mjs`
-(writes static HTML per route into `dist/`, then discards the SSR build), and `pagefind` (builds
-the search index into `dist/pagefind`). The result in `dist/` is fully static.
-
-## Adding a doc page
-
-1. Add the page to the relevant group in `src/lib/docs-nav.ts`.
-2. Add `src/content/docs/<slug>.mdx` with the same slug.
-
-Sidebar order, breadcrumbs, and prev/next pagination all follow `docs-nav.ts`.

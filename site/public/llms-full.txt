@@ -1,0 +1,479 @@
+# inertia-localize
+
+> Laravel-first localization toolkit for Inertia apps. Laravel stays the source of truth for locales and translations; React and Vue adapters consume them through a small useTranslation() hook.
+
+## Introduction
+
+Source: https://inertia-localize.jiordiviera.me/docs/introduction
+
+Inertia Localize brings Laravel's localization to Inertia applications through small React and
+Vue adapters. Laravel remains the source of truth for supported locales and translation files;
+the active locale and selected messages arrive as Inertia page props.
+
+## Scope
+
+Locale URL prefixes are not added by default. Laravel owns validation messages; this package
+shares configured UI translation groups with the client. Frontend adapters use a small
+translation helper, not a separate heavy i18n runtime.
+
+## Packages
+
+| Package | Role |
+| --- | --- |
+| `jiordiviera/inertia-localize` | Laravel service provider, middleware, Inertia shared prop |
+| `@inertia-localize/core` | Framework-independent lookup + interpolation, shared types |
+| `@inertia-localize/react` | `useTranslation()` hook for React |
+| `@inertia-localize/vue` | `useTranslation()` composable for Vue |
+
+Continue to [Installation](/docs/installation) to add the packages to an existing Laravel +
+Inertia application.
+
+---
+
+## Installation
+
+Source: https://inertia-localize.jiordiviera.me/docs/installation
+
+Install the Laravel package and the adapter for your frontend. Packages are published
+independently, so only install the adapter you use.
+
+```sh
+composer require jiordiviera/inertia-localize
+npm install @inertia-localize/react  # or @inertia-localize/vue
+php artisan vendor:publish --tag=inertia-localize-config
+```
+
+The service provider is registered through Laravel package discovery. Publishing writes
+`config/inertia-localize.php`, which defines `default`, `fallback`, supported `locales`,
+`session_key`, translation `groups`, and an optional `user_column`.
+
+Next: [Quickstart](/docs/quickstart) wires up the locale route and reads a translation on the
+frontend.
+
+---
+
+## Quickstart
+
+Source: https://inertia-localize.jiordiviera.me/docs/quickstart
+
+## 1. Configure locales and groups
+
+```php
+'locales' => ['en' => ['name' => 'English'], 'fr' => ['name' => 'Français']],
+'groups' => ['ui'],
+```
+
+## 2. Add translations
+
+Older Laravel apps may use `resources/lang` instead of `lang/`.
+
+```php
+// lang/en/ui.php
+return ['greeting' => 'Hello :name'];
+```
+
+## 3. Register the locale route
+
+Keep the switch route inside Laravel's session-enabled `web` middleware group.
+
+```php
+use InertiaLocalize\Http\Controllers\LocaleController;
+use InertiaLocalize\Http\Middleware\SetLocale;
+
+Route::post('/locale', LocaleController::class)->name('locale.switch');
+Route::middleware(SetLocale::class)->group(function () {
+    Route::get('/', HomeController::class);
+});
+```
+
+## 4. Read a translation on the frontend
+
+```tsx
+import { useTranslation } from '@inertia-localize/react'
+
+const { t, locale } = useTranslation()
+t('ui.greeting', { name: 'Ada' }) // Hello Ada
+```
+
+Laravel automatically shares the `i18n` prop with Inertia, including `locale`, `fallback`,
+`locales`, and flattened `messages` such as `ui.greeting`. See [The i18n shared
+prop](/docs/i18n-prop) for the full shape.
+
+---
+
+## Configuration
+
+Source: https://inertia-localize.jiordiviera.me/docs/configuration
+
+`php artisan vendor:publish --tag=inertia-localize-config` writes `config/inertia-localize.php`:
+
+```php
+return [
+    'default' => env('APP_LOCALE', 'en'),
+    'fallback' => env('APP_FALLBACK_LOCALE', 'en'),
+    'locales' => [
+        'en' => ['name' => 'English'],
+        'fr' => ['name' => 'Français'],
+    ],
+    'session_key' => 'locale',
+    'groups' => ['ui'],
+    'user_column' => null,
+];
+```
+
+| Key | Purpose |
+| --- | --- |
+| `default` / `fallback` | Locale used when the session has no value, and when a message is missing |
+| `locales` | Supported locale codes and display names, shared to the frontend as-is |
+| `session_key` | Session key the active locale is stored under |
+| `groups` | Laravel translation groups exported to the frontend, flattened to dot keys |
+| `user_column` | Optional column on the authenticated user model used to persist locale across sessions |
+
+The package does not depend on a frontend framework — this configuration is read entirely on
+the Laravel side.
+
+---
+
+## Locale switching & sessions
+
+Source: https://inertia-localize.jiordiviera.me/docs/locale-switching
+
+The locale is session-based, not URL-based. POST the selected locale to the switch route, then
+subsequent requests use that locale until it changes again.
+
+```php
+use Illuminate\Support\Facades\Route;
+use InertiaLocalize\Http\Controllers\LocaleController;
+use InertiaLocalize\Http\Middleware\SetLocale;
+
+Route::post('/locale', LocaleController::class)->name('locale.switch');
+
+Route::middleware(SetLocale::class)->group(function () {
+    Route::get('/', HomeController::class);
+});
+```
+
+> Register `locale.switch` inside routes that already run in Laravel's session-enabled `web`
+> middleware group — routes in `routes/web.php` start the session before route middleware runs.
+
+Post `{ locale: 'fr' }` to `locale.switch`. Supported values are stored under the configured
+`session_key`; unsupported values receive HTTP 422. On each request, `SetLocale` sets Laravel's
+application locale from the session and falls back to the configured `default` when the session
+value is missing or unsupported.
+
+This session-first approach does not add locale URL prefixes or, by itself, persist a user
+preference across devices — see below.
+
+## Persisting on the user model
+
+Set `user_column` in the config to remember an authenticated user's locale beyond the current
+session, instead of only the session value.
+
+---
+
+## Translation groups
+
+Source: https://inertia-localize.jiordiviera.me/docs/translation-groups
+
+The package exports selected Laravel translation groups to the frontend — it does not ship a
+separate translation format. List the groups to expose in `config/inertia-localize.php`:
+
+```php
+'groups' => ['ui'],
+```
+
+Each group corresponds to a Laravel language file per locale:
+
+```php
+// lang/en/ui.php
+return [
+    'greeting' => 'Hello :name',
+    'actions' => [
+        'save' => 'Save',
+    ],
+];
+```
+
+For the active locale, every configured group is loaded and flattened to dot keys prefixed by
+the group name — `ui.greeting` and `ui.actions.save` in the example above. Flattening happens on
+the Laravel side, so the frontend always receives a flat `messages` dictionary regardless of how
+nested the underlying PHP array is.
+
+If a translation key is missing, check the locale's language file, the configured `groups`, and
+that the key includes its group prefix (`ui.greeting`, not `greeting`).
+
+---
+
+## The i18n shared prop
+
+Source: https://inertia-localize.jiordiviera.me/docs/i18n-prop
+
+The package automatically shares an `i18n` prop on every Inertia response — no controller
+changes needed. It is available on the initial server-rendered page without a client fetch, and
+is included in partial reloads.
+
+```php
+'i18n' => [
+    'locale' => 'fr',
+    'fallback' => 'en',
+    'locales' => [
+        ['code' => 'en', 'name' => 'English'],
+        ['code' => 'fr', 'name' => 'Français'],
+    ],
+    'messages' => [
+        'actions.save' => 'Enregistrer',
+    ],
+]
+```
+
+| Field | Description |
+| --- | --- |
+| `locale` | The active locale for this request |
+| `fallback` | The configured fallback locale |
+| `locales` | Every supported locale from config, as `{ code, name }` |
+| `messages` | Flattened dot-key messages for the active locale's configured groups |
+
+If `i18n` is missing from a page's props, confirm the route uses Inertia and Laravel's
+session-enabled `web` middleware group — `SetLocale` and the prop sharing both depend on it.
+
+---
+
+## React adapter
+
+Source: https://inertia-localize.jiordiviera.me/docs/react-adapter
+
+`@inertia-localize/react` reads the current Inertia `i18n` prop directly — it does not keep a
+second locale or message dictionary in React state.
+
+```tsx
+import { useTranslation } from '@inertia-localize/react'
+
+export function Greeting() {
+  const { t, locale, locales } = useTranslation()
+
+  return (
+    <p lang={locale}>
+      {t('greeting.user', { name: 'Ada' })} ({locales.length} languages)
+    </p>
+  )
+}
+```
+
+`useTranslation()` returns:
+
+| Field | Type |
+| --- | --- |
+| `t(key, replacements?)` | Looks up a dot-key message and interpolates `:placeholder`s |
+| `tChoice(key, count, replacements?)` | Selects a plural form using Laravel's `trans_choice` syntax — see [Interpolation](/docs/interpolation) |
+| `locale` | Active locale code |
+| `fallback` | Configured fallback locale code |
+| `locales` | Every supported locale, as `{ code, name }` |
+
+The consuming app must install compatible versions of `react` and `@inertiajs/react`.
+
+## Switching locale
+
+```tsx
+import { useLocaleSwitch } from '@inertia-localize/react'
+
+const { setLocale, switching } = useLocaleSwitch()
+```
+
+Posts to the locale-switch route (`/locale` by default, override with `{ url }`) via Inertia's
+`router.post()`; the redirect it triggers refreshes `i18n` like any other visit. Also takes
+`preserveScroll`, `preserveState`, `onSuccess`, and `onError`.
+
+---
+
+## Vue adapter
+
+Source: https://inertia-localize.jiordiviera.me/docs/vue-adapter
+
+`@inertia-localize/vue` reads the current Inertia page props directly and requires no Vue
+plugin — just call the composable inside `<script setup>`.
+
+```vue
+<script setup lang="ts">
+import { useTranslation } from '@inertia-localize/vue'
+
+const { t, locale, locales } = useTranslation()
+</script>
+
+<template>
+  <p :lang="locale">
+    {{ t('greeting.user', { name: 'Ada' }) }}
+    ({{ locales.length }} languages)
+  </p>
+</template>
+```
+
+`useTranslation()` returns `t(key, replacements?)`, `tChoice(key, count, replacements?)` (Laravel
+`trans_choice` syntax — see [Interpolation](/docs/interpolation)), plus computed refs for
+`locale`, `fallback`, and `locales` — the same shape as the [React adapter](/docs/react-adapter),
+so messages and dot keys behave identically across both.
+
+The consuming app must install compatible versions of `vue` and `@inertiajs/vue3`.
+
+## Switching locale
+
+```vue
+<script setup lang="ts">
+import { useLocaleSwitch } from '@inertia-localize/vue'
+
+const { setLocale, switching } = useLocaleSwitch()
+</script>
+```
+
+Same shape as the [React adapter](/docs/react-adapter): posts to `/locale` by default (override
+with `{ url }`) via Inertia's `router.post()`, plus `preserveScroll`, `preserveState`,
+`onSuccess`, and `onError`. `switching` is a computed ref here instead of a plain boolean.
+
+---
+
+## Interpolation
+
+Source: https://inertia-localize.jiordiviera.me/docs/interpolation
+
+`@inertia-localize/core` powers lookup and interpolation for both adapters.
+
+```ts
+import { translate } from '@inertia-localize/core'
+
+translate({ 'greeting.user': 'Hello :name' }, 'greeting.user', { name: 'Ada' })
+// "Hello Ada"
+```
+
+Messages use flat dot-key dictionaries — the same shape the Laravel package produces from
+translation groups. Placeholders use Laravel's `:name` syntax, not ICU or `{{mustache}}` syntax.
+Replacements accept strings, numbers, and booleans; unknown placeholders remain unchanged.
+
+## Missing keys
+
+A missing key returns the key itself by default. Pass an explicit fallback as the fourth
+argument when a friendlier default is needed:
+
+```ts
+translate({}, 'greeting.user', { name: 'Ada' }, { fallback: 'Hello :name' })
+// "Hello Ada"
+```
+
+## Pluralization
+
+`translateChoice(messages, key, count, replacements?, options?)` selects a plural form using
+Laravel's `trans_choice` pipe-separated syntax — not ICU MessageFormat — so lang files stay the
+same whether an app also calls `trans_choice()` server-side:
+
+```ts
+import { translateChoice } from '@inertia-localize/core'
+
+const messages = {
+  'cart.items': '{0} No items|{1} One item|[2,*] :count items',
+}
+
+translateChoice(messages, 'cart.items', 0) // "No items"
+translateChoice(messages, 'cart.items', 1) // "One item"
+translateChoice(messages, 'cart.items', 5) // "5 items"
+```
+
+Each segment may start with an exact `{n}` or inclusive range `[n,m]` selector (`*` for
+infinity); the first matching segment wins, falling back to the last one. Without any explicit
+selector, only the plain 2-segment `singular|plural` shape resolves (`count === 1` picks the
+first) — for 3+ forms, use explicit ranges rather than relying on locale-specific plural rules,
+which this package doesn't implement. `:count` is always available for interpolation and
+overrides a same-named entry in `replacements`, matching `trans_choice`.
+
+---
+
+## API reference
+
+Source: https://inertia-localize.jiordiviera.me/docs/api-reference
+
+## `@inertia-localize/core`
+
+- `translate(messages, key, replacements?, { fallback }?)` — dot-key lookup with `:name`
+  interpolation.
+- Shared types: `LocaleCode`, `LocaleMetadata`, `MessageDictionary`, `TranslationReplacements`,
+  `I18nProps`. `I18nProps` matches the Laravel/Inertia contract: active locale, fallback locale,
+  available locales, and the current flat message dictionary.
+
+## `@inertia-localize/react`
+
+- `useTranslation()` &rarr; `{ t, locale, fallback, locales }`
+
+## `@inertia-localize/vue`
+
+- `useTranslation()` &rarr; `{ t, locale, fallback, locales }` (`locale`, `fallback`, `locales`
+  are computed refs)
+
+## Laravel package (`jiordiviera/inertia-localize`)
+
+- `InertiaLocalize\Http\Middleware\SetLocale` &mdash; resolves the active locale from session,
+  applies it to the request.
+- `InertiaLocalize\Http\Controllers\LocaleController` &mdash; handles `POST` to the locale
+  switch route.
+- Shared Inertia prop: `i18n` &mdash; see [The i18n shared prop](/docs/i18n-prop).
+- Config: `config/inertia-localize.php` &mdash; see [Configuration](/docs/configuration).
+
+---
+
+## Troubleshooting
+
+Source: https://inertia-localize.jiordiviera.me/docs/troubleshooting
+
+## `i18n` prop is missing
+
+Confirm the route renders through Inertia and runs inside Laravel's session-enabled `web`
+middleware group. The shared prop and `SetLocale` both depend on an active session.
+
+## A translation key renders as-is
+
+`translate()` returns the key itself when it isn't found. Check, in order:
+
+1. The locale's language file has the key (`lang/en/ui.php`).
+2. The key's group is listed in `config('inertia-localize.groups')`.
+3. The key you're calling includes its group prefix &mdash; `ui.greeting`, not `greeting`.
+
+## Switching locale doesn't persist
+
+The switch route must be registered inside the `web` middleware group so the session is
+available. If you need the locale to persist across sessions for a signed-in user, set
+`user_column` in the config &mdash; see [Locale switching &
+sessions](/docs/locale-switching#persisting-on-the-user-model).
+
+## Locale switch POST returns 422
+
+The posted `locale` value isn't in `config('inertia-localize.locales')`. Only configured locale
+codes are accepted.
+
+---
+
+## Compatibility
+
+Source: https://inertia-localize.jiordiviera.me/docs/compatibility
+
+## Laravel package
+
+| Requirement | Versions |
+| --- | --- |
+| PHP | &ge;8.2 |
+| Laravel (`illuminate/*`) | ^11.0 &#124; ^12.0 &#124; ^13.0 |
+| `inertiajs/inertia-laravel` | ^2.0 &#124; ^3.0 |
+
+## `@inertia-localize/react`
+
+| Requirement | Versions |
+| --- | --- |
+| `react` | ^16.9.0 &#124; ^17.0.0 &#124; ^18.0.0 &#124; ^19.0.0 |
+| `@inertiajs/react` | ^2.0.0 &#124; ^3.0.0 |
+
+## `@inertia-localize/vue`
+
+| Requirement | Versions |
+| --- | --- |
+| `vue` | ^3.0.0 |
+| `@inertiajs/vue3` | ^2.0.0 &#124; ^3.0.0 |
+
+`@inertia-localize/core` has no peer dependencies &mdash; it's plain TypeScript shared by both
+adapters.
+
+---

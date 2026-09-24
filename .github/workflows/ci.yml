@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - v*
+    tags:
+      - v*
+
+permissions:
+  contents: read
+
+jobs:
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.5.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist --working-dir=packages/laravel
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm lint
+      - run: pnpm test:e2e
+      - name: Validate release tag versions
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: node scripts/validate-release.mjs "${GITHUB_REF_NAME}"
+      - name: Preview npm packages
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          pnpm --filter @inertia-localize/core pack --dry-run
+          pnpm --filter @inertia-localize/react pack --dry-run
+          pnpm --filter @inertia-localize/vue pack --dry-run
+
+  laravel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+      - run: composer validate --strict --working-dir=packages/laravel
+      - run: composer install --no-interaction --prefer-dist --working-dir=packages/laravel
+      - run: composer test --working-dir=packages/laravel

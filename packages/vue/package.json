@@ -1,6 +1,7 @@
 {
   "name": "@inertia-localize/vue",
   "version": "0.1.0",
+  "license": "MIT",
   "description": "Vue adapter for Inertia Localize",
   "author": {
     "name": "Jiordi Kengne",

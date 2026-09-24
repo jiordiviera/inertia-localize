@@ -27,3 +27,15 @@ export function Greeting() {
 | `locales` | Every supported locale, as `{ code, name }` |
 
 The consuming app must install compatible versions of `react` and `@inertiajs/react`.
+
+## Switching locale
+
+```tsx
+import { useLocaleSwitch } from '@inertia-localize/react'
+
+const { setLocale, switching } = useLocaleSwitch()
+```
+
+Posts to the locale-switch route (`/locale` by default, override with `{ url }`) via Inertia's
+`router.post()`; the redirect it triggers refreshes `i18n` like any other visit. Also takes
+`preserveScroll`, `preserveState`, `onSuccess`, and `onError`.

@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { label: "API Reference", href: "/docs/api-reference" },
 ]
 
-const REPO_URL = "https://github.com/jiordiviera/inertia-locale-kit"
+const REPO_URL = "https://github.com/jiordiviera/inertia-localize"
 const COFFEE_URL = "https://buymeacoffee.com/jiordiviera"
 
 export function SiteHeader() {

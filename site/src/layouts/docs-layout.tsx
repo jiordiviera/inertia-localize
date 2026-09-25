@@ -36,7 +36,7 @@ export function DocsLayout() {
           <div className="flex shrink-0 items-center gap-2">
             <DocPageActions slug={slug} />
             <a
-              href={`https://github.com/jiordiviera/inertia-locale-kit/blob/v0/site/src/content/docs/${slug}.mdx`}
+              href={`https://github.com/jiordiviera/inertia-localize/blob/v0/site/src/content/docs/${slug}.mdx`}
               target="_blank"
               rel="noreferrer"
               className="rounded-md border border-border px-2.5 py-1 transition-colors hover:border-foreground/30 hover:text-foreground"

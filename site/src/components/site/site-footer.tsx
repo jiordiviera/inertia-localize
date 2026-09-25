@@ -4,7 +4,7 @@ import { GithubDark } from "@/components/ui/svgs/githubDark"
 import { GithubLight } from "@/components/ui/svgs/githubLight"
 
 const COFFEE_URL = "https://buymeacoffee.com/jiordiviera"
-const REPO_URL = "https://github.com/jiordiviera/inertia-locale-kit"
+const REPO_URL = "https://github.com/jiordiviera/inertia-localize"
 
 export function SiteFooter() {
   const isDark = useResolvedDark()

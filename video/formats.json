@@ -1,0 +1,18 @@
+{
+  "landscape": {
+    "page": "index.html",
+    "narration": "narration.json",
+    "voice": "voice",
+    "name": "inertia-localize-intro",
+    "langs": ["en", "fr"],
+    "burnCaptions": false
+  },
+  "tiktok": {
+    "page": "tiktok.html",
+    "narration": "narration.tiktok.json",
+    "voice": "voice/tiktok",
+    "name": "inertia-localize-tiktok",
+    "langs": ["en"],
+    "burnCaptions": true
+  }
+}

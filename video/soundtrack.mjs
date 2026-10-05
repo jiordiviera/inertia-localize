@@ -1,21 +1,23 @@
 // Builds the soundtrack (music bed, sound effects and an optional voice-over) for the video
 // rendered by render.mjs, writes SRT captions, and muxes everything into the final MP4.
 //
-//   node video/soundtrack.mjs              # en + fr
+//   node video/soundtrack.mjs                    # landscape, en + fr
 //   node video/soundtrack.mjs --lang fr
+//   node video/soundtrack.mjs --format tiktok
 //
-// Voice-over is optional: put one clip per narration line in video/voice/<lang>/, named by
-// line number (01.wav, 02.mp3, …). Each clip starts at its line's `at` time in
-// narration.json and the music ducks under it. Without clips the video gets music, sound
-// effects and captions only. Requires ffmpeg on PATH and Playwright (to read the cues).
+// Voice-over is optional: put one clip per narration line in the format's voice folder
+// (video/voice/<lang>/ for landscape), named by line number (01.wav, 02.mp3, …). Each clip
+// starts at its line's `at` time and the music ducks under it. Without clips the video
+// gets music, sound effects and captions only. Requires ffmpeg on PATH and Playwright (to
+// read the cues). Formats are listed in formats.json.
 
 import { spawn } from 'node:child_process'
-import { existsSync, readdirSync } from 'node:fs'
 import { readFile, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
+import { captionCues, readClips, srt } from './captions.mjs'
 
 const require = createRequire(import.meta.url)
 const { chromium } = require('playwright')
@@ -23,13 +25,16 @@ const { chromium } = require('playwright')
 const here = dirname(fileURLToPath(import.meta.url))
 const { values } = parseArgs({
   options: {
-    lang: { type: 'string', default: 'en,fr' },
+    format: { type: 'string', default: 'landscape' },
+    lang: { type: 'string' },
     out: { type: 'string', default: join(here, 'dist') },
   },
 })
 const outDir = resolve(values.out)
+const formats = JSON.parse(await readFile(join(here, 'formats.json'), 'utf8'))
+const config = formats[values.format]
 const narration = JSON.parse(
-  await readFile(join(here, 'narration.json'), 'utf8'),
+  await readFile(join(here, config.narration), 'utf8'),
 )
 const RATE = 48000
 const TAU = Math.PI * 2
@@ -58,7 +63,7 @@ async function readTimeline() {
   const browser = await chromium.launch()
   try {
     const tab = await browser.newPage()
-    await tab.goto(`${pathToFileURL(join(here, 'index.html')).href}?render`)
+    await tab.goto(`${pathToFileURL(join(here, config.page)).href}?render`)
     await tab.evaluate(() => window.__ready)
     return await tab.evaluate(() => ({
       duration: window.__duration,
@@ -154,18 +159,33 @@ const PROGRESSION = [
   { root: 48, notes: [55, 59, 60, 64] }, // Cmaj7
   { root: 43, notes: [55, 59, 62, 64] }, // G6
 ]
-// One entry per scene, in order: intro, problem, idea, flow, setup, demo, features, agents, outro.
-const ARRANGEMENT = [
-  { pad: 0.8, arp: 0, bass: 0, drums: 0 },
-  { pad: 1, arp: 0.55, bass: 0, drums: 0 },
-  { pad: 1, arp: 0.8, bass: 0.9, drums: 0 },
-  { pad: 0.9, arp: 1, bass: 1, drums: 1 },
-  { pad: 0.9, arp: 1, bass: 1, drums: 1 },
-  { pad: 0.9, arp: 1, bass: 1, drums: 1 },
-  { pad: 0.9, arp: 1, bass: 1, drums: 1 },
-  { pad: 1, arp: 0.7, bass: 0.6, drums: 0 },
-  { pad: 1, arp: 0.35, bass: 0.7, drums: 0 },
-]
+// One entry per scene of each format, in order.
+const FULL = { pad: 0.9, arp: 1, bass: 1, drums: 1 }
+const ARRANGEMENTS = {
+  // intro, problem, idea, flow, setup, demo, features, agents, outro
+  landscape: [
+    { pad: 0.8, arp: 0, bass: 0, drums: 0 },
+    { pad: 1, arp: 0.55, bass: 0, drums: 0 },
+    { pad: 1, arp: 0.8, bass: 0.9, drums: 0 },
+    FULL,
+    FULL,
+    FULL,
+    FULL,
+    { pad: 1, arp: 0.7, bass: 0.6, drums: 0 },
+    { pad: 1, arp: 0.35, bass: 0.7, drums: 0 },
+  ],
+  // hook, problem, solution, flow, demo, install, outro: energy from the first second
+  tiktok: [
+    { pad: 1, arp: 0.7, bass: 0.9, drums: 0.7 },
+    { pad: 1, arp: 0.6, bass: 0.7, drums: 0 },
+    FULL,
+    FULL,
+    FULL,
+    FULL,
+    { pad: 1, arp: 0.5, bass: 0.8, drums: 0.4 },
+  ],
+}
+const ARRANGEMENT = ARRANGEMENTS[values.format]
 
 function arrangement(sceneEnds) {
   const ramp = 0.6
@@ -479,81 +499,19 @@ async function decode(file) {
   return new Float32Array(bytes)
 }
 
-async function voiceOver(lang, lines, duration) {
-  const folder = join(here, 'voice', lang)
-  const files = existsSync(folder) ? readdirSync(folder) : []
+async function voiceOver(clips, lines, duration) {
   const track = new Float32Array(Math.ceil(duration * RATE))
-  const spans = []
   for (const [index, line] of lines.entries()) {
-    const name = files.find((file) =>
-      file.startsWith(String(index + 1).padStart(2, '0')),
-    )
-    if (!name) continue
-    const clip = await decode(join(folder, name))
+    if (!clips[index]) continue
+    const clip = await decode(clips[index].path)
     const level = rms(clip, 0.01)
     const gain = level ? 0.12 / level : 1
     const start = Math.round(line.at * RATE)
     for (let i = 0; i < clip.length && start + i < track.length; i++) {
       track[start + i] += clip[i] * gain
     }
-    spans[index] = clip.length / RATE
   }
-  return { track, spans, found: spans.filter(Boolean).length }
-}
-
-function srtTime(seconds) {
-  const ms = Math.round(seconds * 1000)
-  const pad = (value, size = 2) => String(value).padStart(size, '0')
-  return `${pad(Math.floor(ms / 3600000))}:${pad(Math.floor(ms / 60000) % 60)}:${pad(Math.floor(ms / 1000) % 60)},${pad(ms % 1000, 3)}`
-}
-
-// Wraps text into lines of at most `width` characters.
-function wrap(text, width = 42) {
-  const lines = ['']
-  for (const word of text.split(' ')) {
-    const last = lines.length - 1
-    if (lines[last] && `${lines[last]} ${word}`.length > width) lines.push(word)
-    else lines[last] = lines[last] ? `${lines[last]} ${word}` : word
-  }
-  return lines
-}
-
-// One cue per sentence (two lines max), timed in proportion to its length.
-function captions(lines, spans) {
-  const cues = []
-  lines.forEach((line, index) => {
-    const estimate = line.text.length / 14 + 0.4
-    const end = Math.min(
-      line.until - 0.1,
-      line.at + (spans[index] ? spans[index] + 0.3 : estimate),
-    )
-    // Sentences first, then commas when a sentence alone needs more than two lines.
-    const pieces = line.text
-      .match(/[^.:!?]+[.:!?]*\s*/g)
-      .flatMap((sentence) =>
-        wrap(sentence.trim()).length > 2
-          ? sentence.match(/[^,]+,?\s*/g)
-          : [sentence],
-      )
-      .map((piece) => piece.trim())
-    const chunks = []
-    for (const piece of pieces) {
-      const previous = chunks.at(-1)
-      if (previous && wrap(`${previous} ${piece}`).length <= 2) {
-        chunks[chunks.length - 1] = `${previous} ${piece}`
-      } else chunks.push(piece)
-    }
-    const total = chunks.reduce((sum, chunk) => sum + chunk.length, 0)
-    let start = line.at
-    for (const chunk of chunks) {
-      const stop = start + ((end - line.at) * chunk.length) / total
-      cues.push(
-        `${srtTime(start)} --> ${srtTime(stop)}\n${wrap(chunk).join('\n')}`,
-      )
-      start = stop
-    }
-  })
-  return cues.map((cue, index) => `${index + 1}\n${cue}\n`).join('\n')
+  return track
 }
 
 // ---------------------------------------------------------------- mixdown
@@ -583,11 +541,9 @@ function wav(left, right) {
 
 async function build(lang, timeline, bed, sfx) {
   const lines = narration[lang]
-  const {
-    track: voice,
-    spans,
-    found,
-  } = await voiceOver(lang, lines, timeline.duration)
+  const clips = readClips(join(here, config.voice, lang), lines.length)
+  const found = clips.filter(Boolean).length
+  const voice = await voiceOver(clips, lines, timeline.duration)
   const length = voice.length
 
   // Duck the music under the voice: fast attack, slow release, about -10 dB.
@@ -615,9 +571,10 @@ async function build(lang, timeline, bed, sfx) {
     right[i] *= scale
   }
 
-  const audio = join(outDir, `soundtrack-${lang}.wav`)
+  const base = join(outDir, `${config.name}-${lang}`)
+  const audio = `${base}.wav`
   await writeFile(audio, wav(left, right))
-  await writeFile(join(outDir, `captions-${lang}.srt`), captions(lines, spans))
+  await writeFile(`${base}.srt`, srt(captionCues(lines, clips)))
 
   // Two-pass EBU R128 normalisation to -14 LUFS, the usual target for social feeds.
   const target = 'I=-14:TP=-1.5:LRA=11'
@@ -644,8 +601,8 @@ async function build(lang, timeline, bed, sfx) {
   ].join(':')
   const chain = `${loudnorm},alimiter=limit=0.79:level=false`
 
-  const video = join(outDir, `video-${lang}.mp4`)
-  const file = join(outDir, `inertia-localize-intro-${lang}.mp4`)
+  const video = `${base}.silent.mp4`
+  const file = `${base}.mp4`
   await ffmpeg(
     [
       ['-i', video, '-i', audio],
@@ -663,6 +620,7 @@ const sceneEnds = timeline.cues
   .map((cue) => cue.time)
 const bed = music(timeline.duration, sceneEnds)
 const sfx = effects(timeline.duration, timeline.cues)
-for (const lang of values.lang.split(',').map((value) => value.trim())) {
+const langs = values.lang?.split(',') ?? config.langs
+for (const lang of langs) {
   await build(lang, timeline, bed, sfx)
 }

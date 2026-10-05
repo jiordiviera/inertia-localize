@@ -1,6 +1,8 @@
-// Renders video/index.html frame by frame with Playwright and encodes it with ffmpeg.
+// Renders a video page frame by frame with Playwright and encodes it with ffmpeg. The
+// result is silent; soundtrack.mjs adds the audio. Formats are listed in formats.json.
 //
-//   node video/render.mjs                      # en + fr MP4s in video/dist
+//   node video/render.mjs                      # landscape, en + fr, in video/dist
+//   node video/render.mjs --format tiktok      # vertical, captions burned in
 //   node video/render.mjs --lang fr --fps 60
 //   node video/render.mjs --stills 2,10,50     # PNG stills for quick review
 //
@@ -8,11 +10,12 @@
 
 import { spawn } from 'node:child_process'
 import { once } from 'node:events'
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
+import { captionCues, readClips } from './captions.mjs'
 
 const require = createRequire(import.meta.url)
 const { chromium } = require('playwright')
@@ -20,7 +23,8 @@ const { chromium } = require('playwright')
 const here = dirname(fileURLToPath(import.meta.url))
 const { values } = parseArgs({
   options: {
-    lang: { type: 'string', default: 'en,fr' },
+    format: { type: 'string', default: 'landscape' },
+    lang: { type: 'string' },
     fps: { type: 'string', default: '30' },
     out: { type: 'string', default: join(here, 'dist') },
     stills: { type: 'string' },
@@ -28,16 +32,27 @@ const { values } = parseArgs({
 })
 
 const fps = Number(values.fps)
-const langs = values.lang.split(',').map((lang) => lang.trim())
 const outDir = resolve(values.out)
-const page = pathToFileURL(join(here, 'index.html'))
+const formats = JSON.parse(await readFile(join(here, 'formats.json'), 'utf8'))
+const config = formats[values.format]
+const langs = values.lang?.split(',') ?? config.langs
+const page = pathToFileURL(join(here, config.page))
+const narration = JSON.parse(
+  await readFile(join(here, config.narration), 'utf8'),
+)
 
 async function openPage(browser, lang) {
-  const tab = await browser.newPage({
-    viewport: { width: 1920, height: 1080 },
-  })
+  const tab = await browser.newPage()
   await tab.goto(`${page.href}?render&lang=${lang}`)
   await tab.evaluate(() => window.__ready)
+  await tab.setViewportSize(await tab.evaluate(() => window.__size))
+  if (config.burnCaptions) {
+    // Short, punchy cues timed from the voice clips, word by word when aligned.
+    const lines = narration[lang]
+    const clips = readClips(join(here, config.voice, lang), lines.length)
+    const cues = captionCues(lines, clips, { width: 20, lines: 2, maxWords: 5 })
+    await tab.evaluate((list) => window.__setCaptions(list), cues)
+  }
   return tab
 }
 
@@ -45,7 +60,10 @@ async function renderStills(browser, lang, times) {
   const tab = await openPage(browser, lang)
   for (const time of times) {
     await tab.evaluate((t) => window.__seek(t), time)
-    const file = join(outDir, `still-${lang}-${time.toFixed(1)}.png`)
+    const file = join(
+      outDir,
+      `still-${values.format}-${lang}-${time.toFixed(1)}.png`,
+    )
     await writeFile(file, await tab.screenshot())
     console.log(file)
   }
@@ -56,7 +74,7 @@ async function renderVideo(browser, lang) {
   const tab = await openPage(browser, lang)
   const duration = await tab.evaluate(() => window.__duration)
   const frames = Math.round(duration * fps)
-  const file = join(outDir, `video-${lang}.mp4`)
+  const file = join(outDir, `${config.name}-${lang}.silent.mp4`)
 
   const ffmpeg = spawn(
     'ffmpeg',

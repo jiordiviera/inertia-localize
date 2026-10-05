@@ -4,94 +4,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Inertia Localize — Intro video</title>
+<link rel="stylesheet" href="base.css" />
 <style>
-@font-face {
-  font-family: 'Geist';
-  font-weight: 100 900;
-  font-display: block;
-  src: url(fonts/geist-latin-wght-normal.woff2) format('woff2-variations');
-}
-@font-face {
-  font-family: 'Geist Mono';
-  font-weight: 100 900;
-  font-display: block;
-  src: url(fonts/geist-mono-latin-wght-normal.woff2) format('woff2-variations');
-}
-
-:root {
-  --bg: #07070c;
-  --fg: #f4f4f8;
-  --muted: #9b9bb0;
-  --dim: #64647a;
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --primary: #5b5bf7;
-  --primary-2: #7c86ff;
-  --primary-3: #aab3ff;
-  --green: #34d399;
-  --red: #fb5f78;
-  --amber: #fbbf24;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
-
-#stage {
-  position: absolute; left: 0; top: 0;
-  width: 1920px; height: 1080px; overflow: hidden;
-  background: var(--bg); color: var(--fg);
-  font-family: 'Geist', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  transform-origin: 0 0;
-}
-.mono, .code, .card-head { font-family: 'Geist Mono', ui-monospace, monospace; }
-.primary { color: var(--primary-2); }
-.muted { color: var(--muted); }
-
-/* ---------- motion primitives (delays are absolute timeline seconds) ---------- */
-.up { animation: up 0.9s var(--ease) var(--d) both; }
-.fade { animation: fade 0.7s ease var(--d) both; }
-.pop { animation: pop 0.9s var(--spring) var(--d) both; }
-.from-left { animation: fromLeft 0.9s var(--ease) var(--d) both; }
-.from-right { animation: fromRight 0.9s var(--ease) var(--d) both; }
-.reveal { animation: reveal 1s var(--ease) var(--d) both; }
-.swap { display: inline-grid; justify-items: start; }
-.swap > * { grid-area: 1 / 1; }
-.swap-out { animation: swapOut 0.45s ease var(--d) forwards; }
-.swap-in { animation: swapIn 0.55s var(--ease) var(--d) both; }
-.flash { animation: flash 1.4s ease var(--d) both; }
-
-@keyframes up { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
-@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes gone { to { opacity: 0; } }
-@keyframes pop { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: scale(1); } }
-@keyframes fromLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: none; } }
-@keyframes fromRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: none; } }
-@keyframes reveal { from { clip-path: inset(0 100% 0 0); transform: translateX(-30px); } to { clip-path: inset(0 -10% 0 0); transform: none; } }
-@keyframes swapOut { to { opacity: 0; transform: translateY(-22px); filter: blur(5px); } }
-@keyframes swapIn { from { opacity: 0; transform: translateY(22px); filter: blur(5px); } to { opacity: 1; transform: none; filter: blur(0); } }
-@keyframes flash {
-  0% { background-color: rgba(91, 91, 247, 0); }
-  25% { background-color: rgba(91, 91, 247, 0.32); }
-  100% { background-color: rgba(91, 91, 247, 0.1); }
-}
-@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes growY { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+#stage { width: 1920px; height: 1080px; }
 
 /* ---------- scenes ---------- */
-.scene {
-  position: absolute; inset: 0;
-  padding: 150px 120px 100px;
-  display: flex; flex-direction: column;
-  animation: sceneIn 0.5s ease var(--in) both, sceneOut 0.55s ease-in var(--out) forwards;
-}
+.scene { padding: 150px 120px 100px; }
 .scene.center { justify-content: center; align-items: center; text-align: center; padding-top: 100px; }
-@keyframes sceneIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes sceneOut { from { opacity: 1; } to { opacity: 0; transform: scale(0.985); filter: blur(8px); } }
 
 .eyebrow {
   font-size: 22px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
@@ -99,30 +18,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 }
 .title { font-size: 66px; line-height: 1.06; font-weight: 740; letter-spacing: -0.022em; max-width: 1500px; text-wrap: balance; }
 .lead { font-size: 32px; line-height: 1.45; color: var(--muted); max-width: 1200px; }
-
-/* ---------- background ---------- */
-.bg { position: absolute; inset: 0; }
-.bg-glow {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(900px 620px at 78% 28%, rgba(91, 91, 247, 0.17), transparent 70%),
-    radial-gradient(820px 620px at 16% 86%, rgba(79, 70, 229, 0.12), transparent 70%);
-}
-.bg-grid {
-  position: absolute; inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.075) 1.1px, transparent 1.4px);
-  background-size: 36px 36px;
-  mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000 15%, transparent 78%);
-}
-.bg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.corner-in-tl { animation: cornerTL 1.6s var(--ease) 0s both; }
-.corner-in-br { animation: cornerBR 1.6s var(--ease) 0s both; }
-.drift-a { animation: driftA 9s ease-in-out 0s infinite alternate; }
-.drift-b { animation: driftB 11s ease-in-out 0s infinite alternate; }
-@keyframes cornerTL { from { transform: translate(-420px, -420px); } to { transform: none; } }
-@keyframes cornerBR { from { transform: translate(420px, 420px); } to { transform: none; } }
-@keyframes driftA { from { transform: translate(0, 0); } to { transform: translate(-26px, -14px); } }
-@keyframes driftB { from { transform: translate(0, 0); } to { transform: translate(24px, 16px); } }
 
 .chrome {
   position: absolute; left: 120px; right: 120px; top: 52px; z-index: 5;
@@ -138,55 +33,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
   background: linear-gradient(90deg, var(--primary), var(--primary-2));
   transform-origin: 0 50%; opacity: 0.75;
 }
-
-/* ---------- shared components ---------- */
-.card {
-  position: relative;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.022));
-  border: 1px solid var(--border); border-radius: 22px;
-  box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(6px);
-}
-.card-head {
-  display: flex; align-items: center; gap: 12px;
-  padding: 16px 24px; border-bottom: 1px solid var(--border);
-  font-size: 19px; color: var(--muted);
-}
-.card-head svg { width: 24px; height: 24px; flex: none; }
-.dots { display: flex; gap: 9px; margin-right: 8px; }
-.dots i { width: 14px; height: 14px; border-radius: 50%; background: #ff5f57; }
-.dots i:nth-child(2) { background: #febc2e; }
-.dots i:nth-child(3) { background: #28c840; }
-.code { padding: 22px 28px; font-size: 24px; line-height: 1.62; color: #e7e7f2; }
-.code .ln { position: relative; display: block; white-space: pre; min-height: 1.62em; margin: 0 -14px; padding: 0 14px; border-radius: 8px; }
-.tk { color: #c792ea; }
-.ts { color: #b5e48c; }
-.tf { color: #82aaff; }
-.tc { color: var(--dim); }
-.tt { color: #ff7a93; }
-.ta { color: #ffcb6b; }
-.tp { color: #89ddff; }
-.glow-on {
-  position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
-  border: 2px solid var(--primary);
-  box-shadow: 0 0 0 6px rgba(91, 91, 247, 0.14), 0 24px 70px -12px rgba(91, 91, 247, 0.5);
-}
-.ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.chip {
-  display: inline-flex; align-items: center; gap: 12px;
-  padding: 14px 24px; border-radius: 999px;
-  border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.04);
-  font-size: 26px; font-weight: 550;
-}
-.chip svg { width: 30px; height: 30px; }
-.badge {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 10px 20px; border-radius: 999px;
-  border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.035);
-  font-family: 'Geist Mono', monospace; font-size: 21px; color: #d9d9e6;
-}
-.badge svg { width: 22px; height: 22px; color: var(--primary-2); }
-.caret { display: inline-block; width: 0.55em; height: 1.1em; margin-left: 2px; vertical-align: -0.18em; background: var(--primary-2); border-radius: 2px; }
 
 /* ---------- 1. intro ---------- */
 .brand { display: flex; align-items: center; gap: 56px; }
@@ -216,10 +62,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 .sync-x svg { width: 48px; height: 48px; }
 .sync-label { font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--muted); text-align: center; justify-items: center; }
 .sync-label .bad { color: var(--red); }
-.mark-warn { animation: markWarn 0.6s ease var(--d) both; }
-.mark-miss { animation: markMiss 0.6s ease var(--d) both; }
-@keyframes markWarn { from { background: transparent; box-shadow: inset 4px 0 0 transparent; } to { background: rgba(251, 191, 36, 0.13); box-shadow: inset 4px 0 0 var(--amber); } }
-@keyframes markMiss { from { background: transparent; box-shadow: inset 4px 0 0 transparent; } to { background: rgba(251, 95, 120, 0.13); box-shadow: inset 4px 0 0 var(--red); } }
 .tag {
   position: absolute; right: 14px; top: 0; bottom: 0; height: fit-content; margin: auto 0;
   font-family: 'Geist', sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 0.04em;
@@ -309,8 +151,6 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
 @keyframes tabMove { from { transform: none; width: 118px; } to { transform: translateX(124px); width: 96px; } }
 .code-stack { display: grid; }
 .code-stack > * { grid-area: 1 / 1; }
-.mark-line { animation: markLine 0.6s ease var(--d) both; }
-@keyframes markLine { from { background: transparent; box-shadow: inset 3px 0 0 transparent; } to { background: rgba(91, 91, 247, 0.16); box-shadow: inset 3px 0 0 var(--primary-2); } }
 .same-api { margin-left: auto; font-family: 'Geist', sans-serif; font-size: 19px; color: var(--primary-3); }
 
 .browser .card-head { padding: 14px 20px; }
@@ -793,6 +633,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
   <div class="progress" style="animation:progress 79.4s linear 0s both"></div>
 </div>
 
+<script src="timeline.js"></script>
 <script>
   // Video copy uses flat dot keys and Laravel-style :name placeholders, like the package itself.
   const messages = {
@@ -890,106 +731,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     },
   }
 
-  const DURATION = 79.4
-  const params = new URLSearchParams(location.search)
-  const lang = params.get('lang') === 'fr' ? 'fr' : 'en'
-  const rendering = params.has('render')
-  const t = (key) => messages[lang][key] ?? messages.en[key] ?? key
-
-  document.documentElement.lang = lang
-  for (const el of document.querySelectorAll('[data-t]')) el.innerHTML = t(el.dataset.t)
-
-  const scenes = [...document.querySelectorAll('.scene')].map((el) => {
-    const start = Number(el.dataset.in)
-    const end = Number(el.dataset.out)
-    el.style.setProperty('--in', `${start}s`)
-    el.style.setProperty('--out', `${end}s`)
-    return { el, start, end }
-  })
-
-  const typed = [...document.querySelectorAll('[data-type]')].map((el) => {
-    const text = el.textContent
-    const start = Number(el.dataset.type)
-    const duration = Number(el.dataset.dur)
-    const caret = document.createElement('span')
-    caret.className = 'caret'
-    el.after(caret)
-    el.textContent = ''
-    const caretEnd = Number(el.dataset.caretEnd ?? start + duration + 0.7)
-    return { el, text, start, duration, caret, caretEnd }
-  })
-
-  function seek(time) {
-    for (const scene of scenes) {
-      const visible = time >= scene.start - 0.01 && time < scene.end + 0.7
-      scene.el.style.display = visible ? '' : 'none'
-    }
-    for (const animation of document.getAnimations()) {
-      animation.pause()
-      animation.currentTime = time * 1000
-    }
-    for (const item of typed) {
-      const progress = Math.min(Math.max((time - item.start) / item.duration, 0), 1)
-      item.el.textContent = item.text.slice(0, Math.round(progress * item.text.length))
-      const typing = progress > 0 && progress < 1
-      const shown = time >= item.start - 0.5 && time < item.caretEnd
-      item.caret.style.opacity = shown && (typing || Math.floor(time * 2.4) % 2 === 0) ? '1' : '0'
-    }
-  }
-
-  // Sound cues for soundtrack.mjs: scene transitions, keystrokes and [data-sfx] elements.
-  function cues() {
-    const list = []
-    for (const scene of scenes) {
-      if (scene.end < DURATION) list.push({ type: 'whoosh', time: scene.end })
-    }
-    for (const item of typed) {
-      ;[...item.text].forEach((char, index) => {
-        const time = item.start + ((index + 0.5) / item.text.length) * item.duration
-        if (char !== ' ') list.push({ type: 'key', time })
-      })
-    }
-    for (const el of document.querySelectorAll('[data-sfx]')) {
-      const time = Number.parseFloat(el.dataset.sfxAt ?? el.style.getPropertyValue('--d'))
-      list.push({ type: el.dataset.sfx, time, note: Number(el.dataset.sfxNote ?? 0) })
-    }
-    return list.sort((a, b) => a.time - b.time)
-  }
-
-  window.__duration = DURATION
-  window.__seek = seek
-  window.__cues = cues
-  window.__ready = Promise.all([
-    document.fonts.load('700 40px Geist'),
-    document.fonts.load('400 20px "Geist Mono"'),
-  ]).then(() => document.fonts.ready)
-
-  if (!rendering) {
-    const stage = document.getElementById('stage')
-    const fit = () => {
-      const scale = Math.min(innerWidth / 1920, innerHeight / 1080)
-      stage.style.transform = `translate(${(innerWidth - 1920 * scale) / 2}px, ${(innerHeight - 1080 * scale) / 2}px) scale(${scale})`
-    }
-    addEventListener('resize', fit)
-    fit()
-
-    // Preview controls: space pauses, arrow keys jump 5s, ?t=42 starts at 42s.
-    let time = Number(params.get('t') ?? 0)
-    let paused = false
-    let last = performance.now()
-    addEventListener('keydown', (event) => {
-      if (event.key === ' ') paused = !paused
-      if (event.key === 'ArrowRight') time += 5
-      if (event.key === 'ArrowLeft') time = Math.max(0, time - 5)
-    })
-    const tick = (now) => {
-      if (!paused) time = (time + (now - last) / 1000) % DURATION
-      last = now
-      seek(time)
-      requestAnimationFrame(tick)
-    }
-    window.__ready.then(() => requestAnimationFrame(tick))
-  }
+  createTimeline({ duration: 79.4, width: 1920, height: 1080, messages })
 </script>
 </body>
 </html>

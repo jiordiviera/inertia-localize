@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Inertia Localize — TikTok video</title>
+<link rel="stylesheet" href="base.css" />
+<style>
+/* 1080×1920. TikTok overlays its UI on the top 150px, the bottom ~480px and a right rail,
+   so content stays in y 210–1240 and captions sit just below it. */
+#stage { width: 1080px; height: 1920px; }
+.scene { padding: 210px 120px 680px 72px; }
+.scene.center { justify-content: center; align-items: center; text-align: center; padding-right: 96px; }
+
+.eyebrow { font-size: 32px; font-weight: 650; letter-spacing: 0.2em; text-transform: uppercase; color: var(--primary-2); margin-bottom: 18px; }
+.title { font-size: 80px; line-height: 1.04; font-weight: 760; letter-spacing: -0.025em; text-wrap: balance; }
+.code { font-size: 30px; line-height: 1.55; padding: 22px 30px; }
+.card-head { font-size: 24px; padding: 18px 28px; }
+.card-head svg { width: 30px; height: 30px; }
+.card { border-radius: 26px; }
+
+/* background corners, re-cut for portrait */
+.bg-glow {
+  background:
+    radial-gradient(700px 700px at 85% 22%, rgba(91, 91, 247, 0.2), transparent 70%),
+    radial-gradient(700px 800px at 10% 80%, rgba(79, 70, 229, 0.14), transparent 70%);
+}
+
+/* 1. hook */
+.brand-pill { display: inline-flex; align-items: center; gap: 16px; padding: 12px 26px 12px 14px; border-radius: 999px; border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.05); font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
+.brand-pill svg { width: 58px; height: 58px; }
+.hook-eyebrow { margin-top: 70px; font-size: 44px; font-weight: 750; color: var(--primary-2); letter-spacing: 0.04em; }
+.hook-title { margin-top: 18px; font-size: 112px; line-height: 1.02; font-weight: 820; letter-spacing: -0.035em; }
+.hook-title .word { display: inline-block; margin-right: 0.22em; }
+.strike { position: relative; color: #ff8fa3; }
+.strike::after { content: ''; position: absolute; left: -4%; right: -4%; top: 52%; height: 12px; border-radius: 6px; background: var(--red); transform-origin: 0 50%; animation: grow 0.35s ease-out var(--d) both; }
+.copy-row { display: flex; align-items: center; gap: 22px; margin-top: 76px; }
+.file-chip { position: relative; display: inline-flex; align-items: center; gap: 14px; padding: 18px 26px; border-radius: 18px; border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.05); font-family: 'Geist Mono', monospace; font-size: 30px; }
+.file-chip svg { width: 34px; height: 34px; }
+.copy-arrow { color: var(--dim); }
+.copy-arrow svg { width: 50px; height: 50px; display: block; }
+.chip-x { position: absolute; right: -22px; top: -22px; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: #2a0d14; border: 3px solid var(--red); color: var(--red); }
+.chip-x svg { width: 32px; height: 32px; }
+
+/* 2. problem */
+.stack { display: flex; flex-direction: column; margin-top: 44px; }
+.vs { align-self: center; position: relative; width: 92px; height: 92px; margin: 22px 0; border-radius: 50%; display: grid; place-items: center; border: 2px dashed var(--border-strong); color: var(--muted); font-size: 46px; font-weight: 700; }
+.vs-x { position: absolute; inset: -2px; border-radius: 50%; display: grid; place-items: center; background: #2a0d14; border: 2px solid var(--red); color: var(--red); box-shadow: 0 0 40px rgba(251, 95, 120, 0.4); }
+.vs-x svg { width: 46px; height: 46px; }
+.tag { position: absolute; right: 16px; top: 0; bottom: 0; height: fit-content; margin: auto 0; font-family: 'Geist', sans-serif; font-size: 22px; font-weight: 650; padding: 4px 14px; border-radius: 999px; }
+.tag.warn { color: var(--amber); background: rgba(251, 191, 36, 0.14); border: 1px solid rgba(251, 191, 36, 0.4); }
+.tag.miss { color: var(--red); background: rgba(251, 95, 120, 0.14); border: 1px solid rgba(251, 95, 120, 0.4); }
+.missing-key { color: rgba(251, 95, 120, 0.8); }
+.glow-in { animation: fade 0.4s ease var(--d) both; }
+
+/* 3. solution */
+.solution .brand-logo { width: 300px; height: 300px; filter: drop-shadow(0 40px 80px rgba(91, 91, 247, 0.4)); }
+.solution .brand-word { margin-top: 48px; font-size: 150px; font-weight: 820; line-height: 0.9; letter-spacing: -0.045em; }
+.solution .brand-word .primary { color: #6470ff; }
+.truth { margin-top: 70px; font-size: 76px; font-weight: 780; letter-spacing: -0.03em; }
+.underline { position: relative; display: inline-block; }
+.underline svg { position: absolute; left: -3%; width: 106%; bottom: -30px; height: 36px; overflow: visible; }
+.underline path { fill: none; stroke: var(--primary); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 1; animation: draw 0.8s var(--ease) var(--d) both; }
+.duo-row { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 64px; }
+.big-chip { font-size: 32px; }
+.big-chip svg { width: 38px; height: 38px; }
+.plus-ic { width: 40px; height: 40px; color: var(--dim); }
+
+/* 4. flow */
+.flow { display: flex; flex-direction: column; margin-top: 46px; }
+.node { position: relative; display: flex; align-items: center; gap: 28px; height: 140px; padding: 0 30px; border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); }
+.node .glow-on { animation: fade 0.4s ease var(--on) both; }
+.node-ic { width: 84px; height: 84px; flex: none; border-radius: 22px; display: grid; place-items: center; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.05); color: var(--primary-2); }
+.node-ic svg { width: 48px; height: 48px; }
+.node-ic.duo { width: auto; padding: 0 16px; display: flex; gap: 12px; }
+.duo svg { width: 42px; height: 42px; }
+.node-ic .t-fn { font-family: 'Geist Mono', monospace; font-size: 32px; font-weight: 700; color: var(--primary-3); }
+.node-label { font-size: 40px; font-weight: 700; letter-spacing: -0.015em; }
+.node-detail { margin-top: 6px; font-family: 'Geist Mono', monospace; font-size: 26px; color: var(--muted); }
+.vlink { position: relative; width: 4px; height: 46px; margin-left: 70px; background: rgba(255, 255, 255, 0.12); border-radius: 2px; }
+.vlink-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, var(--primary), var(--primary-2)); transform-origin: 50% 0; animation: growY 0.5s ease-in-out var(--d) both; }
+
+/* 5. demo */
+.demo-code { margin-top: 36px; }
+.demo-code .code { font-size: 29px; line-height: 1.5; }
+.browser { margin-top: 28px; }
+.urlbar { flex: 1; padding: 8px 18px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); font-size: 22px; color: var(--muted); }
+.page { position: relative; height: 380px; padding: 28px 40px; overflow: hidden; border-radius: 0 0 26px 26px; background: radial-gradient(500px 300px at 85% 0%, rgba(91, 91, 247, 0.14), transparent 70%); }
+.page-nav { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 700; }
+.page-nav .app-logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--primary), #8b5cf6); }
+.page-h1 { position: absolute; left: 40px; top: 96px; font-size: 104px; font-weight: 800; letter-spacing: -0.035em; }
+.page-btn { position: absolute; left: 40px; top: 262px; padding: 18px 34px; border-radius: 16px; border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.06); font-size: 32px; font-weight: 650; animation: press 0.35s ease 27.3s both; }
+@keyframes press { 0%, 100% { transform: none; background: rgba(255, 255, 255, 0.06); } 40% { transform: scale(0.95); background: rgba(91, 91, 247, 0.45); } }
+.ripple { position: absolute; left: 140px; top: 302px; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: rgba(124, 134, 255, 0.7); animation: ripple 0.7s ease-out 27.35s both; }
+@keyframes ripple { from { transform: scale(0); opacity: 0.9; } to { transform: scale(8); opacity: 0; } }
+.cursor { position: absolute; left: 0; top: 0; z-index: 3; animation: gone 0.4s ease 29.6s forwards; }
+.cursor-move { animation: cursorMove 1s cubic-bezier(0.45, 0, 0.2, 1) 26.2s both; }
+.cursor-press { width: 56px; height: 56px; transform-origin: 10px 5px; animation: cursorPress 0.3s ease 27.25s both; }
+.cursor svg { width: 56px; height: 56px; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6)); }
+@keyframes cursorMove { 0% { transform: translate(760px, 380px); opacity: 0; } 25% { opacity: 1; } 100% { transform: translate(150px, 298px); opacity: 1; } }
+@keyframes cursorPress { 0%, 100% { transform: none; } 45% { transform: scale(0.82); } }
+.toast { position: absolute; right: 26px; top: 26px; display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-radius: 14px; background: #12121e; border: 1px solid var(--border-strong); font-family: 'Geist Mono', monospace; font-size: 24px; color: #d4d4e2; box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.8); }
+.toast .method { color: var(--amber); font-weight: 700; }
+.toast .status { color: var(--green); font-weight: 700; }
+
+/* 6. install */
+.term { margin-top: 46px; }
+.term-body { padding: 28px 30px; font-family: 'Geist Mono', monospace; font-size: 27px; line-height: 1.9; }
+.term-line { white-space: pre; }
+.prompt { color: var(--primary-2); font-weight: 700; }
+.term-out { display: flex; align-items: center; gap: 12px; color: var(--green); padding-left: 30px; }
+.term-out svg { width: 30px; height: 30px; }
+.term-out span { color: #b9b9cb; }
+.timer { display: inline-flex; align-items: center; gap: 18px; margin-top: 44px; padding: 20px 34px; border-radius: 22px; background: rgba(91, 91, 247, 0.16); border: 1px solid rgba(124, 134, 255, 0.45); font-size: 46px; font-weight: 780; color: var(--primary-3); align-self: flex-start; }
+.timer svg { width: 52px; height: 52px; }
+.badges { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+.badges .badge { font-size: 26px; padding: 12px 22px; }
+
+/* 7. outro */
+.outro .brand-logo { width: 240px; height: 240px; filter: drop-shadow(0 40px 80px rgba(91, 91, 247, 0.4)); }
+.outro .brand-word { margin-top: 40px; font-size: 128px; font-weight: 820; line-height: 0.9; letter-spacing: -0.045em; }
+.outro .brand-word .primary { color: #6470ff; }
+.oss { margin-top: 56px; }
+.oss.chip { font-size: 34px; }
+.cta { display: inline-flex; align-items: center; gap: 18px; margin-top: 54px; padding: 26px 46px; border-radius: 22px; background: var(--primary); color: #fff; font-size: 52px; font-weight: 780; box-shadow: 0 24px 70px -16px rgba(91, 91, 247, 0.75); }
+.cta svg { width: 54px; height: 54px; }
+.links { margin-top: 44px; display: flex; flex-direction: column; gap: 14px; font-family: 'Geist Mono', monospace; font-size: 30px; color: #d9d9e6; }
+.links span { display: inline-flex; align-items: center; justify-content: center; gap: 14px; }
+.links svg { width: 34px; height: 34px; }
+/* captions */
+#captions {
+  position: absolute; left: 72px; right: 150px; top: 1272px; z-index: 10;
+  display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; column-gap: 18px;
+  font-size: 66px; font-weight: 850; line-height: 1.12; letter-spacing: -0.01em; text-align: center;
+  color: #fff; transform-origin: 50% 0;
+  -webkit-text-stroke: 14px rgba(7, 7, 12, 0.94); paint-order: stroke fill;
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55));
+}
+#captions span { display: inline-block; }
+#captions span.now { color: #ffd84d; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="logo-clip"><rect width="100" height="100" rx="23" /></clipPath>
+    <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a46ff" />
+      <stop offset="1" stop-color="#6383ff" />
+    </linearGradient>
+    <linearGradient id="corner-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5b5bf7" stop-opacity="0.75" />
+      <stop offset="0.75" stop-color="#4f46e5" stop-opacity="0.12" />
+    </linearGradient>
+    <path id="logo-corner" d="M0 0H56L41 15C38 18 34.5 19.3 30.5 19.3C26.5 19.3 23 20.8 20 23.8L0 43.8Z" />
+  </defs>
+  <symbol id="logo" viewBox="0 0 100 100">
+    <g clip-path="url(#logo-clip)">
+      <rect width="100" height="100" fill="#0b0b10" />
+      <use href="#logo-corner" fill="url(#logo-grad)" />
+      <use href="#logo-corner" fill="url(#logo-grad)" transform="rotate(180 50 50)" />
+    </g>
+    <rect x="0.5" y="0.5" width="99" height="99" rx="22.5" fill="none" stroke="rgba(255,255,255,0.08)" />
+    <text x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Geist, sans-serif" font-weight="700" font-size="40" letter-spacing="2" fill="#fff">{t}</text>
+  </symbol>
+  <symbol id="logo-laravel" viewBox="0 0 256 264">
+    <path fill="#FF2D20" d="m255.9 59.6.1 1.1v56.6c0 1.4-.8 2.8-2 3.5l-47.6 27.4v54.2c0 1.4-.7 2.8-2 3.5l-99.1 57-.7.4-.3.1c-.7.2-1.4.2-2.1 0l-.4-.1-.6-.3L2 206c-1.3-.8-2.1-2.2-2.1-3.6V32.7l.1-1.1.2-.4.3-.6.2-.4.4-.5.4-.3c.2 0 .3-.2.5-.3L51.6.6c1.3-.8 2.9-.8 4.1 0L105.3 29c.2 0 .3.2.4.3l.5.3c0 .2.2.4.3.5l.3.4.3.6.1.4.2 1v106l41.2-23.7V60.7c0-.4 0-.7.2-1l.1-.4.3-.7.3-.3.3-.5.5-.3.4-.4 49.6-28.5c1.2-.7 2.8-.7 4 0L254 57l.5.4.4.3.4.5.2.3c.2.2.2.5.3.7l.2.3Zm-8.2 55.3v-47l-17.3 10-24 13.7v47l41.3-23.7Zm-49.5 85v-47l-23.6 13.5-67.2 38.4v47.5l90.8-52.3ZM8.2 39.9V200l90.9 52.3v-47.5l-47.5-26.9-.4-.4c-.2 0-.3-.1-.4-.3l-.4-.4-.3-.4-.2-.5-.2-.5v-.6l-.2-.5V63.6L25.6 49.8l-17.3-10Zm45.5-31L12.4 32.8l41.3 23.7 41.2-23.7L53.7 8.9ZM75 157.3l24-13.8V39.8l-17.3 10-24 13.8v103.6l17.3-10ZM202.3 36.9 161 60.7l41.3 23.8 41.3-23.8-41.3-23.8Zm-4.1 54.7-24-13.8-17.3-10v47l24 13.9 17.3 10v-47Zm-95 106 60.6-34.5 30.2-17.3-41.2-23.8-47.5 27.4L62 174.3l41.2 23.3Z" />
+  </symbol>
+  <symbol id="logo-react" viewBox="0 0 569 512">
+    <g fill="#58C4DC">
+      <path d="M285.5,201 C255.400481,201 231,225.400481 231,255.5 C231,285.599519 255.400481,310 285.5,310 C315.599519,310 340,285.599519 340,255.5 C340,225.400481 315.599519,201 285.5,201" />
+      <path d="M568.959856,255.99437 C568.959856,213.207656 529.337802,175.68144 466.251623,150.985214 C467.094645,145.423543 467.85738,139.922107 468.399323,134.521063 C474.621631,73.0415145 459.808523,28.6686204 426.709856,9.5541429 C389.677085,-11.8291748 337.36955,3.69129898 284.479928,46.0162134 C231.590306,3.69129898 179.282771,-11.8291748 142.25,9.5541429 C109.151333,28.6686204 94.3382249,73.0415145 100.560533,134.521063 C101.102476,139.922107 101.845139,145.443621 102.708233,151.02537 C97.4493791,153.033193 92.2908847,155.161486 87.3331099,157.39017 C31.0111824,182.708821 0,217.765415 0,255.99437 C0,298.781084 39.6220545,336.307301 102.708233,361.003527 C101.845139,366.565197 101.102476,372.066633 100.560533,377.467678 C94.3382249,438.947226 109.151333,483.32012 142.25,502.434597 C153.629683,508.887578 166.52439,512.186771 179.603923,511.991836 C210.956328,511.991836 247.567589,495.487529 284.479928,465.972527 C321.372196,495.487529 358.003528,511.991836 389.396077,511.991836 C402.475265,512.183856 415.36922,508.884856 426.75,502.434597 C459.848667,483.32012 474.661775,438.947226 468.439467,377.467678 C467.897524,372.066633 467.134789,366.565197 466.291767,361.003527 C529.377946,336.347457 569,298.761006 569,255.99437 M389.155214,27.1025182 C397.565154,26.899606 405.877839,28.9368502 413.241569,33.0055186 C436.223966,46.2772304 446.540955,82.2775015 441.522965,131.770345 C441.181741,135.143488 440.780302,138.556788 440.298575,141.990165 C414.066922,134.08804 387.205771,128.452154 360.010724,125.144528 C343.525021,103.224055 325.192524,82.7564475 305.214266,63.9661533 C336.586743,39.7116483 366.032313,27.1025182 389.135142,27.1025182 M378.356498,310.205598 C368.204912,327.830733 357.150626,344.919965 345.237759,361.405091 C325.045049,363.479997 304.758818,364.51205 284.459856,364.497299 C264.167589,364.51136 243.888075,363.479308 223.702025,361.405091 C211.820914,344.919381 200.80007,327.83006 190.683646,310.205598 C180.532593,292.629285 171.306974,274.534187 163.044553,255.99437 C171.306974,237.454554 180.532593,219.359455 190.683646,201.783142 C200.784121,184.229367 211.770999,167.201087 223.601665,150.764353 C243.824636,148.63809 264.145559,147.579168 284.479928,147.591877 C304.772146,147.579725 325.051559,148.611772 345.237759,150.68404 C357.109048,167.14607 368.136094,184.201112 378.27621,201.783142 C388.419418,219.363718 397.644825,237.458403 405.915303,255.99437 C397.644825,274.530337 388.419418,292.625022 378.27621,310.205598 M419.724813,290.127366 C426.09516,307.503536 431.324985,325.277083 435.380944,343.334682 C417.779633,348.823635 399.836793,353.149774 381.668372,356.285142 C388.573127,345.871232 395.263781,335.035679 401.740334,323.778483 C408.143291,312.655143 414.144807,301.431411 419.805101,290.207679 M246.363271,390.377981 C258.848032,391.140954 271.593728,391.582675 284.5,391.582675 C297.406272,391.582675 310.232256,391.140954 322.737089,390.377981 C310.880643,404.583418 298.10766,417.997563 284.5,430.534446 C270.921643,417.999548 258.18192,404.585125 246.363271,390.377981 Z M187.311556,356.244986 C169.137286,353.123646 151.187726,348.810918 133.578912,343.334682 C137.618549,325.305649 142.828222,307.559058 149.174827,290.207679 C154.754833,301.431411 160.736278,312.655143 167.239594,323.778483 C173.74291,334.901824 180.467017,345.864539 187.311556,356.285142 M149.174827,221.760984 C142.850954,204.473938 137.654787,186.794745 133.619056,168.834762 C151.18418,163.352378 169.085653,159.013101 187.211197,155.844146 C180.346585,166.224592 173.622478,176.986525 167.139234,188.210257 C160.65599,199.433989 154.734761,210.517173 149.074467,221.760984 M322.616657,121.590681 C310.131896,120.827708 297.3862,120.385987 284.379568,120.385987 C271.479987,120.385987 258.767744,120.787552 246.242839,121.590681 C258.061488,107.383537 270.801211,93.9691137 284.379568,81.4342157 C297.99241,93.9658277 310.765727,107.380324 322.616657,121.590681 Z M401.70019,188.210257 C395.196875,176.939676 388.472767,166.09743 381.527868,155.68352 C399.744224,158.819049 417.734224,163.151949 435.380944,168.654058 C431.331963,186.680673 426.122466,204.426664 419.785029,221.781062 C414.205023,210.55733 408.203506,199.333598 401.720262,188.230335 M127.517179,131.790423 C122.438973,82.3176579 132.816178,46.2973086 155.778503,33.0255968 C163.144699,28.9632474 171.455651,26.9264282 179.864858,27.1225964 C202.967687,27.1225964 232.413257,39.7317265 263.785734,63.9862316 C243.794133,82.7898734 225.448298,103.270812 208.949132,125.204763 C181.761691,128.528025 154.90355,134.14313 128.661281,141.990165 C128.199626,138.556788 127.778115,135.163566 127.456963,131.790423 M98.4529773,182.106474 C101.54406,180.767925 104.695358,179.429376 107.906872,178.090828 C114.220532,204.735668 122.781793,230.7969 133.498624,255.99437 C122.761529,281.241316 114.193296,307.357063 107.8868,334.058539 C56.7434387,313.076786 27.0971497,284.003505 27.0971497,255.99437 C27.0971497,229.450947 53.1907013,202.526037 98.4529773,182.106474 Z M155.778503,478.963143 C132.816178,465.691432 122.438973,429.671082 127.517179,380.198317 C127.838331,376.825174 128.259842,373.431953 128.721497,369.978497 C154.953686,377.878517 181.814655,383.514365 209.009348,386.824134 C225.500295,408.752719 243.832321,429.233234 263.805806,448.042665 C220.069,481.834331 180.105722,492.97775 155.838719,478.963143 M441.502893,380.198317 C446.520883,429.691161 436.203894,465.691432 413.221497,478.963143 C388.974566,493.017906 348.991216,481.834331 305.274481,448.042665 C325.241364,429.232737 343.566681,408.752215 360.050868,386.824134 C387.245915,383.516508 414.107066,377.880622 440.338719,369.978497 C440.820446,373.431953 441.221885,376.825174 441.563109,380.198317 M461.193488,334.018382 C454.869166,307.332523 446.294494,281.231049 435.561592,255.99437 C446.289797,230.744081 454.857778,204.629101 461.173416,177.930202 C512.216417,198.911955 541.942994,227.985236 541.942994,255.99437 C541.942994,284.003505 512.296705,313.076786 461.153344,334.058539" />
+    </g>
+  </symbol>
+  <symbol id="logo-vue" viewBox="0 0 256 221">
+    <path d="M204.8 0H256L128 220.8 0 0h97.92L128 51.2 157.44 0h47.36Z" fill="#41B883" />
+    <path d="m0 0 128 220.8L256 0h-51.2L128 132.48 50.56 0H0Z" fill="#41B883" />
+    <path d="M50.56 0 128 133.12 204.8 0h-47.36L128 51.2 97.92 0H50.56Z" fill="#35495E" />
+  </symbol>
+  <symbol id="logo-github" viewBox="0 0 1024 1024">
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M512 0C229.12 0 0 229.12 0 512c0 226.56 146.56 417.92 350.08 485.76 25.6 4.48 35.2-10.88 35.2-24.32 0-12.16-.64-52.48-.64-95.36-128.64 23.68-161.92-31.36-172.16-60.16-5.76-14.72-30.72-60.16-52.48-72.32-17.92-9.6-43.52-33.28-.64-33.92 40.32-.64 69.12 37.12 78.72 52.48 46.08 77.44 119.68 55.68 149.12 42.24 4.48-33.28 17.92-55.68 32.64-68.48-113.92-12.8-232.96-56.96-232.96-252.8 0-55.68 19.84-101.76 52.48-137.6-5.12-12.8-23.04-65.28 5.12-135.68 0 0 42.88-13.44 140.8 52.48 40.96-11.52 84.48-17.28 128-17.28s87.04 5.76 128 17.28c97.92-66.56 140.8-52.48 140.8-52.48 28.16 70.4 10.24 122.88 5.12 135.68 32.64 35.84 52.48 81.28 52.48 137.6 0 196.48-119.68 240-233.6 252.8 18.56 16 34.56 46.72 34.56 94.72 0 68.48-.64 123.52-.64 140.8 0 13.44 9.6 29.44 35.2 24.32C877.44 929.92 1024 737.92 1024 512 1024 229.12 794.88 0 512 0" />
+  </symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3v7h6l-8 11v-7H5l8-11" /></symbol>
+  <symbol id="i-braces" viewBox="0 0 24 24"><path d="M7 4a2 2 0 0 0-2 2v3a2 3 0 0 1-2 3a2 3 0 0 1 2 3v3a2 2 0 0 0 2 2" /><path d="M17 4a2 2 0 0 1 2 2v3a2 3 0 0 0 2 3a2 3 0 0 0-2 3v3a2 2 0 0 1-2 2" /></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1-7.96-14.846a12 12 0 0 0 8.5-3a12 12 0 0 0 8.5 3a12 12 0 0 1-.09 7.06" /><path d="M15 19l2 2l4-4" /></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5l10-10" /></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18" /><path d="M6 6l12 12" /></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M7 10h14l-4-4" /><path d="M17 14H3l4 4" /></symbol>
+  <symbol id="i-world" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /><path d="M3.6 9h16.8" /><path d="M3.6 15h16.8" /><path d="M11.5 3a17 17 0 0 0 0 18" /><path d="M12.5 3a17 17 0 0 1 0 18" /></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2-2a2 2 0 0 1-2-2a2 2 0 0 1-2 2zm0-12a2 2 0 0 1 2 2a2 2 0 0 1 2-2a2 2 0 0 1-2-2a2 2 0 0 1-2 2zm-7 12a6 6 0 0 1 6-6a6 6 0 0 1-6-6a6 6 0 0 1-6 6a6 6 0 0 1 6 6z" /></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" /></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="M13 18l6-6" /><path d="M13 6l6 6" /></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M5 7l5 5l-5 5" /><path d="M12 19h7" /></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14" /><path d="M18 13l-6 6" /><path d="M6 13l6 6" /></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0" /><path d="M12 7v5l3 3" /></symbol>
+</svg>
+
+<div id="stage">
+  <div class="bg">
+    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+    <svg aria-hidden="true" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+      <g class="corner-in-tl"><g class="drift-a">
+        <path d="M0 0H560L378 182C346 214 313 226 270 226C227 226 192 242 160 274L0 434Z" fill="url(#corner-grad)" />
+      </g></g>
+      <g class="corner-in-br"><g class="drift-b">
+        <path d="M0 0H560L378 182C346 214 313 226 270 226C227 226 192 242 160 274L0 434Z" fill="url(#corner-grad)" transform="rotate(180 540 960)" />
+      </g></g>
+    </svg>
+  </div>
+
+  <!-- 1. Hook -->
+  <section class="scene" data-in="0" data-out="4.5">
+    <div><span class="brand-pill pop" data-sfx="pop" style="--d:0.1s"><svg aria-hidden="true"><use href="#logo" /></svg>inertia <span class="primary">localize</span></span></div>
+    <div class="hook-eyebrow up" style="--d:0.3s">Laravel devs:</div>
+    <div class="hook-title">
+      <span class="word up" style="--d:1.36s">Stop</span><span class="word up" style="--d:1.76s">copying</span><span class="word up" style="--d:2.22s">your</span><span class="word up" style="--d:2.38s">translations</span><span class="word up" style="--d:3.04s">into</span><span class="word up" style="--d:3.4s"><span class="strike" style="--d:3.7s">JSON</span>.</span>
+    </div>
+    <div class="copy-row">
+      <span class="file-chip from-left" data-sfx="swish" style="--d:1.6s"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>lang/en/ui.php</span>
+      <span class="copy-arrow fade" style="--d:2.1s"><svg aria-hidden="true" class="ic"><use href="#i-arrow" /></svg></span>
+      <span class="file-chip from-right" style="--d:2.4s"><svg aria-hidden="true" class="ic" style="color:var(--amber)"><use href="#i-braces" /></svg>en.json<span class="chip-x pop" data-sfx="error" style="--d:3.7s"><svg aria-hidden="true" class="ic"><use href="#i-x" /></svg></span></span>
+    </div>
+  </section>
+
+  <!-- 2. Problem -->
+  <section class="scene" data-in="4.5" data-out="11.9">
+    <p class="eyebrow up" style="--d:4.7s">The problem</p>
+    <div class="title up" style="--d:4.85s">Translations live twice.</div>
+    <div class="stack">
+      <div class="card from-left" data-sfx="swish" style="--d:5.6s">
+        <div class="glow-on glow-in" data-sfx="tick" style="--d:6.94s"></div>
+        <div class="card-head"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>lang/fr/ui.php</div>
+        <div class="code">
+          <span class="ln"><span class="tk">return</span> [</span>
+          <span class="ln">    <span class="ts">'save'</span> <span class="tp">=&gt;</span> <span class="ts">'Enregistrer'</span>,</span>
+          <span class="ln">    <span class="ts">'greeting'</span> <span class="tp">=&gt;</span> <span class="ts">'Bonjour :name'</span>,</span>
+          <span class="ln">];</span>
+        </div>
+      </div>
+      <div class="vs fade" style="--d:8.2s">≠<div class="vs-x pop" data-sfx="error" style="--d:10.82s"><svg aria-hidden="true" class="ic"><use href="#i-x" /></svg></div></div>
+      <div class="card from-right" style="--d:7.9s">
+        <div class="glow-on glow-in" data-sfx="tick" style="--d:8.64s"></div>
+        <div class="card-head"><svg aria-hidden="true" class="ic" style="color:var(--amber)"><use href="#i-braces" /></svg>resources/js/locales/fr.json</div>
+        <div class="code">
+          <span class="ln">{</span>
+          <span class="ln mark-warn" style="--d:11s">  <span class="ts">"save"</span>: <span class="ts">"Sauvegarder"</span>,<span class="tag warn up" style="--d:11s">differs</span></span>
+          <span class="ln mark-miss" style="--d:11.25s">  <span class="missing-key">"greeting": …</span><span class="tag miss up" style="--d:11.25s">missing</span></span>
+          <span class="ln">}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Solution -->
+  <section class="scene center solution" data-in="11.9" data-out="16.9">
+    <svg aria-hidden="true" class="brand-logo pop" data-sfx="pop" style="--d:12.15s"><use href="#logo" /></svg>
+    <div class="brand-word">
+      <div class="reveal" data-sfx="swish" style="--d:12.3s">inertia</div>
+      <div class="reveal primary" style="--d:12.74s">localize</div>
+    </div>
+    <div class="truth up" style="--d:14.5s"><span class="underline">One source of truth.<svg aria-hidden="true" viewBox="0 0 400 40" preserveAspectRatio="none"><path pathLength="1" data-sfx="swish" style="--d:15.1s" d="M4 30 C 90 8, 220 6, 396 22" /></svg></span></div>
+    <div class="duo-row">
+      <span class="chip big-chip up" data-sfx="tick" style="--d:15.6s"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>Laravel</span>
+      <svg aria-hidden="true" class="ic plus-ic fade" style="--d:15.75s"><use href="#i-arrow" /></svg>
+      <span class="chip big-chip up" data-sfx="tick" style="--d:15.85s"><svg aria-hidden="true"><use href="#logo-react" /></svg>React</span>
+      <span class="chip big-chip up" data-sfx="tick" style="--d:16s"><svg aria-hidden="true"><use href="#logo-vue" /></svg>Vue</span>
+    </div>
+  </section>
+
+  <!-- 4. How it works -->
+  <section class="scene" data-in="16.9" data-out="24.2">
+    <p class="eyebrow up" style="--d:17s">How it works</p>
+    <div class="title up" style="--d:17.15s">From lang/ to your UI.</div>
+    <div class="flow">
+      <div class="node up" data-sfx="ping" data-sfx-at="17.44" data-sfx-note="0" style="--d:17.3s;--on:17.44s">
+        <div class="glow-on"></div>
+        <div class="node-ic"><svg aria-hidden="true"><use href="#logo-laravel" /></svg></div>
+        <div><div class="node-label">Laravel</div><div class="node-detail">lang/en/ui.php</div></div>
+      </div>
+      <div class="vlink fade" style="--d:17.5s"><div class="vlink-fill" style="--d:18.7s"></div></div>
+      <div class="node up" data-sfx="ping" data-sfx-at="19.24" data-sfx-note="1" style="--d:17.55s;--on:19.24s">
+        <div class="glow-on"></div>
+        <div class="node-ic"><svg aria-hidden="true" class="ic"><use href="#i-braces" /></svg></div>
+        <div><div class="node-label">Inertia prop</div><div class="node-detail">i18n, on every response</div></div>
+      </div>
+      <div class="vlink fade" style="--d:17.75s"><div class="vlink-fill" style="--d:20s"></div></div>
+      <div class="node up" data-sfx="ping" data-sfx-at="20.52" data-sfx-note="2" style="--d:17.8s;--on:20.52s">
+        <div class="glow-on"></div>
+        <div class="node-ic duo"><svg aria-hidden="true"><use href="#logo-react" /></svg><svg aria-hidden="true"><use href="#logo-vue" /></svg></div>
+        <div><div class="node-label">React / Vue adapter</div><div class="node-detail">useTranslation()</div></div>
+      </div>
+      <div class="vlink fade" style="--d:18s"><div class="vlink-fill" style="--d:21.7s"></div></div>
+      <div class="node up" data-sfx="ping" data-sfx-at="22.26" data-sfx-note="3" style="--d:18.05s;--on:22.26s">
+        <div class="glow-on"></div>
+        <div class="node-ic"><span class="t-fn">t()</span></div>
+        <div><div class="node-label">t('ui.greeting')</div><div class="node-detail">→ "Hello Ada"</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Demo -->
+  <section class="scene" data-in="24.2" data-out="32.1">
+    <p class="eyebrow up" style="--d:24.3s">In your page</p>
+    <div class="card demo-code up" data-sfx="swish" style="--d:24.4s">
+      <div class="card-head"><svg aria-hidden="true"><use href="#logo-react" /></svg>Welcome.tsx</div>
+      <div class="code">
+        <span class="ln"><span class="tk">const</span> { t } = <span class="tf">useTranslation</span>()</span>
+        <span class="ln"><span class="tk">const</span> { setLocale } = <span class="tf">useLocaleSwitch</span>()</span>
+        <span class="ln"> </span>
+        <span class="ln mark-line" data-sfx="tick" style="--d:25s">&lt;<span class="tt">h1</span>&gt;{<span class="tf">t</span>(<span class="ts">'ui.greeting'</span>, { name: <span class="ts">'Ada'</span> })}&lt;/<span class="tt">h1</span>&gt;</span>
+        <span class="ln mark-line" style="--d:27.36s">&lt;<span class="tt">button</span> <span class="ta">onClick</span>={() =&gt; <span class="tf">setLocale</span>(<span class="ts">'fr'</span>)}&gt;</span>
+        <span class="ln mark-line" style="--d:27.36s">  Français</span>
+        <span class="ln mark-line" style="--d:27.36s">&lt;/<span class="tt">button</span>&gt;</span>
+      </div>
+    </div>
+    <div class="card browser from-right" style="--d:24.7s">
+      <div class="card-head"><div class="dots"><i></i><i></i><i></i></div><div class="urlbar">app.test/welcome</div></div>
+      <div class="page">
+        <div class="page-nav"><span class="app-logo"></span>Acme</div>
+        <div class="page-h1 up" style="--d:25.1s">
+          <span class="swap" data-sfx="sparkle" style="--d:28.5s"><span class="swap-out">Hello Ada</span><span class="swap-in">Bonjour Ada</span></span>
+        </div>
+        <div class="page-btn fade" data-sfx="click" data-sfx-at="27.3" style="--d:25.3s">Français</div>
+        <div class="ripple"></div>
+        <div class="cursor"><div class="cursor-move"><div class="cursor-press">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2v17.2l4.6-4.3 3.1 6.9 3-1.3-3-6.8H18Z" fill="#fff" stroke="#14141c" stroke-width="1.3" stroke-linejoin="round" /></svg>
+        </div></div></div>
+        <div class="toast" style="animation:up .5s var(--ease) 27.5s both, gone .4s ease 30.2s forwards">
+          <span class="method">POST</span>/locale<span class="status">302</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Install -->
+  <section class="scene" data-in="32.1" data-out="37.9">
+    <p class="eyebrow up" style="--d:32.2s">Install</p>
+    <div class="title up" style="--d:32.35s">Two commands.</div>
+    <div class="card term up" style="--d:32.4s">
+      <div class="card-head"><div class="dots"><i></i><i></i><i></i></div>~/my-app</div>
+      <div class="term-body">
+        <div class="term-line"><span class="prompt">$</span> <span data-type="32.6" data-dur="0.95">composer require jiordiviera/inertia-localize</span></div>
+        <div class="term-out up" data-sfx="chime" style="--d:33.7s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span>Laravel package installed</span></div>
+        <div class="term-line fade" style="--d:33.8s"><span class="prompt">$</span> <span data-type="33.95" data-dur="0.6">npm install @inertia-localize/react</span></div>
+        <div class="term-out up" data-sfx="chime" style="--d:34.7s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span>React adapter added</span></div>
+      </div>
+    </div>
+    <div class="timer pop" data-sfx="pop" style="--d:34.95s"><svg aria-hidden="true" class="ic"><use href="#i-clock" /></svg>30-second setup</div>
+    <div class="badges">
+      <span class="badge up" data-sfx="tick" style="--d:35.5s">Laravel 11–13</span>
+      <span class="badge up" style="--d:35.62s">Inertia 2 &amp; 3</span>
+      <span class="badge up" style="--d:35.74s">React 16.9+</span>
+      <span class="badge up" style="--d:35.86s">Vue 3</span>
+      <span class="badge up" style="--d:35.98s">PHP 8.2+</span>
+    </div>
+  </section>
+
+  <!-- 7. Outro -->
+  <section class="scene center outro" data-in="37.9" data-out="999">
+    <svg aria-hidden="true" class="brand-logo pop" data-sfx="pop" style="--d:38.2s"><use href="#logo" /></svg>
+    <div class="brand-word">
+      <div class="reveal" style="--d:38.45s">inertia</div>
+      <div class="reveal primary" style="--d:38.75s">localize</div>
+    </div>
+    <span class="chip oss up" data-sfx="tick" style="--d:39.6s"><svg aria-hidden="true" class="ic" style="color:var(--green)"><use href="#i-check" /></svg>Free &amp; open source · MIT</span>
+    <span class="cta pop" data-sfx="pop" style="--d:42.2s">Link in bio<svg aria-hidden="true" class="ic"><use href="#i-down" /></svg></span>
+    <div class="links">
+      <span class="up" style="--d:42.7s"><svg aria-hidden="true"><use href="#logo-github" /></svg>jiordiviera/inertia-localize</span>
+      <span class="up" style="--d:42.9s"><svg aria-hidden="true" class="ic"><use href="#i-world" /></svg>inertia-localize.jiordiviera.me</span>
+    </div>
+  </section>
+
+  <div id="captions"></div>
+</div>
+
+<script src="timeline.js"></script>
+<script>
+  createTimeline({ duration: 45.5, width: 1080, height: 1920 })
+</script>
+</body>
+</html>

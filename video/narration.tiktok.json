@@ -1,0 +1,42 @@
+{
+  "en": [
+    {
+      "at": 0.3,
+      "until": 4.6,
+      "text": "Laravel devs: stop copying your translations into JSON."
+    },
+    {
+      "at": 4.8,
+      "until": 12.0,
+      "text": "Most Inertia apps keep them twice: PHP for Laravel, JSON for the frontend. Then they drift apart."
+    },
+    {
+      "at": 12.3,
+      "until": 17.0,
+      "text": "Inertia Localize keeps Laravel as your single source of truth."
+    },
+    {
+      "at": 17.3,
+      "until": 24.3,
+      "text": "Your lang files ride along as an Inertia prop, and the React or Vue adapter gives you t().",
+      "speak": "Your lang files ride along as an Inertia prop, and the React or Vue adapter gives you tee."
+    },
+    {
+      "at": 24.8,
+      "until": 32.2,
+      "text": "Call t() with a key. To switch language, call setLocale: the page re-renders in French.",
+      "speak": "Call tee with a key. To switch language, call set locale: the page re-renders in French."
+    },
+    {
+      "at": 32.5,
+      "until": 38.0,
+      "text": "Install it with Composer and npm. Setup takes thirty seconds.",
+      "speak": "Install it with Composer and N P M. Setup takes thirty seconds."
+    },
+    {
+      "at": 38.4,
+      "until": 45.5,
+      "text": "Inertia Localize is free and open source. Grab it from the link in bio!"
+    }
+  ]
+}

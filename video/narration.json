@@ -1,0 +1,98 @@
+{
+  "en": [
+    {
+      "at": 0.8,
+      "until": 5.6,
+      "text": "Meet Inertia Localize. Laravel translations, anywhere."
+    },
+    {
+      "at": 6.3,
+      "until": 15.2,
+      "text": "Most Inertia apps keep translations twice: PHP for Laravel, JSON for the frontend. They drift apart, and keys go missing."
+    },
+    {
+      "at": 15.9,
+      "until": 21.6,
+      "text": "Inertia Localize keeps Laravel as your single source of truth."
+    },
+    {
+      "at": 22.4,
+      "until": 31.8,
+      "text": "Translations are shared as an Inertia prop on every response. Your React or Vue adapter reads it, and you just call t()."
+    },
+    {
+      "at": 32.6,
+      "until": 44.6,
+      "text": "Setup takes thirty seconds: install the package and your adapter, publish the config, pick your locales, and register the locale route."
+    },
+    {
+      "at": 45.3,
+      "until": 53.9,
+      "text": "In your pages, just call t(). To switch locale, call setLocale: the session and the i18n prop update, and the page follows."
+    },
+    { "at": 54.3, "until": 59.4, "text": "Same API in Vue." },
+    {
+      "at": 60.1,
+      "until": 66.4,
+      "text": "Minimal integration. A type-safe API. One source of truth."
+    },
+    {
+      "at": 67,
+      "until": 71.4,
+      "text": "And it ships skills for your AI coding agent."
+    },
+    {
+      "at": 72.4,
+      "until": 79.4,
+      "text": "Inertia Localize: keep Laravel as your source of truth. Open source, MIT licensed."
+    }
+  ],
+  "fr": [
+    {
+      "at": 0.8,
+      "until": 5.6,
+      "text": "Voici Inertia Localize : les traductions Laravel, partout."
+    },
+    {
+      "at": 6.3,
+      "until": 15.2,
+      "text": "Souvent, vos traductions vivent en double : PHP côté Laravel, JSON côté frontend. Et elles finissent par diverger."
+    },
+    {
+      "at": 15.9,
+      "until": 21.6,
+      "text": "Inertia Localize garde Laravel comme seule source de vérité."
+    },
+    {
+      "at": 22.4,
+      "until": 31.8,
+      "text": "Vos traductions sont partagées via une prop Inertia. L’adaptateur React ou Vue la lit : il ne reste qu’à appeler t()."
+    },
+    {
+      "at": 32.6,
+      "until": 44.6,
+      "text": "L’installation prend trente secondes : le package, l’adaptateur, la configuration de vos langues et la route de changement de langue."
+    },
+    {
+      "at": 45.3,
+      "until": 53.9,
+      "text": "Dans vos pages, un simple appel à t(). Pour changer de langue, setLocale : la session et la prop se mettent à jour."
+    },
+    { "at": 54.3, "until": 59.4, "text": "Même API avec Vue." },
+    {
+      "at": 60.1,
+      "until": 66.4,
+      "text": "Intégration minimale. API typée. Une seule source de vérité."
+    },
+    {
+      "at": 67,
+      "until": 71.4,
+      "text": "Et des skills prêts pour votre agent de code IA."
+    },
+    {
+      "at": 72.4,
+      "until": 79.4,
+      "text": "Inertia Localize : gardez Laravel comme source de vérité. Open source, sous licence MIT."
+    }
+  ]
+}

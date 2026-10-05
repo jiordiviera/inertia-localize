@@ -56,7 +56,7 @@ async function renderVideo(browser, lang) {
   const tab = await openPage(browser, lang)
   const duration = await tab.evaluate(() => window.__duration)
   const frames = Math.round(duration * fps)
-  const file = join(outDir, `inertia-localize-intro-${lang}.mp4`)
+  const file = join(outDir, `video-${lang}.mp4`)
 
   const ffmpeg = spawn(
     'ffmpeg',

@@ -456,20 +456,20 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
   <!-- 1. Intro -->
   <section class="scene center" data-in="0" data-out="5.6">
     <div class="brand">
-      <svg aria-hidden="true" class="brand-logo pop" style="--d:0.25s"><use href="#logo" /></svg>
+      <svg data-sfx="pop" aria-hidden="true" class="brand-logo pop" style="--d:0.25s"><use href="#logo" /></svg>
       <div class="brand-word">
-        <div class="reveal" style="--d:0.8s">inertia</div>
+        <div data-sfx="swish" class="reveal" style="--d:0.8s">inertia</div>
         <div class="reveal primary" style="--d:1.05s">localize</div>
       </div>
     </div>
     <p class="tagline up" style="--d:1.8s" data-t="intro.tagline"></p>
     <div class="intro-stack">
-      <span class="chip up" style="--d:2.6s"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>Laravel</span>
+      <span data-sfx="tick" class="chip up" style="--d:2.6s"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>Laravel</span>
       <span class="plus fade" style="--d:2.75s">+</span>
-      <span class="chip up" style="--d:2.85s">Inertia</span>
+      <span data-sfx="tick" class="chip up" style="--d:2.85s">Inertia</span>
       <span class="plus fade" style="--d:3s"><svg aria-hidden="true" class="ic plus-ic"><use href="#i-arrow" /></svg></span>
-      <span class="chip up" style="--d:3.1s"><svg aria-hidden="true"><use href="#logo-react" /></svg>React</span>
-      <span class="chip up" style="--d:3.25s"><svg aria-hidden="true"><use href="#logo-vue" /></svg>Vue</span>
+      <span data-sfx="tick" class="chip up" style="--d:3.1s"><svg aria-hidden="true"><use href="#logo-react" /></svg>React</span>
+      <span data-sfx="tick" class="chip up" style="--d:3.25s"><svg aria-hidden="true"><use href="#logo-vue" /></svg>Vue</span>
     </div>
   </section>
 
@@ -478,7 +478,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     <p class="eyebrow up" style="--d:6s" data-t="problem.eyebrow"></p>
     <div class="title up" style="--d:6.15s" data-t="problem.title"></div>
     <div class="dup">
-      <div class="card from-left" style="--d:7s">
+      <div data-sfx="swish" class="card from-left" style="--d:7s">
         <div class="card-head"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>lang/fr/ui.php</div>
         <div class="code">
           <span class="ln"><span class="tk">return</span> [</span>
@@ -491,7 +491,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
       <div class="sync">
         <div class="sync-ring fade" style="--d:7.8s">
           <svg aria-hidden="true" class="ic"><use href="#i-sync" /></svg>
-          <div class="sync-x pop" style="--d:9.5s"><svg aria-hidden="true" class="ic"><use href="#i-x" /></svg></div>
+          <div data-sfx="error" class="sync-x pop" style="--d:9.5s"><svg aria-hidden="true" class="ic"><use href="#i-x" /></svg></div>
         </div>
         <div class="sync-label swap fade" style="--d:7.9s">
           <span class="swap-out" style="--d:9.5s" data-t="problem.sync"></span>
@@ -502,17 +502,17 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
         <div class="card-head"><svg aria-hidden="true" class="ic" style="color:var(--amber)"><use href="#i-braces" /></svg>resources/js/locales/fr.json</div>
         <div class="code">
           <span class="ln">{</span>
-          <span class="ln mark-warn" style="--d:10s">  <span class="ts">"save"</span>: <span class="ts">"Sauvegarder"</span>,<span class="tag warn up" style="--d:10s" data-t="problem.differs"></span></span>
-          <span class="ln mark-warn" style="--d:10.35s">  <span class="ts">"greeting"</span>: <span class="ts">"Bonjour {{name}}"</span><span class="tag warn up" style="--d:10.35s" data-t="problem.differs"></span></span>
-          <span class="ln mark-miss" style="--d:10.7s">  <span class="missing-key">"logout": …</span><span class="tag miss up" style="--d:10.7s" data-t="problem.missing"></span></span>
+          <span data-sfx="tick" class="ln mark-warn" style="--d:10s">  <span class="ts">"save"</span>: <span class="ts">"Sauvegarder"</span>,<span class="tag warn up" style="--d:10s" data-t="problem.differs"></span></span>
+          <span data-sfx="tick" class="ln mark-warn" style="--d:10.35s">  <span class="ts">"greeting"</span>: <span class="ts">"Bonjour {{name}}"</span><span class="tag warn up" style="--d:10.35s" data-t="problem.differs"></span></span>
+          <span data-sfx="tick" class="ln mark-miss" style="--d:10.7s">  <span class="missing-key">"logout": …</span><span class="tag miss up" style="--d:10.7s" data-t="problem.missing"></span></span>
           <span class="ln">}</span>
         </div>
       </div>
     </div>
     <div class="pains">
-      <div class="pain up" style="--d:11.4s"><span class="num">1</span><span data-t="problem.pain1"></span></div>
-      <div class="pain up" style="--d:11.75s"><span class="num">2</span><span data-t="problem.pain2"></span></div>
-      <div class="pain up" style="--d:12.1s"><span class="num">3</span><span data-t="problem.pain3"></span></div>
+      <div data-sfx="tick" class="pain up" style="--d:11.4s"><span class="num">1</span><span data-t="problem.pain1"></span></div>
+      <div data-sfx="tick" class="pain up" style="--d:11.75s"><span class="num">2</span><span data-t="problem.pain2"></span></div>
+      <div data-sfx="tick" class="pain up" style="--d:12.1s"><span class="num">3</span><span data-t="problem.pain3"></span></div>
     </div>
   </section>
 
@@ -521,7 +521,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     <div class="statement">
       <span class="up" style="--d:15.6s" data-t="idea.line1"></span>
       <span class="up primary" style="--d:16.2s" data-t="idea.line2"></span>
-      <span class="up" style="--d:16.8s"><span class="underline"><span data-t="idea.line3"></span><svg aria-hidden="true" viewBox="0 0 400 40" preserveAspectRatio="none"><path pathLength="1" style="--d:17.5s" d="M4 30 C 90 8, 220 6, 396 22" /></svg></span></span>
+      <span class="up" style="--d:16.8s"><span class="underline"><span data-t="idea.line3"></span><svg aria-hidden="true" viewBox="0 0 400 40" preserveAspectRatio="none"><path data-sfx="swish" pathLength="1" style="--d:17.5s" d="M4 30 C 90 8, 220 6, 396 22" /></svg></span></span>
     </div>
     <p class="lead idea-lead up" style="--d:18.3s" data-t="idea.sub"></p>
   </section>
@@ -531,38 +531,38 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     <p class="eyebrow up" style="--d:22s" data-t="flow.eyebrow"></p>
     <div class="title up" style="--d:22.15s" data-t="flow.title"></div>
     <div class="flow">
-      <div class="node up" style="--d:22.8s;--on:24s">
+      <div data-sfx="ping" data-sfx-at="24" data-sfx-note="0" class="node up" style="--d:22.8s;--on:24s">
         <div class="glow-on"></div>
         <div class="node-ic"><svg aria-hidden="true"><use href="#logo-laravel" /></svg></div>
         <div><div class="node-label">Laravel</div><div class="node-detail">lang/*</div></div>
       </div>
       <div class="link fade" style="--d:23s"><div class="link-fill" style="--d:24.25s"></div><div class="link-dot" style="--d:24.25s"></div></div>
-      <div class="node up" style="--d:23.05s;--on:24.8s">
+      <div data-sfx="ping" data-sfx-at="24.8" data-sfx-note="1" class="node up" style="--d:23.05s;--on:24.8s">
         <div class="glow-on"></div>
         <div class="node-ic"><svg aria-hidden="true"><use href="#logo" /></svg></div>
         <div><div class="node-label">Inertia Localize</div><div class="node-detail" data-t="flow.normalizes"></div></div>
       </div>
       <div class="link fade" style="--d:23.25s"><div class="link-fill" style="--d:25.05s"></div><div class="link-dot" style="--d:25.05s"></div></div>
-      <div class="node up" style="--d:23.3s;--on:25.6s">
+      <div data-sfx="ping" data-sfx-at="25.6" data-sfx-note="2" class="node up" style="--d:23.3s;--on:25.6s">
         <div class="glow-on"></div>
         <div class="node-ic"><svg aria-hidden="true" class="ic"><use href="#i-braces" /></svg></div>
         <div><div class="node-label" data-t="flow.sharedProps"></div><div class="node-detail">i18n</div></div>
       </div>
       <div class="link fade" style="--d:23.5s"><div class="link-fill" style="--d:25.85s"></div><div class="link-dot" style="--d:25.85s"></div></div>
-      <div class="node up" style="--d:23.55s;--on:26.4s">
+      <div data-sfx="ping" data-sfx-at="26.4" data-sfx-note="3" class="node up" style="--d:23.55s;--on:26.4s">
         <div class="glow-on"></div>
         <div class="node-ic duo"><svg aria-hidden="true"><use href="#logo-react" /></svg><svg aria-hidden="true"><use href="#logo-vue" /></svg></div>
         <div><div class="node-label">React / Vue</div><div class="node-detail" data-t="flow.adapters"></div></div>
       </div>
       <div class="link fade" style="--d:23.75s"><div class="link-fill" style="--d:26.65s"></div><div class="link-dot" style="--d:26.65s"></div></div>
-      <div class="node up" style="--d:23.8s;--on:27.2s">
+      <div data-sfx="ping" data-sfx-at="27.2" data-sfx-note="4" class="node up" style="--d:23.8s;--on:27.2s">
         <div class="glow-on"></div>
         <div class="node-ic"><span class="t-fn">t()</span></div>
         <div><div class="node-label" data-t="flow.yourPage"></div><div class="node-detail">useTranslation()</div></div>
       </div>
     </div>
     <div class="vlink" style="--d:27.7s"></div>
-    <div class="card prop-card up" style="--d:27.9s">
+    <div data-sfx="swish" class="card prop-card up" style="--d:27.9s">
       <div class="card-head"><span class="pill">i18n</span><span class="head-note" data-t="flow.shared"></span></div>
       <div class="code">
         <span class="ln"><span class="ts">'i18n'</span> <span class="tp">=&gt;</span> [</span>
@@ -584,14 +584,14 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
         <div class="card-head"><div class="dots"><i></i><i></i><i></i></div>~/my-app</div>
         <div class="term-body">
           <div class="term-line fade" style="--d:33s"><span class="prompt">$</span> <span data-type="33.4" data-dur="1.25">composer require jiordiviera/inertia-localize</span></div>
-          <div class="term-out up" style="--d:34.95s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span data-t="setup.ok1"></span></div>
+          <div data-sfx="chime" class="term-out up" style="--d:34.95s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span data-t="setup.ok1"></span></div>
           <div class="term-line fade" style="--d:35.15s"><span class="prompt">$</span> <span data-type="35.45" data-dur="1">npm install @inertia-localize/react</span><span class="tc fade" style="--d:36.5s">  # or /vue</span></div>
-          <div class="term-out up" style="--d:36.85s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span data-t="setup.ok2"></span></div>
+          <div data-sfx="chime" class="term-out up" style="--d:36.85s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span data-t="setup.ok2"></span></div>
           <div class="term-line fade" style="--d:37.05s"><span class="prompt">$</span> <span data-type="37.35" data-dur="1.45">php artisan vendor:publish --tag=inertia-localize-config</span></div>
-          <div class="term-out up" style="--d:39.1s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span data-t="setup.ok3"></span></div>
+          <div data-sfx="chime" class="term-out up" style="--d:39.1s"><svg aria-hidden="true" class="ic"><use href="#i-check" /></svg><span data-t="setup.ok3"></span></div>
         </div>
       </div>
-      <div class="card cfg from-right" style="--d:39.3s">
+      <div data-sfx="swish" class="card cfg from-right" style="--d:39.3s">
         <div class="card-head"><svg aria-hidden="true" class="ic"><use href="#i-file" /></svg>config/inertia-localize.php</div>
         <div class="code">
           <span class="ln"><span class="tk">return</span> [</span>
@@ -604,7 +604,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
         </div>
       </div>
     </div>
-    <div class="card routes up" style="--d:41s">
+    <div data-sfx="tick" class="card routes up" style="--d:41s">
       <div class="card-head"><svg aria-hidden="true" class="ic"><use href="#i-file" /></svg>routes/web.php</div>
       <div class="code">
         <span class="ln mark-line" style="--d:41.7s"><span class="tf">Route</span>::<span class="tf">post</span>(<span class="ts">'/locale'</span>, <span class="tf">LocaleController</span>::<span class="tk">class</span>)-&gt;<span class="tf">name</span>(<span class="ts">'locale.switch'</span>);</span>
@@ -644,7 +644,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
             <div class="tabs">
               <div class="tab-ind"></div>
               <div class="tab tab-react"><svg aria-hidden="true"><use href="#logo-react" /></svg>React</div>
-              <div class="tab tab-vue"><svg aria-hidden="true"><use href="#logo-vue" /></svg>Vue</div>
+              <div data-sfx="tick" data-sfx-at="53.8" class="tab tab-vue"><svg aria-hidden="true"><use href="#logo-vue" /></svg>Vue</div>
             </div>
             <span class="same-api up" style="--d:54.2s" data-t="demo.sameApi"></span>
           </div>
@@ -686,10 +686,10 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
           <div class="page">
             <div class="page-nav"><span class="app-logo"></span>Acme<span class="skel"></span></div>
             <h1 class="page-h1 up" style="--d:48.3s">
-              <span class="swap" style="--d:51.75s"><span class="swap-out">Hello Ada</span><span class="swap-in">Bonjour Ada</span></span>
+              <span data-sfx="sparkle" class="swap" style="--d:51.75s"><span class="swap-out">Hello Ada</span><span class="swap-in">Bonjour Ada</span></span>
             </h1>
             <div class="page-lines fade" style="--d:48.5s"><i style="width:82%"></i><i style="width:58%"></i></div>
-            <div class="page-btn fade" style="--d:48.6s">Français</div>
+            <div data-sfx="click" data-sfx-at="51.15" class="page-btn fade" style="--d:48.6s">Français</div>
             <div class="ripple"></div>
             <div class="cursor"><div class="cursor-move"><div class="cursor-press">
               <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 2v17.2l4.6-4.3 3.1 6.9 3-1.3-3-6.8H18Z" fill="#fff" stroke="#14141c" stroke-width="1.3" stroke-linejoin="round" /></svg>
@@ -726,17 +726,17 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
       </div>
     </div>
     <div class="features">
-      <div class="card feature up" style="--d:60.8s">
+      <div data-sfx="tick" class="card feature up" style="--d:60.8s">
         <div class="feature-ic"><svg aria-hidden="true" class="ic"><use href="#i-bolt" /></svg></div>
         <div class="feature-title" data-t="features.f1.title"></div>
         <p data-t="features.f1.body"></p>
       </div>
-      <div class="card feature up" style="--d:61.05s">
+      <div data-sfx="tick" class="card feature up" style="--d:61.05s">
         <div class="feature-ic"><svg aria-hidden="true" class="ic"><use href="#i-braces" /></svg></div>
         <div class="feature-title" data-t="features.f2.title"></div>
         <p data-t="features.f2.body"></p>
       </div>
-      <div class="card feature up" style="--d:61.3s">
+      <div data-sfx="tick" class="card feature up" style="--d:61.3s">
         <div class="feature-ic"><svg aria-hidden="true" class="ic"><use href="#i-shield" /></svg></div>
         <div class="feature-title" data-t="features.f3.title"></div>
         <p data-t="features.f3.body"></p>
@@ -744,7 +744,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     </div>
     <div class="compat">
       <span class="compat-label fade" style="--d:62.4s" data-t="features.compat"></span>
-      <span class="badge up" style="--d:62.5s">PHP 8.2+</span>
+      <span data-sfx="swish" class="badge up" style="--d:62.5s">PHP 8.2+</span>
       <span class="badge up" style="--d:62.65s">Laravel 11 · 12 · 13</span>
       <span class="badge up" style="--d:62.8s">Inertia 2 · 3</span>
       <span class="badge up" style="--d:62.95s">React 16.9+</span>
@@ -765,9 +765,9 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
       </div>
     </div>
     <div class="agent-chips">
-      <span class="chip up" style="--d:69.5s"><svg aria-hidden="true" class="ic" style="color:var(--primary-2)"><use href="#i-sparkles" /></svg>Claude Code</span>
-      <span class="chip up" style="--d:69.65s"><svg aria-hidden="true" class="ic" style="color:var(--primary-2)"><use href="#i-terminal" /></svg>Codex</span>
-      <span class="chip up" style="--d:69.8s"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>Laravel Boost</span>
+      <span data-sfx="tick" class="chip up" style="--d:69.5s"><svg aria-hidden="true" class="ic" style="color:var(--primary-2)"><use href="#i-sparkles" /></svg>Claude Code</span>
+      <span data-sfx="tick" class="chip up" style="--d:69.65s"><svg aria-hidden="true" class="ic" style="color:var(--primary-2)"><use href="#i-terminal" /></svg>Codex</span>
+      <span data-sfx="tick" class="chip up" style="--d:69.8s"><svg aria-hidden="true"><use href="#logo-laravel" /></svg>Laravel Boost</span>
     </div>
     <p class="agent-skills fade" style="--d:70.1s">inertia-localize-integration · inertia-localize-contributing</p>
   </section>
@@ -775,7 +775,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
   <!-- 9. Outro -->
   <section class="scene center outro" data-in="71.6" data-out="999">
     <div class="brand">
-      <svg aria-hidden="true" class="brand-logo pop" style="--d:71.8s"><use href="#logo" /></svg>
+      <svg data-sfx="pop" aria-hidden="true" class="brand-logo pop" style="--d:71.8s"><use href="#logo" /></svg>
       <div class="brand-word">
         <div class="reveal" style="--d:72.2s">inertia</div>
         <div class="reveal primary" style="--d:72.4s">localize</div>
@@ -784,7 +784,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     <div class="outro-title up" style="--d:73s" data-t="outro.title"></div>
     <p class="outro-sub up" style="--d:73.3s" data-t="outro.sub"></p>
     <div class="ctas">
-      <span class="cta solid up" style="--d:73.8s"><svg aria-hidden="true" class="ic"><use href="#i-world" /></svg><span class="mono">inertia-localize.jiordiviera.me</span></span>
+      <span data-sfx="tick" class="cta solid up" style="--d:73.8s"><svg aria-hidden="true" class="ic"><use href="#i-world" /></svg><span class="mono">inertia-localize.jiordiviera.me</span></span>
       <span class="cta outline up" style="--d:74s"><svg aria-hidden="true"><use href="#logo-github" /></svg><span class="mono">jiordiviera/inertia-localize</span></span>
     </div>
     <p class="license fade" style="--d:74.6s" data-t="outro.license"></p>
@@ -937,8 +937,28 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
     }
   }
 
+  // Sound cues for soundtrack.mjs: scene transitions, keystrokes and [data-sfx] elements.
+  function cues() {
+    const list = []
+    for (const scene of scenes) {
+      if (scene.end < DURATION) list.push({ type: 'whoosh', time: scene.end })
+    }
+    for (const item of typed) {
+      ;[...item.text].forEach((char, index) => {
+        const time = item.start + ((index + 0.5) / item.text.length) * item.duration
+        if (char !== ' ') list.push({ type: 'key', time })
+      })
+    }
+    for (const el of document.querySelectorAll('[data-sfx]')) {
+      const time = Number.parseFloat(el.dataset.sfxAt ?? el.style.getPropertyValue('--d'))
+      list.push({ type: el.dataset.sfx, time, note: Number(el.dataset.sfxNote ?? 0) })
+    }
+    return list.sort((a, b) => a.time - b.time)
+  }
+
   window.__duration = DURATION
   window.__seek = seek
+  window.__cues = cues
   window.__ready = Promise.all([
     document.fonts.load('700 40px Geist'),
     document.fonts.load('400 20px "Geist Mono"'),

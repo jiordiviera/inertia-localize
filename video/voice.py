@@ -5,11 +5,11 @@
     python video/voice.py --model model.onnx --voices ... --lang fr
     python video/voice.py --dry-run          # print the phonemes only
 
-The model is Kokoro-82M (Apache-2.0) in ONNX form, for example model.onnx from
-onnx-community/Kokoro-82M-v1.0-ONNX. The voices are the .bin style files shipped in the
+The model is Kokoro-82M (Apache-2.0) in ONNX form, for example
+https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/onnx/model.onnx. The voices are the .bin style files shipped in the
 kokoro-js npm package. Each line is read from its `speak` field when present, otherwise
-from `text`; words in [brackets] are pronounced in English, which keeps product names
-right in the French narration. A line that would overrun its `until` time is regenerated
+from `text`; words in [brackets] are pronounced in English and /…/ holds raw phonemes,
+which keeps product names right in the French narration. A line that would overrun its `until` time is regenerated
 slightly faster. Run `node video/soundtrack.mjs` afterwards to mix the clips in.
 """
 
@@ -29,14 +29,22 @@ VOICES = {"en": ("af_heart", "en-us", 1.0), "fr": ("ff_siwis", "fr-fr", 1.0)}
 MAX_SPEED = 1.3
 
 
+SEGMENT = re.compile(r"\[([^\]]+)\]|/([^/]+)/")
+
+
 def phonemes(tokenizer, text, lang):
-    """Phonemize text, using English for [bracketed] words, without espeak language flags."""
-    parts = re.split(r"\[([^\]]+)\]", text)
-    spoken = [
-        tokenizer.phonemize(part, "en-us" if index % 2 else lang)
-        for index, part in enumerate(parts)
-        if part.strip()
-    ]
+    """Phonemize text: [words] in English, /phonemes/ as written, the rest in `lang`."""
+    spoken = []
+    last = 0
+    for match in [*SEGMENT.finditer(text), None]:
+        plain = text[last : match.start() if match else len(text)]
+        if plain.strip():
+            spoken.append(tokenizer.phonemize(plain, lang))
+        if match:
+            english, raw = match.groups()
+            spoken.append(tokenizer.phonemize(english, "en-us") if english else raw)
+            last = match.end()
+    # espeak marks language switches as (en)…(fr); the model would read them aloud.
     joined = re.sub(r"\([a-z-]+\)", "", " ".join(spoken))
     return re.sub(r"\s+([.,:;!?])", r"\1", joined).strip()
 

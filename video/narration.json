@@ -58,7 +58,7 @@
       "at": 0.8,
       "until": 5.6,
       "text": "Voici Inertia Localize : les traductions Laravel, partout.",
-      "speak": "Voici [Inertia Localize] : les traductions Laravel, partout."
+      "speak": "Voici /inˈɛʁʃa lˈokalajz/ : les traductions Laravel, partout."
     },
     {
       "at": 6.3,
@@ -70,13 +70,13 @@
       "at": 15.9,
       "until": 21.6,
       "text": "Inertia Localize garde Laravel comme seule source de vérité.",
-      "speak": "[Inertia Localize] garde Laravel comme seule source de vérité."
+      "speak": "/inˈɛʁʃa lˈokalajz/ garde Laravel comme seule source de vérité."
     },
     {
       "at": 22.4,
       "until": 31.8,
-      "text": "Vos traductions sont partagées via une prop Inertia. L’adaptateur React ou Vue la lit : il ne reste qu’à appeler t().",
-      "speak": "Vos traductions sont partagées via une prop [Inertia]. L’adaptateur [React] ou [Vue] la lit : il ne reste qu’à appeler té."
+      "text": "Inertia partage vos traductions dans une prop. L’adaptateur React ou Vue s’en charge : il ne reste qu’à appeler t().",
+      "speak": "/inɛʁʃˈa/ partage vos traductions dans une prop. L’adaptateur [React] ou /vjˈu/ s’en charge : il ne reste qu’à appeler la fonction té."
     },
     {
       "at": 32.6,
@@ -87,30 +87,30 @@
       "at": 45.3,
       "until": 53.9,
       "text": "Dans vos pages, un simple appel à t(). Pour changer de langue, setLocale : la session et la prop se mettent à jour.",
-      "speak": "Dans vos pages, un simple appel à té. Pour changer de langue, [set locale] : la session et la prop se mettent à jour."
+      "speak": "Dans vos pages, un simple appel à la fonction té. Pour changer de langue, [set locale] : la session et la prop se mettent à jour."
     },
     {
       "at": 54.3,
       "until": 59.4,
-      "text": "Même API avec Vue.",
-      "speak": "Même API avec [Vue]."
+      "text": "C’est pareil avec Vue.",
+      "speak": "C’est pareil avec /vjˈu/."
     },
     {
       "at": 60.1,
       "until": 66.4,
-      "text": "Intégration minimale. API typée. Une seule source de vérité."
+      "text": "Intégration minimale. Typée dès la conception. Une seule source de vérité."
     },
     {
       "at": 67,
       "until": 71.4,
-      "text": "Et des skills prêts pour votre agent de code IA.",
-      "speak": "Et des [skills] prêts pour votre agent de code, i a."
+      "text": "Et des skills prêts pour votre agent de code, comme Claude Code.",
+      "speak": "Et des /skˈilz/ prêts pour votre agent de code, comme Claude Code."
     },
     {
       "at": 72.4,
       "until": 79.4,
       "text": "Inertia Localize : gardez Laravel comme source de vérité. Open source, sous licence MIT.",
-      "speak": "[Inertia Localize] : gardez Laravel comme source de vérité. [Open source], sous licence MIT."
+      "speak": "/inˈɛʁʃa lˈokalajz/ : gardez Laravel comme source de vérité. /ˈopɛn sˈuʁs/, sous licence M I T."
     }
   ]
 }

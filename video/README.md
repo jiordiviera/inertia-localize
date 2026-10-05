@@ -23,7 +23,9 @@ Both scripts require ffmpeg on `PATH` and Playwright with Chromium. When Playwri
 
 ## Voice-over
 
-Record or generate one clip per line of `narration.json` and save them as `video/voice/<lang>/01.wav`, `02.wav`, and so on (any format ffmpeg reads). Each clip starts at its line's `at` time and should finish before `until`. Then run `node video/soundtrack.mjs` again: clips are levelled, the music ducks under the voice and the captions follow the real clip lengths. Lines without a clip are skipped.
+`voice.py` generates the clips with the open-source Kokoro-82M model (see its docstring for the model and voice files). Optional `speak` fields in `narration.json` hold the text as pronounced, with English words in `[brackets]`; `text` stays the caption.
+
+To use a recorded voice instead, record one clip per line of `narration.json` and save them as `video/voice/<lang>/01.wav`, `02.wav`, and so on (any format ffmpeg reads). Each clip starts at its line's `at` time and should finish before `until`. Then run `node video/soundtrack.mjs` again: clips are levelled, the music ducks under the voice and the captions follow the real clip lengths. Lines without a clip are skipped.
 
 ## Editing
 

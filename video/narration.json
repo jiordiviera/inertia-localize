@@ -18,7 +18,8 @@
     {
       "at": 22.4,
       "until": 31.8,
-      "text": "Translations are shared as an Inertia prop on every response. Your React or Vue adapter reads it, and you just call t()."
+      "text": "Translations are shared as an Inertia prop on every response. Your React or Vue adapter reads it, and you just call t().",
+      "speak": "Translations are shared as an Inertia prop on every response. Your React or Vue adapter reads it, and you just call tee."
     },
     {
       "at": 32.6,
@@ -28,9 +29,14 @@
     {
       "at": 45.3,
       "until": 53.9,
-      "text": "In your pages, just call t(). To switch locale, call setLocale: the session and the i18n prop update, and the page follows."
+      "text": "In your pages, just call t(). To switch locale, call setLocale: the session and the i18n prop update, and the page follows.",
+      "speak": "In your pages, just call tee. To switch locale, call set locale: the session and the i18n prop update, and the page follows."
     },
-    { "at": 54.3, "until": 59.4, "text": "Same API in Vue." },
+    {
+      "at": 54.3,
+      "until": 59.4,
+      "text": "Same API in Vue."
+    },
     {
       "at": 60.1,
       "until": 66.4,
@@ -51,22 +57,26 @@
     {
       "at": 0.8,
       "until": 5.6,
-      "text": "Voici Inertia Localize : les traductions Laravel, partout."
+      "text": "Voici Inertia Localize : les traductions Laravel, partout.",
+      "speak": "Voici [Inertia Localize] : les traductions Laravel, partout."
     },
     {
       "at": 6.3,
       "until": 15.2,
-      "text": "Souvent, vos traductions vivent en double : PHP côté Laravel, JSON côté frontend. Et elles finissent par diverger."
+      "text": "Souvent, vos traductions vivent en double : PHP côté Laravel, JSON côté frontend. Et elles finissent par diverger.",
+      "speak": "Souvent, vos traductions vivent en double : PHP côté Laravel, [JSON] côté [front-end]. Et elles finissent par diverger."
     },
     {
       "at": 15.9,
       "until": 21.6,
-      "text": "Inertia Localize garde Laravel comme seule source de vérité."
+      "text": "Inertia Localize garde Laravel comme seule source de vérité.",
+      "speak": "[Inertia Localize] garde Laravel comme seule source de vérité."
     },
     {
       "at": 22.4,
       "until": 31.8,
-      "text": "Vos traductions sont partagées via une prop Inertia. L’adaptateur React ou Vue la lit : il ne reste qu’à appeler t()."
+      "text": "Vos traductions sont partagées via une prop Inertia. L’adaptateur React ou Vue la lit : il ne reste qu’à appeler t().",
+      "speak": "Vos traductions sont partagées via une prop [Inertia]. L’adaptateur [React] ou [Vue] la lit : il ne reste qu’à appeler té."
     },
     {
       "at": 32.6,
@@ -76,9 +86,15 @@
     {
       "at": 45.3,
       "until": 53.9,
-      "text": "Dans vos pages, un simple appel à t(). Pour changer de langue, setLocale : la session et la prop se mettent à jour."
+      "text": "Dans vos pages, un simple appel à t(). Pour changer de langue, setLocale : la session et la prop se mettent à jour.",
+      "speak": "Dans vos pages, un simple appel à té. Pour changer de langue, [set locale] : la session et la prop se mettent à jour."
     },
-    { "at": 54.3, "until": 59.4, "text": "Même API avec Vue." },
+    {
+      "at": 54.3,
+      "until": 59.4,
+      "text": "Même API avec Vue.",
+      "speak": "Même API avec [Vue]."
+    },
     {
       "at": 60.1,
       "until": 66.4,
@@ -87,12 +103,14 @@
     {
       "at": 67,
       "until": 71.4,
-      "text": "Et des skills prêts pour votre agent de code IA."
+      "text": "Et des skills prêts pour votre agent de code IA.",
+      "speak": "Et des [skills] prêts pour votre agent de code, i a."
     },
     {
       "at": 72.4,
       "until": 79.4,
-      "text": "Inertia Localize : gardez Laravel comme source de vérité. Open source, sous licence MIT."
+      "text": "Inertia Localize : gardez Laravel comme source de vérité. Open source, sous licence MIT.",
+      "speak": "[Inertia Localize] : gardez Laravel comme source de vérité. [Open source], sous licence MIT."
     }
   ]
 }

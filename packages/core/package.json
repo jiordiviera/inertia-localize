@@ -1,6 +1,6 @@
 {
   "name": "@inertia-localize/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "description": "Framework-independent translation utilities for Inertia Localize",
   "author": {

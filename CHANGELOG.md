@@ -2,6 +2,21 @@
 
 This project follows Semantic Versioning. Versions below `1.0.0` are pre-stable; public APIs may change between minor releases. The initial release notes are maintained at the repository root. Changesets generates per-package changelogs for subsequent releases.
 
+## [0.2.0] - Unreleased
+
+### Added
+
+- `useLocaleSwitch()` in the React and Vue adapters: posts the selected locale to the package's locale-switch route through Inertia's `router.post()` and exposes a `switching` state.
+- `translateChoice()` in `@inertia-localize/core`, exposed as `tChoice()` by both adapters. It resolves plural forms with Laravel's `trans_choice` pipe-separated syntax (exact `{n}` and range `[n,m]` selectors, automatic `:count` interpolation). It is not ICU MessageFormat, so lang files stay identical whether the app also calls `trans_choice()` server-side.
+
+### Compatibility
+
+- Same as 0.1.0. The new APIs are additive; no existing call changes behaviour.
+
+### Migration Notes
+
+None required. To use plural forms, switch `t('key', { count })` to `tChoice('key', { count })` where the lang file uses the pipe syntax.
+
 ## [0.1.0] - Unreleased
 
 This is the first usable, pre-stable release. Pin package versions and review release notes before upgrading; compatibility is not guaranteed across future `0.x` minor versions.
